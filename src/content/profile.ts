@@ -22,7 +22,7 @@ export const profile = {
   summary:
     "Senior software engineer with 12+ years building and scaling production e-commerce platforms for brands in the US, Europe, Australia, New Zealand, and Singapore. Deep platform expertise across Shopify Plus and Salesforce Commerce Cloud, including six years supporting global Timex and Guess Watches storefronts.",
   summaryMore:
-    "Strong in JavaScript and React/Next.js engineering, API and third-party integrations, platform migrations, and Core Web Vitals performance. Diagnoses complex production issues across code, apps, and platform settings. Works independently or in distributed teams, and uses AI coding tools (Claude Code, Codex) to move faster while owning code review, testing, and release quality.",
+    "Strong in JavaScript and React/Next.js engineering, API and third-party integrations, platform migrations, and Core Web Vitals performance. Diagnoses complex production issues across code, apps, and platform settings. Works independently or in distributed teams, owning code review, testing, and release quality.",
   stats: [
     { value: "12+", label: "Years shipping production e-commerce" },
     { value: "50+", label: "Shopify & Shopify Plus stores" },
@@ -73,11 +73,6 @@ export const profile = {
       group: "Data & Tools",
       items: ["MySQL", "Git", "GitHub", "GitLab", "Bitbucket", "Jira", "Figma", "Google Lighthouse", "GTmetrix", "Agile/Scrum"],
     },
-    {
-      group: "AI-Assisted Development",
-      items: ["Claude Code", "OpenAI Codex", "ChatGPT", "Google Antigravity"],
-      note: "Used for implementation, refactoring, debugging, and documentation, with all output reviewed and tested before release.",
-    },
   ],
   experience: [
     {
@@ -93,7 +88,6 @@ export const profile = {
         "Resolved complex production issues as sole engineer for small businesses and within 3–5 person teams for mid-to-large clients, tracing root causes across theme code, JavaScript, app conflicts, and platform settings.",
         "Integrated and validated third-party systems including Klaviyo, preorder and back-in-stock apps, store locators, analytics, reviews, and marketing platforms.",
         "Led a full storefront rebuild for The Artisan Collective on WordPress and WooCommerce, including product and content transfer and SEO preservation.",
-        "Accelerated delivery with AI coding tools while personally reviewing, testing, and owning production outcomes.",
       ],
     },
     {

@@ -18,7 +18,7 @@ import {
   type Page,
   type TextStyle,
 } from "../draw-utils";
-import { chrome, frame, paper, PAPER } from "../paper";
+import { chrome, folioOf, frame, paper, PAPER, spreadOf } from "../paper";
 
 const label: TextStyle = { size: 22, family: "mono", upper: true, track: 0.1, color: PAPER.muted };
 
@@ -26,7 +26,7 @@ const label: TextStyle = { size: 22, family: "mono", upper: true, track: 0.1, co
 export function drawToolkit(p: Page) {
   const { ctx, t } = p;
   paper(p, "left");
-  chrome(p, { side: "left", spread: 6, title: "Toolkit", folio: 11, color: PAPER.ink });
+  chrome(p, { side: "left", spread: spreadOf("toolkit"), title: "Toolkit", folio: folioOf("toolkit"), color: PAPER.ink });
   const { x0, x1 } = frame("left");
 
   text(p, "Toolkit", x0 - 4, 262, { size: 180, family: "serif", italic: true, color: PAPER.ink });
@@ -62,10 +62,6 @@ export function drawToolkit(p: Page) {
     for (const it of g.items) {
       y = para(p, it, x, y, colW, { size: 22, lh: 28, color: PAPER.ink, track: -0.006 }) + 6;
     }
-    if ("note" in g && g.note) {
-      y += 14;
-      para(p, g.note, x, y, colW, { size: 22, lh: 26, family: "serif", italic: true, color: PAPER.muted });
-    }
     ctx.globalAlpha = 1;
   });
 }
@@ -74,7 +70,7 @@ export function drawToolkit(p: Page) {
 export function drawExperience(p: Page) {
   const { ctx, t } = p;
   paper(p, "right");
-  chrome(p, { side: "right", spread: 6, title: "Experience", folio: 12, color: PAPER.ink });
+  chrome(p, { side: "right", spread: spreadOf("experience"), title: "Experience", folio: folioOf("experience"), color: PAPER.ink });
   const { x0 } = frame("right");
 
   text(p, "Experience", x0 - 4, 250, { size: 116, family: "serif", italic: true, color: PAPER.ink });
@@ -141,7 +137,7 @@ export function drawExperience(p: Page) {
 export function drawProcess(p: Page) {
   const { ctx, t } = p;
   paper(p, "left");
-  chrome(p, { side: "left", spread: 7, title: "Process", folio: 13, color: PAPER.ink });
+  chrome(p, { side: "left", spread: spreadOf("process"), title: "Process", folio: folioOf("process"), color: PAPER.ink });
   const { x0, x1 } = frame("left");
 
   const hw = text(p, "How I ", x0 - 4, 250, { size: 168, family: "serif", color: PAPER.ink });
@@ -188,7 +184,7 @@ const bare = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "")
 export function drawContact(p: Page) {
   const { ctx, t } = p;
   paper(p, "right");
-  chrome(p, { side: "right", spread: 7, title: "Contact", folio: 14, color: PAPER.ink });
+  chrome(p, { side: "right", spread: spreadOf("contact"), title: "Contact", folio: folioOf("contact"), color: PAPER.ink });
   const { x0, x1 } = frame("right");
 
   text(p, "Say hello", x0, 164, { ...label, color: PAPER.accent });

@@ -148,7 +148,6 @@ export function ClassicPortfolio() {
                     </li>
                   ))}
                 </ul>
-                {"note" in g && g.note && <p className="mt-4 text-[13.5px] leading-relaxed text-ink-muted">{g.note}</p>}
               </div>
             ))}
           </div>

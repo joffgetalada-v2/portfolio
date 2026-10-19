@@ -18,7 +18,7 @@ import {
   type Page,
   type TextStyle,
 } from "../draw-utils";
-import { chrome, frame, paper, PAPER, surface } from "../paper";
+import { chrome, folioOf, frame, paper, PAPER, spreadOf, surface } from "../paper";
 
 const work = workById.timex;
 const { bg: NAVY, ink: IVORY, accent: GOLD } = work.palette;
@@ -249,7 +249,7 @@ export function drawTimexHero(p: Page) {
     ctx.restore();
   }
 
-  chrome(p, { side: "left", spread: 2, title: "Timex & Guess Watches", folio: 3, color: IVORY, alpha: 0.72 });
+  chrome(p, { side: "left", spread: spreadOf("timex-hero"), title: "Timex & Guess Watches", folio: folioOf("timex-hero"), color: IVORY, alpha: 0.72 });
   const x0 = frame("left").x0;
 
   text(p, work.kind, x0, 170, { size: 20, family: "mono", upper: true, track: 0.14, color: GOLD });
@@ -323,7 +323,7 @@ function releaseCard(p: Page, x: number, y: number, w: number, h: number) {
 export function drawTimexDetail(p: Page) {
   const { ctx } = p;
   paper(p, "right");
-  chrome(p, { side: "right", spread: 2, title: "Timex & Guess Watches", folio: 4, color: PAPER.ink });
+  chrome(p, { side: "right", spread: spreadOf("timex-detail"), title: "Timex & Guess Watches", folio: folioOf("timex-detail"), color: PAPER.ink });
   const { x0, x1 } = frame("right");
   const cw = x1 - x0;
 

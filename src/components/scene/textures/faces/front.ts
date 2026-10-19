@@ -20,13 +20,13 @@ import {
   type Page,
   type TextStyle,
 } from "../draw-utils";
-import { chrome, frame, paper, PAPER } from "../paper";
+import { chrome, folioOf, frame, paper, PAPER, spreadOf } from "../paper";
 import { CONTENTS_ROWS } from "../layout";
 
 export function drawContents(p: Page) {
   const { ctx, t } = p;
   paper(p, "left");
-  chrome(p, { side: "left", spread: 1, title: "Contents", folio: 1, color: PAPER.ink });
+  chrome(p, { side: "left", spread: spreadOf("contents"), title: "Contents", folio: folioOf("contents"), color: PAPER.ink });
   const { x0, x1 } = frame("left");
 
   text(p, "Contents", x0 - 4, 262, { size: 180, family: "serif", italic: true, color: PAPER.ink, track: -0.01 });
@@ -76,7 +76,7 @@ function parseStat(value: string) {
 export function drawIntro(p: Page) {
   const { ctx, t } = p;
   paper(p, "right");
-  chrome(p, { side: "right", spread: 1, title: "Hello", folio: 2, color: PAPER.ink });
+  chrome(p, { side: "right", spread: spreadOf("intro"), title: "Hello", folio: folioOf("intro"), color: PAPER.ink });
   const { x0, x1 } = frame("right");
   const cw = x1 - x0;
 

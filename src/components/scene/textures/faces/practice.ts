@@ -22,7 +22,7 @@ import {
   type Path,
   type TextStyle,
 } from "../draw-utils";
-import { chrome, frame, surface } from "../paper";
+import { chrome, folioOf, frame, spreadOf, surface } from "../paper";
 
 // ---- Artisan ----
 const artisan = workById.artisan;
@@ -110,7 +110,7 @@ export function drawArtisan(p: Page) {
     grain: 0.36,
     vignette: 0.1,
   });
-  chrome(p, { side: "left", spread: 4, title: "The Artisan Collective", folio: 7, color: BROWN, alpha: 0.78 });
+  chrome(p, { side: "left", spread: spreadOf("artisan"), title: "The Artisan Collective", folio: folioOf("artisan"), color: BROWN, alpha: 0.78 });
   const { x0, x1 } = frame("left");
 
   text(p, `${artisan.kind} · ${artisan.role}`, x0, 164, { size: 20, family: "mono", upper: true, track: 0.12, color: TERRA });
@@ -260,7 +260,7 @@ function tileGrid(p: Page, gx: number, gy: number) {
 export function drawFreelance(p: Page) {
   const { ctx } = p;
   surface(p, { tone: COAL, side: "right", dark: true, vignette: 0.3 });
-  chrome(p, { side: "right", spread: 4, title: "50+ Shopify stores", folio: 8, color: CHALK, alpha: 0.72 });
+  chrome(p, { side: "right", spread: spreadOf("freelance"), title: "50+ Shopify stores", folio: folioOf("freelance"), color: CHALK, alpha: 0.72 });
   const { x0, x1 } = frame("right");
 
   text(p, `${free.kind} · ${free.period}`, x0, 164, { size: 20, family: "mono", upper: true, track: 0.12, color: LIME });

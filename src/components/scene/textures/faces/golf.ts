@@ -20,7 +20,7 @@ import {
   type Page,
   type TextStyle,
 } from "../draw-utils";
-import { chrome, frame, surface } from "../paper";
+import { chrome, folioOf, frame, spreadOf, surface } from "../paper";
 
 // ---- Malbon ----
 const malbon = workById.malbon;
@@ -190,7 +190,7 @@ export function drawMalbon(p: Page) {
       c.restore();
     },
   });
-  chrome(p, { side: "left", spread: 3, title: "Malbon Golf", folio: 5, color: CREAM, alpha: 0.75 });
+  chrome(p, { side: "left", spread: spreadOf("malbon"), title: "Malbon Golf", folio: folioOf("malbon"), color: CREAM, alpha: 0.75 });
   const { x0, x1 } = frame("left");
 
   const title: TextStyle = { size: 260, family: "display", color: CREAM, track: 0.005 };
@@ -413,7 +413,7 @@ function migrationDiagram(p: Page, x: number, y: number, w: number, h: number) {
 export function drawAtomic(p: Page) {
   const { ctx } = p;
   surface(p, { tone: BONE, side: "right" });
-  chrome(p, { side: "right", spread: 3, title: "Atomic Golf", folio: 6, color: INK, alpha: 0.75 });
+  chrome(p, { side: "right", spread: spreadOf("atomic"), title: "Atomic Golf", folio: folioOf("atomic"), color: INK, alpha: 0.75 });
   const { x0, x1 } = frame("right");
 
   const title: TextStyle = { size: 260, family: "display", color: INK, track: 0.005 };
