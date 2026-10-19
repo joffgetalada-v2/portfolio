@@ -1,0 +1,222 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #050505;
+  --bg-raised: #0e0e0d;
+  --ink: #ededea;
+  --ink-muted: #9a9a94;
+  --ink-faint: #5d5d58;
+  --line: rgba(237, 237, 234, 0.12);
+  --paper: #f3f1ec;
+  --paper-ink: #151513;
+  --accent: #d9b77e;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-raised: var(--bg-raised);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+  --color-line: var(--line);
+  --color-paper: var(--paper);
+  --color-paper-ink: var(--paper-ink);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-instrument-serif);
+  --font-display: var(--font-anton);
+}
+
+html {
+  background: var(--bg);
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--accent);
+  color: #111;
+}
+
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---- Work tiles (components/classic/tiles), transform and opacity only ---- */
+
+/* Pin moves down 100% of its height and the page up 100% of its own, so the last pixel lands on the
+   tile edge at any size. % of the animated box, not container units: those go stale mid-transition. */
+.wt-pin,
+.wt-scroll,
+.wt-thumb {
+  transform: translateY(0);
+}
+.wt-pin {
+  --wt-to: 100%;
+}
+.wt-scroll {
+  --wt-to: -100%;
+}
+/* Thumb is 18% of its track: 82 / 18 */
+.wt-thumb {
+  --wt-to: 455.5556%;
+  opacity: 0;
+}
+
+/* :has(img:not([data-ready])) holds the motion until images load, see ShotImage. */
+
+/* Hover devices: scroll on hover or focus, ease back on leave. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .wt-pin,
+  .wt-scroll,
+  .wt-thumb {
+    transition:
+      transform 1.3s cubic-bezier(0.65, 0, 0.35, 1),
+      opacity 0.5s ease;
+  }
+  .wt:is(:hover, :focus-within) .wt-view:not(:has(img:not([data-ready]))) :is(.wt-pin, .wt-scroll, .wt-thumb) {
+    transform: translateY(var(--wt-to));
+    transition-property: transform, opacity;
+    transition-duration: var(--wt-leg, 14s), 0.4s;
+    transition-timing-function: ease-in-out, ease;
+  }
+  .wt:is(:hover, :focus-within) .wt-view:not(:has(img:not([data-ready]))) .wt-thumb {
+    opacity: 0.55;
+  }
+  /* Down, up, down as one transition so leaving mid-way eases back. A removed animation would snap. */
+  @supports (transition-timing-function: linear(0, 1)) {
+    .wt:is(:hover, :focus-within) .wt-view:not(:has(img:not([data-ready]))) :is(.wt-pin, .wt-scroll, .wt-thumb) {
+      transition-duration: calc(var(--wt-leg, 14s) * 3), 0.4s;
+      transition-timing-function:
+        linear(0 0%, 0.01 2.08%, 0.038 4.17%, 0.084 6.25%, 0.146 8.33%, 0.222 10.42%, 0.309 12.5%, 0.402 14.58%, 0.5 16.67%, 0.598 18.75%, 0.691 20.83%, 0.778 22.92%, 0.854 25%, 0.916 27.08%, 0.962 29.17%, 0.99 31.25%, 1 33.33%, 0.99 35.42%, 0.962 37.5%, 0.916 39.58%, 0.854 41.67%, 0.778 43.75%, 0.691 45.83%, 0.598 47.92%, 0.5 50%, 0.402 52.08%, 0.309 54.17%, 0.222 56.25%, 0.146 58.33%, 0.084 60.42%, 0.038 62.5%, 0.01 64.58%, 0 66.67%, 0.01 68.75%, 0.038 70.83%, 0.084 72.92%, 0.146 75%, 0.222 77.08%, 0.309 79.17%, 0.402 81.25%, 0.5 83.33%, 0.598 85.42%, 0.691 87.5%, 0.778 89.58%, 0.854 91.67%, 0.916 93.75%, 0.962 95.83%, 0.99 97.92%, 1 100%),
+        ease;
+    }
+  }
+}
+
+/* Touch: autoscroll */
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .wt-view:not(:has(img:not([data-ready]))) :is(.wt-pin, .wt-scroll, .wt-thumb) {
+    animation: wt-autoscroll var(--wt-leg, 14s) ease-in-out infinite alternate;
+  }
+  .wt-view:not(:has(img:not([data-ready]))) .wt-thumb {
+    opacity: 0.45;
+  }
+}
+
+@keyframes wt-autoscroll {
+  0%,
+  8% {
+    transform: translateY(0);
+  }
+  92%,
+  100% {
+    transform: translateY(var(--wt-to));
+  }
+}
+
+/* ArtisanTile */
+@keyframes wt-weave {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes wt-pick {
+  0% {
+    opacity: 0;
+  }
+  2%,
+  12% {
+    opacity: 1;
+  }
+  14.2%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes wt-ping {
+  0%,
+  40% {
+    transform: scale(1);
+    opacity: 0;
+  }
+  46% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+/* StoresMosaic: each column renders its cards twice, so -50% loops */
+@keyframes wt-marquee {
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+.wt-weave {
+  animation: wt-weave 36s linear infinite;
+}
+.wt-pick {
+  opacity: 0;
+  animation: wt-pick 14s ease-in-out infinite both;
+}
+.wt-ping {
+  opacity: 0;
+  animation: wt-ping 2s ease-out infinite;
+}
+.wt-marquee {
+  animation: wt-marquee var(--wt-dur, 40s) linear infinite;
+}
+.wt-marquee[data-dir="down"] {
+  animation-direction: reverse;
+}
+.wt-wall {
+  transition: scale 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .wt:hover .wt-wall {
+    scale: 1.045;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wt-pin,
+  .wt-scroll,
+  .wt-thumb,
+  .wt-weave,
+  .wt-pick,
+  .wt-ping,
+  .wt-marquee {
+    animation: none;
+  }
+  .wt-pick[data-still] {
+    opacity: 1;
+  }
+}
