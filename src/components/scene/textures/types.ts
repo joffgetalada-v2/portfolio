@@ -23,12 +23,16 @@ export interface DrawContext {
   fonts: FaceFonts;
   /** Work.image, when the face has one. */
   image: HTMLImageElement | null;
+  /** Work.shots in order, null until loaded. Empty unless the face sets shots. */
+  shots: readonly (HTMLImageElement | null)[];
 }
 
 export interface FaceSpec {
   draw: (d: DrawContext) => void;
   /** Redrawn every frame while hovered. */
   animated: boolean;
+  /** Loads its work's live-site captures into DrawContext.shots. */
+  shots: boolean;
 }
 
 export type FaceRegistry = Record<FaceId, FaceSpec>;

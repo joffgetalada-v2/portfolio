@@ -173,10 +173,10 @@ body {
   }
 }
 
-/* StoresMosaic: each column renders its cards twice, so -50% loops */
+/* StoresMosaic: each column renders its cards --wt-copies times, so moving by one copy loops */
 @keyframes wt-marquee {
   to {
-    transform: translateY(-50%);
+    transform: translateY(calc(-100% / var(--wt-copies, 2)));
   }
 }
 

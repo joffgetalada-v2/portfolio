@@ -7,7 +7,7 @@ const css = `
 
 export function UiKeyframes() {
   return (
-    <style href="cartbound-ui-keyframes" precedence="low">
+    <style href="portfolio-ui-keyframes" precedence="low">
       {css}
     </style>
   );

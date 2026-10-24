@@ -156,6 +156,15 @@ export function drawProcess(p: Page) {
 
   const titleSt = { size: 26, weight: 600, lh: 31, color: PAPER.ink, track: -0.015 };
   const titleLines = Math.max(...items.map((s) => wrap(p, s.title, colW, titleSt).length));
+  // Largest body size whose longest column still clears the folio.
+  const bodyTop = top + 160 + titleLines * titleSt.lh + 12;
+  const bodySt = [22, 21, 20, 19]
+    .map((size) => ({ size, lh: Math.round(size * 1.4), track: -0.004 }))
+    .find((st) => bodyTop + (Math.max(...items.map((s) => wrap(p, s.body, colW, st).length)) - 1) * st.lh <= 790) ?? {
+    size: 19,
+    lh: 27,
+    track: -0.004,
+  };
   items.forEach((s, i) => {
     const x = x0 + i * (colW + gap);
     line(ctx, x, top, x + colW, top, PAPER.ink, 1.5);
@@ -174,7 +183,7 @@ export function drawProcess(p: Page) {
     ctx.restore();
 
     para(p, s.title, x, top + 160, colW, titleSt);
-    para(p, s.body, x, top + 160 + titleLines * titleSt.lh + 12, colW, { size: 22, lh: 31, color: PAPER.muted, track: -0.004 });
+    para(p, s.body, x, bodyTop, colW, { ...bodySt, color: PAPER.muted });
   });
 }
 

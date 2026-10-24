@@ -12,6 +12,7 @@ export interface Page {
   t: number;
   fonts: FaceFonts;
   image: HTMLImageElement | null;
+  shots: readonly (HTMLImageElement | null)[];
   /** Canvas size in px; s = pw / W. */
   pw: number;
   ph: number;

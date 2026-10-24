@@ -54,6 +54,8 @@ export type FaceId =
   | "atomic"
   | "artisan"
   | "freelance"
+  | "react-client"
+  | "react-personal"
   | "toolkit"
   | "experience"
   | "process"
@@ -71,7 +73,8 @@ export const SHEETS: Sheet[] = [
   { front: "intro", back: "timex-hero" },
   { front: "timex-detail", back: "malbon" },
   { front: "atomic", back: "artisan" },
-  { front: "freelance", back: "toolkit" },
+  { front: "freelance", back: "react-client" },
+  { front: "react-personal", back: "toolkit" },
   { front: "experience", back: "process" },
   { front: "contact", back: "back-cover" },
 ];
@@ -92,8 +95,9 @@ const SPREAD_META: Record<number, { label: string; works: WorkId[] }> = {
   2: { label: "Timex & Guess Watches", works: ["timex"] },
   3: { label: "Malbon Golf · Atomic Golf", works: ["malbon", "atomic"] },
   4: { label: "The Artisan Collective · 50+ stores", works: ["artisan", "freelance"] },
-  5: { label: "Toolkit · Experience", works: [] },
-  6: { label: "Process · Contact", works: [] },
+  5: { label: "React projects", works: ["react-client", "react-personal"] },
+  6: { label: "Toolkit · Experience", works: [] },
+  7: { label: "Process · Contact", works: [] },
 };
 
 export const SPREADS: Spread[] = SHEETS.slice(1).map((sheet, i) => {
@@ -117,4 +121,6 @@ export const FACE_WORK: Partial<Record<FaceId, WorkId>> = {
   atomic: "atomic",
   artisan: "artisan",
   freelance: "freelance",
+  "react-client": "react-client",
+  "react-personal": "react-personal",
 };

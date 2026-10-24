@@ -2,10 +2,10 @@
 
 export const profile = {
   name: "Joffrey Anthony Getalada",
-  shortName: "Joffrey Getalada",
+  shortName: "Joffrey Anthony Getalada",
   firstName: "Joffrey",
   role: "Senior Software Engineer",
-  headline: "Senior E-Commerce Engineer · Shopify Plus & Salesforce Commerce Cloud",
+  headline: "Senior E-Commerce Engineer · Shopify Plus & Salesforce Commerce Cloud (Demandware)",
   location: "Cebu, Philippines",
   timezone: "GMT+8",
   availability: "Remote · overlap with US, AU & EU hours",
@@ -20,7 +20,7 @@ export const profile = {
     upwork: "",
   },
   summary:
-    "Senior software engineer with 12+ years building and scaling production e-commerce platforms for brands in the US, Europe, Australia, New Zealand, and Singapore. Deep platform expertise across Shopify Plus and Salesforce Commerce Cloud, including six years supporting global Timex and Guess Watches storefronts.",
+    "Senior software engineer with 12+ years building and scaling production e-commerce platforms for brands in the US, Europe, Australia, New Zealand, and Singapore. Deep platform expertise across Shopify Plus and Salesforce Commerce Cloud (Demandware), including six years supporting global Timex and Guess Watches storefronts.",
   summaryMore:
     "Strong in JavaScript and React/Next.js engineering, API and third-party integrations, platform migrations, and Core Web Vitals performance. Diagnoses complex production issues across code, apps, and platform settings. Works independently or in distributed teams, owning code review, testing, and release quality.",
   stats: [
@@ -33,7 +33,7 @@ export const profile = {
   strengths: [
     {
       title: "Enterprise commerce",
-      body: "6+ years on international Timex and Guess Watches storefronts (Shopify and Salesforce Commerce Cloud), a specialty few engineers have.",
+      body: "6+ years on international Timex and Guess Watches storefronts on Shopify and Salesforce Commerce Cloud (Demandware), a specialty few engineers have.",
     },
     {
       title: "Scale of delivery",
@@ -55,7 +55,7 @@ export const profile = {
     },
     {
       group: "Commerce Platforms",
-      items: ["Shopify", "Shopify Plus", "Liquid", "Shopify CLI", "Salesforce Commerce Cloud", "WooCommerce", "WordPress"],
+      items: ["Shopify", "Shopify Plus", "Liquid", "Shopify CLI", "Salesforce Commerce Cloud (Demandware)", "WooCommerce", "WordPress"],
     },
     {
       group: "Engineering",
@@ -98,7 +98,7 @@ export const profile = {
       start: 2018,
       end: 2024,
       points: [
-        "Built and maintained production code for Timex and Guess Watches storefronts across international markets on Shopify and Salesforce Commerce Cloud, using JavaScript, Liquid, HTML5, and CSS3/SASS.",
+        "Built and maintained production code for Timex and Guess Watches storefronts across international markets on Shopify and Salesforce Commerce Cloud (Demandware), using JavaScript, Liquid, HTML5, and CSS3/SASS.",
         "Improved purchase journeys by refining product pages, navigation, content modules, and checkout-related interfaces with product, design, marketing, and QA teams.",
         "Used Lighthouse and GTmetrix to find bottlenecks, optimize front-end assets, and verify Core Web Vitals before deployment.",
         "Reduced recurring defects by documenting development procedures and standardizing quality checks within Agile/Scrum workflows in Jira.",
@@ -149,7 +149,7 @@ export const profile = {
   languages: ["English (professional working proficiency)", "Filipino (native)"],
 } as const;
 
-export type WorkId = "timex" | "malbon" | "atomic" | "artisan" | "freelance";
+export type WorkId = "timex" | "malbon" | "atomic" | "artisan" | "freelance" | "react-client" | "react-personal";
 
 /** Live-site screenshot for the classic page work tiles. */
 export interface SiteShot {
@@ -189,18 +189,18 @@ export const works: Work[] = [
     title: "Timex & Guess Watches",
     client: "Timex Group · TMX Philippines Inc.",
     kind: "Enterprise storefronts",
-    platform: "Shopify · Salesforce Commerce Cloud",
+    platform: "Shopify · Salesforce Commerce Cloud (Demandware)",
     period: "Jun 2018 – Dec 2024",
     role: "Senior Systems Analyst, E-Commerce",
     summary:
       "Six years building and maintaining production code for the global Timex and Guess Watches storefronts across international markets.",
     highlights: [
-      "Built and maintained production storefront code on Shopify and Salesforce Commerce Cloud using JavaScript, Liquid, HTML5, and CSS3/SASS.",
+      "Built and maintained production storefront code on Shopify and Salesforce Commerce Cloud (Demandware) using JavaScript, Liquid, HTML5, and CSS3/SASS.",
       "Refined product pages, navigation, content modules, and checkout-related interfaces with product, design, marketing, and QA teams.",
       "Found bottlenecks with Lighthouse and GTmetrix, optimized front-end assets, and verified Core Web Vitals before deployment.",
       "Reduced recurring defects by documenting development procedures and standardizing quality checks in Agile/Scrum workflows in Jira.",
     ],
-    stack: ["Salesforce Commerce Cloud", "Shopify", "Liquid", "JavaScript", "SASS", "Lighthouse", "GTmetrix", "Jira"],
+    stack: ["Salesforce Commerce Cloud (Demandware)", "Shopify", "Liquid", "JavaScript", "SASS", "Lighthouse", "GTmetrix", "Jira"],
     palette: { bg: "#0d1b2a", ink: "#f4efe6", accent: "#c9a227" },
     shots: [shot("timex", "timex.com"), shot("guess", "guesswatches.com")],
   },
@@ -278,6 +278,44 @@ export const works: Work[] = [
     ],
     stack: ["Shopify Plus", "Liquid", "Shopify CLI", "Klaviyo", "Git", "Figma"],
     palette: { bg: "#111111", ink: "#f5f5f0", accent: "#95bf47" },
+  },
+  {
+    id: "react-client",
+    index: "06",
+    title: "EV360 · FineVu Australia",
+    client: "Australian brands",
+    kind: "React client builds",
+    platform: "React · Next.js",
+    role: "React developer",
+    summary:
+      "React and Next.js sites for two Australian brands: an independent EV battery health-check service with online booking, and a dash cam brand's product site.",
+    highlights: [
+      "EV360: independent EV battery health checks across Melbourne and Brisbane, with certified State of Health reports and online booking.",
+      "FineVu Australia: premium 4K and 2K front and rear dash cams, with product pages and a 3-year Australian warranty.",
+      "Built with React and Next.js.",
+    ],
+    stack: ["React", "Next.js", "JavaScript"],
+    palette: { bg: "#0b1220", ink: "#e8eefc", accent: "#61dafb" },
+    shots: [shot("ev360", "ev360.com.au"), shot("finevu", "finevuaustralia.com.au")],
+  },
+  {
+    id: "react-personal",
+    index: "07",
+    title: "SulitScan PH · ImportTax PH",
+    client: "Personal projects",
+    kind: "Personal products",
+    platform: "React · Next.js",
+    role: "Designer & developer",
+    summary:
+      "Two consumer tools for Filipino shoppers: curated online deals with fake-discount checks, and a calculator for Philippine import duty and VAT.",
+    highlights: [
+      "SulitScan PH: curated Shopee PH and Sephora PH deals with honest buyer notes, fake-discount checks, and shopping guides.",
+      "ImportTax PH: free customs duty and 12% VAT estimator for Temu, Shein, AliExpress, Lazada, Shopee, and international orders.",
+      "Built with React and Next.js.",
+    ],
+    stack: ["React", "Next.js", "JavaScript"],
+    palette: { bg: "#f2efe7", ink: "#151513", accent: "#16a34a" },
+    shots: [shot("sulitscan", "sulitscan.com"), shot("importtax", "importtaxph.com")],
   },
 ];
 

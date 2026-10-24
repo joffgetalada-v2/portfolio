@@ -10,10 +10,12 @@ import {
   easeInOut,
   fitSize,
   line,
+  measure,
   para,
   rrect,
   TAU,
   text,
+  type ChipStyle,
   type Ctx,
   type Page,
   type TextStyle,
@@ -261,8 +263,12 @@ export function drawTimexHero(p: Page) {
 
   ctx.fillStyle = GOLD;
   ctx.fillRect(x0, 614, 56, 2);
-  text(p, work.platform, x0, 670, { size: 24, weight: 500, color: IVORY, track: -0.005 });
-  text(p, work.period ?? "", x0, 710, { size: 20, family: "mono", upper: true, track: 0.1, color: IVORY, alpha: 0.78 });
+  // One platform per line so the long Salesforce name clears the dial.
+  const plat: TextStyle = { size: 24, weight: 500, color: IVORY, track: -0.005 };
+  const platforms = work.platform.split(" · ");
+  const platSize = Math.min(...platforms.map((pl) => fitSize(p, pl, 500, plat)));
+  platforms.forEach((pl, i) => text(p, pl, x0, 664 + i * 34, { ...plat, size: platSize }));
+  text(p, work.period ?? "", x0, 664 + platforms.length * 34 + 12, { size: 20, family: "mono", upper: true, track: 0.1, color: IVORY, alpha: 0.78 });
 }
 
 const CHECKS = ["Lighthouse audit", "GTmetrix report", "Core Web Vitals", "QA checks in Jira"];
@@ -358,12 +364,9 @@ export function drawTimexDetail(p: Page) {
     para(p, hl, x, top + 36, colW, { size: 22, lh: 30, color: PAPER.ink, track: -0.004 });
   });
 
-  chipRow(p, work.stack, x0, 794, x1, {
-    size: 18,
-    family: "mono",
-    color: PAPER.muted,
-    stroke: "rgba(21,21,19,0.4)",
-    h: 36,
-    padX: 12,
-  }, 8);
+  const chipSt: ChipStyle = { size: 18, family: "mono", color: PAPER.muted, stroke: "rgba(21,21,19,0.4)", h: 36, padX: 12 };
+  // One row only; the short Salesforce name if the full one would wrap.
+  const rowW = (items: readonly string[]) => items.reduce((n, it) => n + measure(p, it, chipSt) + 12 * 2 + 8, -8);
+  const short = work.stack.map((it) => (it.startsWith("Salesforce Commerce Cloud") ? "SFCC (Demandware)" : it));
+  chipRow(p, rowW(work.stack) <= cw ? work.stack : short, x0, 794, x1, chipSt, 8);
 }

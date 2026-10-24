@@ -31,12 +31,13 @@ export function Header() {
         className="absolute inset-0 border-b border-line bg-bg/70 opacity-0 backdrop-blur-xl backdrop-saturate-150 transition-opacity duration-500 group-data-[scrolled]/header:opacity-100"
       />
       <div className="relative flex h-16 items-center justify-between gap-4 px-4 md:h-[4.5rem] md:px-8">
+        {/* Name comes from the visible text so it matches what is on screen at each width. */}
         <a
           href="#book"
-          aria-label={`${site.brand}, back to the top`}
-          className="pointer-events-auto -mx-1 rounded-sm px-1 text-[17px] font-medium tracking-[-0.02em] text-ink transition-opacity hover:opacity-80"
+          className="pointer-events-auto -mx-1 min-w-0 rounded-sm px-1 text-[17px] font-medium tracking-[-0.02em] text-ink transition-opacity hover:opacity-80"
         >
-          <Wordmark brand={site.brand} />
+          <Wordmark brand={site.brand} short={site.shortBrand} />
+          <span className="sr-only">, back to the top</span>
         </a>
 
         <nav aria-label="Primary" className="pointer-events-auto flex items-center gap-1 sm:gap-2">

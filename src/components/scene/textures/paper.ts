@@ -239,7 +239,7 @@ export function chrome(p: Page, o: ChromeOpts) {
   const outerX = o.side === "left" ? M.out : W - M.out;
   const label = { size: 18, family: "mono" as const, color: o.color, alpha: a };
   const parts = [
-    { str: site.brand, st: { ...label, track: 0.02 } },
+    { str: site.shortBrand, st: { ...label, track: 0.02 } },
     { str: `  —  ${pad2(o.spread)}  —  `, st: { ...label, track: 0.04 } },
     { str: o.title, st: { ...label, track: 0.14, upper: true } },
   ];

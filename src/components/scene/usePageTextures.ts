@@ -15,6 +15,7 @@ interface Surface {
   ctx: CanvasRenderingContext2D;
   texture: CanvasTexture;
   image: HTMLImageElement | null;
+  shots: (HTMLImageElement | null)[];
   drawn: boolean;
 }
 
@@ -28,6 +29,12 @@ const hasIdle = () => typeof window.requestIdleCallback === "function";
 const idle = (fn: () => void): number =>
   hasIdle() ? window.requestIdleCallback(fn, { timeout: 400 }) : (setTimeout(fn, 32) as unknown as number);
 const cancelIdle = (handle: number) => (hasIdle() ? window.cancelIdleCallback(handle) : clearTimeout(handle));
+
+// Work.shots for faces that draw live-site captures.
+const shotsOf = (id: FaceId) => {
+  const workId = FACE_WORK[id];
+  return (faces[id].shots && workId && workById[workId].shots) || [];
+};
 
 // redraw(face, t) animates a face; ensureDrawn(face) draws it now if it's still queued.
 export function usePageTextures(anisotropy: number, onUpdate?: () => void) {
@@ -44,9 +51,9 @@ export function usePageTextures(anisotropy: number, onUpdate?: () => void) {
     const surface = surfaces.current[id];
     const fonts = fontsRef.current;
     if (!surface || !fonts) return;
-    const { canvas, ctx, texture, image } = surface;
+    const { canvas, ctx, texture, image, shots } = surface;
     ctx.save();
-    faces[id].draw({ ctx, w: canvas.width, h: canvas.height, s: canvas.width / FACE_W, t, fonts, image });
+    faces[id].draw({ ctx, w: canvas.width, h: canvas.height, s: canvas.width / FACE_W, t, fonts, image, shots });
     ctx.restore();
     surface.drawn = true;
     texture.needsUpdate = true;
@@ -92,7 +99,7 @@ export function usePageTextures(anisotropy: number, onUpdate?: () => void) {
         // Blank stock until drawn.
         ctx.fillStyle = COVER_FACES.includes(id) ? "#0b0a09" : "#f3f1ec";
         ctx.fillRect(0, 0, w, h);
-        built[id] = { canvas, ctx, texture, image: null, drawn: false };
+        built[id] = { canvas, ctx, texture, image: null, shots: shotsOf(id).map(() => null), drawn: false };
         map[id] = texture;
       }
       for (const id of FIRST_FACES) redraw(id, 0);
@@ -123,6 +130,25 @@ export function usePageTextures(anisotropy: number, onUpdate?: () => void) {
           redraw(id, 0);
         };
         img.src = src;
+      }
+
+      // Live-site captures for faces that opt in. A face not drawn yet picks them up from the queue.
+      for (const id of ALL_FACES) {
+        shotsOf(id).forEach((shot, i) => {
+          const img = new Image();
+          img.decoding = "async";
+          img.fetchPriority = "low";
+          img.src = shot.src;
+          img.decode().then(
+            () => {
+              const surface = built[id];
+              if (cancelled || !surface) return;
+              surface.shots[i] = img;
+              if (surface.drawn) redraw(id, 0);
+            },
+            () => undefined,
+          );
+        });
       }
     });
 

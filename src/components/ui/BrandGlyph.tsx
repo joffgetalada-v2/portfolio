@@ -7,11 +7,19 @@ export function BrandGlyph({ className }: { className?: string }) {
   );
 }
 
-export function Wordmark({ brand, className }: { brand: string; className?: string }) {
+// short replaces brand below the sm breakpoint.
+export function Wordmark({ brand, short, className }: { brand: string; short?: string; className?: string }) {
   return (
-    <span className={`inline-flex items-center gap-[0.4em] lowercase ${className ?? ""}`}>
+    <span className={`inline-flex items-center gap-[0.4em] whitespace-nowrap ${className ?? ""}`}>
       <BrandGlyph className="size-[0.95em] shrink-0 translate-y-[0.02em]" />
-      <span>{brand}</span>
+      {short ? (
+        <>
+          <span className="sm:hidden">{short}</span>
+          <span className="hidden sm:inline">{brand}</span>
+        </>
+      ) : (
+        <span>{brand}</span>
+      )}
     </span>
   );
 }

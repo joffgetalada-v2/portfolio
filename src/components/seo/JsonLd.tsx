@@ -9,7 +9,7 @@ export function JsonLd() {
     "@context": "https://schema.org",
     "@type": "Person",
     name: profile.name,
-    alternateName: profile.shortName,
+    alternateName: "Joffrey Getalada",
     jobTitle: profile.role,
     description: profile.summary,
     email: profile.email,

@@ -37,7 +37,7 @@ export function ClassicPortfolio() {
             Senior e-commerce engineer for{" "}
             <em className="font-serif font-normal italic tracking-[-0.02em] text-accent">Shopify Plus</em>{" "}
             <span className="text-ink-muted">&amp;</span>{" "}
-            <em className="font-serif font-normal italic tracking-[-0.02em] text-accent">Salesforce Commerce Cloud</em>.
+            <em className="font-serif font-normal italic tracking-[-0.02em] text-accent">Salesforce Commerce Cloud (Demandware)</em>.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <a
@@ -250,7 +250,7 @@ export function ClassicPortfolio() {
           <p className="flex flex-wrap items-center gap-x-3 gap-y-1">
             <Wordmark brand={site.brand} className="text-[15px] font-medium text-ink" />
             <span aria-hidden="true" className="h-3 w-px bg-line" />
-            <span>{profile.shortName}</span>
+            <span>{site.brandTagline}</span>
           </p>
           <p>Built with Next.js &amp; Three.js</p>
           <a href="#book" className="inline-flex items-center gap-2 text-ink transition-colors hover:text-accent">

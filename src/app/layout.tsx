@@ -27,9 +27,9 @@ const anton = Anton({
   weight: "400",
 });
 
-const title = `${profile.shortName} — Senior Shopify Plus & Salesforce Commerce Cloud Engineer`;
+const title = `${profile.name} | Senior E-Commerce Engineer`;
 const description =
-  "Interactive portfolio of Joffrey Getalada, a senior e-commerce engineer with 12+ years and 50+ Shopify stores, including six years on the global Timex and Guess Watches storefronts. Open the book to explore the work.";
+  "Interactive portfolio of Joffrey Anthony Getalada, a senior e-commerce engineer with 12+ years across Shopify Plus, Salesforce Commerce Cloud (Demandware) and React, including six years on the global Timex and Guess Watches storefronts. Open the book to explore the work.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -44,6 +44,8 @@ export const metadata: Metadata = {
   keywords: [
     "Shopify Plus developer",
     "Salesforce Commerce Cloud developer",
+    "Demandware developer",
+    "React developer",
     "Shopify expert",
     "Liquid developer",
     "Next.js developer",
@@ -51,6 +53,7 @@ export const metadata: Metadata = {
     "e-commerce engineer",
     "Upwork Shopify developer",
     "Joffrey Getalada",
+    "Joffrey Anthony Getalada",
   ],
   alternates: { canonical: "/" },
   openGraph: {

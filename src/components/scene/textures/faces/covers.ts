@@ -1,7 +1,7 @@
 // Front and back covers.
 import { profile } from "@/content/profile";
 import { site } from "@/content/site";
-import { brandGlyph, clamp, easeInOut, fract, H, lerp, measure, text, W, type Page, type TextStyle } from "../draw-utils";
+import { brandGlyph, clamp, easeInOut, fitSize, fract, H, lerp, text, W, type Page, type TextStyle } from "../draw-utils";
 import { leather } from "../paper";
 
 const FOIL = "#bdb7ab";
@@ -41,28 +41,30 @@ export function drawCover(p: Page) {
   const { ctx } = p;
   // Centre on the board right of the hinge (x = 86).
   const cx = (86 + W) / 2;
-  const cy = H / 2 - 18;
 
-  const word: TextStyle = { size: 52, weight: 500, track: -0.03, baseline: "alphabetic" };
-  const wordW = measure(p, site.brand, word);
-  const gr = 17;
-  const gap = 14;
-  const total = gr * 2 + gap + wordW;
-  const x0 = cx - total / 2;
-  const base = cy + 16;
+  // Full name on two lines, surname in italic.
+  const words = site.brand.split(" ");
+  const last = words.pop() ?? "";
+  const first = words.join(" ");
+  const name: TextStyle = { size: 132, family: "serif", track: -0.012, align: "center" };
+  name.size = Math.min(name.size, fitSize(p, first, 940, name), fitSize(p, last, 940, { ...name, italic: true }));
+  const lh = name.size * 1.0;
+  const base1 = 404;
+  const base2 = base1 + lh;
 
   deboss(p, (dx, dy, color) => {
     ctx.globalAlpha = 1;
-    brandGlyph(ctx, x0 + gr + dx, cy + 0.5 + dy, gr, color, 3.2);
-    text(p, site.brand, x0 + gr * 2 + gap + dx, base + dy, { ...word, color });
+    brandGlyph(ctx, cx + dx, 236 + dy, 15, color, 2.6);
+    text(p, first, cx + dx, base1 + dy, { ...name, color });
+    text(p, last, cx + dx, base2 + dy, { ...name, italic: true, color });
   });
 
   ctx.fillStyle = FOIL_DIM;
-  ctx.fillRect(cx - 22, cy + 66, 44, 1.5);
-  text(p, `${profile.shortName} · Commerce Folio`, cx, cy + 112, {
-    size: 18,
+  ctx.fillRect(cx - 22, base2 + 62, 44, 1.5);
+  text(p, site.brandTagline, cx, base2 + 112, {
+    size: 20,
     family: "mono",
-    track: 0.2,
+    track: 0.42,
     upper: true,
     align: "center",
     color: FOIL_DIM,
@@ -97,7 +99,7 @@ export function drawBackCover(p: Page) {
   text(p, profile.email, cx, cy + 102, { size: 20, family: "mono", track: 0.04, align: "center", color: FOIL_DIM });
 
   const meta: TextStyle = { size: 18, family: "mono", track: 0.2, upper: true, color: "rgba(189,183,171,0.5)" };
-  text(p, site.brand, 64, H - 64, { ...meta, upper: false, track: 0.08 });
+  text(p, `${site.shortBrand} · ${site.brandTagline}`, 64, H - 64, meta);
   text(p, `${profile.location} · ${profile.timezone}`, W - 86 - 56, H - 64, { ...meta, align: "right" });
 
   sheen(p, 5.5);

@@ -1,6 +1,6 @@
-# cartbound
+# Joffrey Anthony Getalada, portfolio
 
-Interactive portfolio of Joffrey Getalada, senior e-commerce engineer (Shopify Plus, Salesforce Commerce Cloud).
+Interactive portfolio of Joffrey Anthony Getalada, senior e-commerce engineer (Shopify Plus, Salesforce Commerce Cloud (Demandware), React).
 
 The landing view is a 3D book on a desk. Click the book to open it, click or swipe to turn pages, and
 hover a page to see it move. Below the book is a regular scrollable version of the same content for
@@ -43,7 +43,7 @@ Options in `profile.ts`:
 Hosted on Vercel.
 
 1. Import the GitHub repository in Vercel and keep the defaults (Framework: Next.js, build command `next build`).
-2. Set `NEXT_PUBLIC_SITE_URL` to the production URL (e.g. `https://cartbound.vercel.app` or a custom domain)
+2. Set `NEXT_PUBLIC_SITE_URL` to the production URL (e.g. `https://your-project.vercel.app` or a custom domain)
    and redeploy, so share previews and the sitemap use the right address.
 
 Or from the command line:

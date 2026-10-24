@@ -12,6 +12,8 @@ const SHORT_TITLES: Partial<Record<WorkId, string>> = {
   malbon: "Malbon Golf",
   artisan: "Artisan Collective",
   freelance: "50+ stores",
+  "react-client": "EV360 · FineVu",
+  "react-personal": "SulitScan · ImportTax",
 };
 const shortTitle = (id: WorkId) => SHORT_TITLES[id] ?? workById[id].title;
 const pad = (n: number) => String(n).padStart(2, "0");

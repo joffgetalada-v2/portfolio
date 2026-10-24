@@ -6,6 +6,9 @@ import { usePortfolio } from "@/lib/store";
 import { ArrowIcon } from "./icons";
 import { UiKeyframes } from "./UiKeyframes";
 
+// Breaks only between the role and platform names, never inside one.
+const headline = profile.headline.split(/( · | & )/);
+
 const fade =
   "transition-[opacity,translate,filter] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] data-[hidden]:pointer-events-none data-[hidden]:opacity-0 data-[hidden]:blur-[2px]";
 
@@ -38,10 +41,11 @@ export function HeroCopy() {
       )}
 
       {/* Intro. Name and headline are the only h1, the large line above is display copy. */}
+      {/* Short desktop screens get less top padding so the button clears the plant. */}
       <div
         data-hidden={showIntro ? undefined : true}
         inert={!showIntro}
-        className={`absolute left-0 top-0 w-full max-w-[42rem] px-4 pt-[5.25rem] md:px-8 md:pt-32 [@media(max-height:500px)]:pt-20 ${fade} data-[hidden]:-translate-y-3`}
+        className={`absolute left-0 top-0 w-full max-w-[42rem] px-4 pt-[5.25rem] md:px-8 md:pt-32 [@media(min-width:768px)_and_(min-height:501px)_and_(max-height:760px)]:pt-[6.5rem] [@media(max-height:500px)]:pt-20 ${fade} data-[hidden]:-translate-y-3`}
       >
         <p className="text-[clamp(2.05rem,4.6vw,4rem)] font-medium leading-[0.98] tracking-[-0.04em] text-[#e6eaee]">
           <span className="block">Interactive Portfolio</span>{" "}
@@ -50,8 +54,15 @@ export function HeroCopy() {
           </span>
         </p>
 
-        <h1 className="mt-4 max-w-[24rem] text-[13px] leading-relaxed text-ink-muted md:mt-6 md:max-w-[30rem] md:text-[15px]">
-          <span className="text-ink">{profile.shortName}</span> — {profile.headline}
+        <h1 className="mt-4 max-w-[24rem] text-[13px] leading-relaxed text-ink-muted md:mt-6 md:max-w-[23rem] md:text-[15px]">
+          <span className="text-ink">{profile.name}</span> —{" "}
+          {headline.map((part, i) =>
+            i % 2 ? part : (
+              <span key={i} className="whitespace-nowrap">
+                {part}
+              </span>
+            ),
+          )}
         </h1>
 
         {webglFailed ? (

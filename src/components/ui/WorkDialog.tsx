@@ -92,7 +92,7 @@ export function WorkDialog() {
           <span aria-hidden="true" style={{ backgroundColor: accent }} className="mt-6 block h-[3px] w-10 sm:mt-10" />
           <h2
             id={TITLE_ID}
-            className="mt-4 max-w-[34rem] text-balance font-display text-[clamp(2.4rem,7.4vw,4.4rem)] uppercase leading-[0.92] tracking-[0.005em]"
+            className="mt-4 max-w-[34rem] pr-[clamp(5rem,20%,12rem)] text-balance font-display text-[clamp(2.4rem,7.4vw,4.4rem)] uppercase leading-[0.92] tracking-[0.005em]"
           >
             {titleLines(work.title).map((line) => (
               <span key={line} className="block">
@@ -100,7 +100,7 @@ export function WorkDialog() {
               </span>
             ))}
           </h2>
-          <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-1.5 font-mono text-[11.5px] tracking-[0.04em] opacity-85">
+          <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-1.5 pr-[clamp(5rem,20%,12rem)] font-mono text-[11.5px] tracking-[0.04em] opacity-85">
             {[work.client, work.platform, work.period].filter(Boolean).map((item) => (
               <li key={item} className="flex items-center gap-2">
                 <span aria-hidden="true" style={{ backgroundColor: accent }} className="size-1.5 shrink-0 rounded-full" />
@@ -126,6 +126,27 @@ export function WorkDialog() {
                 <dd className="mt-1.5 leading-snug text-ink">{work.period}</dd>
               </div>
             )}
+            {work.shots?.length ? (
+              <div className="col-span-2 sm:col-span-1">
+                <dt className="font-mono text-[10.5px] uppercase tracking-[0.16em] text-ink-muted">
+                  {work.shots.length > 1 ? "Live sites" : "Live site"}
+                </dt>
+                {work.shots.map((s) => (
+                  <dd key={s.site} className="mt-1.5 leading-snug">
+                    <a
+                      href={`https://${s.site}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 break-all text-ink underline decoration-line underline-offset-4 transition-colors hover:decoration-ink"
+                    >
+                      {s.site}
+                      <ArrowIcon dir="up-right" className="size-3.5 shrink-0 text-ink-muted" />
+                      <span className="sr-only">(opens in a new tab)</span>
+                    </a>
+                  </dd>
+                ))}
+              </div>
+            ) : null}
           </dl>
 
           <div className="min-w-0">

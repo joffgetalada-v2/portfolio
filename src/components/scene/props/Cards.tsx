@@ -5,7 +5,6 @@ import { easing } from "maath";
 import { Suspense, use, useEffect, useMemo, useRef } from "react";
 import { BoxGeometry, MeshStandardMaterial, type Group } from "three";
 import { profile } from "@/content/profile";
-import { site } from "@/content/site";
 import { usePortfolio } from "@/lib/store";
 import { loadFaceFonts } from "../textures/fonts";
 import type { FaceFonts } from "../textures/types";
@@ -41,7 +40,8 @@ function drawGlyph(ctx: CanvasRenderingContext2D, x: number, y: number, r: numbe
   ctx.restore();
 }
 
-function cardTexture(fonts: FaceFonts) {
+/** Printed face of the top card. Exported for the /dev/faces preview. */
+export function drawCard(fonts: FaceFonts): HTMLCanvasElement {
   const W = 1200;
   const H = Math.round((W * CARD_D) / CARD_W);
   const { canvas, ctx } = makeCanvas(W, H);
@@ -57,53 +57,51 @@ function cardTexture(fonts: FaceFonts) {
 
   const m = 72;
   ctx.textBaseline = "alphabetic";
-
-  // Brand row
-  drawGlyph(ctx, m + 14, m + 6, 14, INK);
-  ctx.fillStyle = INK;
-  ctx.font = `500 30px ${fonts.sans}`;
-  ctx.fillText(site.brand, m + 40, m + 16);
-
-  ctx.textAlign = "right";
-  ctx.font = `400 22px ${fonts.mono}`;
-  ctx.fillStyle = "rgba(21,21,19,0.55)";
-  ctx.fillText(profile.location.toUpperCase(), W - m, m + 14);
-  ctx.textAlign = "left";
-
-  // Name: sans first name, italic serif surname
-  const [first, ...rest] = profile.shortName.split(" ");
-  const last = rest.join(" ");
-  const nameY = H * 0.5;
-  ctx.fillStyle = INK;
-  ctx.font = `600 92px ${fonts.sans}`;
-  ctx.fillText(first, m - 4, nameY);
-  const firstW = ctx.measureText(`${first} `).width;
-  ctx.font = `italic 400 104px ${fonts.serif}`;
-  ctx.fillText(last, m - 4 + firstW, nameY);
-
-  // Headline on two lines
-  const [role, platforms] = profile.headline.split(" · ");
-  ctx.font = `500 23px ${fonts.mono}`;
-  ctx.fillStyle = "rgba(21,21,19,0.72)";
-  const track = (text: string, x: number, y: number, spacing: number) => {
+  const track = (text: string, x: number, y: number, spacing: number, align: "left" | "right" = "left") => {
     let cx = x;
+    if (align === "right") {
+      for (const ch of text) cx -= ctx.measureText(ch).width + spacing;
+      cx += spacing;
+    }
     for (const ch of text) {
       ctx.fillText(ch, cx, y);
       cx += ctx.measureText(ch).width + spacing;
     }
   };
-  track(role.toUpperCase(), m, nameY + 82, 2.5);
-  if (platforms) track(platforms.toUpperCase(), m, nameY + 118, 2.5);
 
-  // Footer: rule, email, gold mark
+  // Mark and location
+  drawGlyph(ctx, m + 16, m + 8, 16, GOLD);
+  ctx.font = `400 22px ${fonts.mono}`;
+  ctx.fillStyle = "rgba(21,21,19,0.55)";
+  track(profile.location.toUpperCase(), W - m, m + 16, 2.5, "right");
+
+  // Name on two lines: sans given names, italic serif surname
+  const words = profile.name.split(" ");
+  const last = words.pop() ?? "";
+  const first = words.join(" ");
+  ctx.fillStyle = INK;
+  ctx.font = `600 84px ${fonts.sans}`;
+  ctx.letterSpacing = "-2px";
+  ctx.fillText(first, m - 4, 252);
+  ctx.letterSpacing = "0px";
+  ctx.font = `italic 400 112px ${fonts.serif}`;
+  ctx.fillText(last, m - 6, 362);
+
+  // Headline: role, then platforms
+  const [role, platforms] = profile.headline.split(" · ");
+  ctx.font = `500 22px ${fonts.mono}`;
+  ctx.fillStyle = "rgba(21,21,19,0.72)";
+  track(role.toUpperCase(), m, 440, 2.5);
+  if (platforms) track(platforms.toUpperCase(), m, 476, 2.5);
+
+  // Footer: rule and email
   ctx.fillStyle = "rgba(21,21,19,0.18)";
   ctx.fillRect(m, H - m - 52, W - m * 2, 2);
   ctx.fillStyle = INK;
   ctx.font = `400 28px ${fonts.mono}`;
   ctx.fillText(profile.email, m, H - m);
-  drawGlyph(ctx, W - m - 16, H - m - 10, 16, GOLD);
 
-  return canvasTexture(canvas, { color: true, anisotropy: 8 });
+  return canvas;
 }
 
 function CardStack({ position }: { position: readonly [number, number] }) {
@@ -114,7 +112,7 @@ function CardStack({ position }: { position: readonly [number, number] }) {
   const invalidate = useThree((s) => s.invalidate);
 
   const res = useMemo(() => {
-    const face = cardTexture(fonts);
+    const face = canvasTexture(drawCard(fonts), { color: true, anisotropy: 8 });
     const paper = new MeshStandardMaterial({ color: PAPER, roughness: 0.82 });
     const edge = new MeshStandardMaterial({ color: "#d9d3c7", roughness: 0.9 });
     const printed = new MeshStandardMaterial({ map: face, roughness: 0.78 });

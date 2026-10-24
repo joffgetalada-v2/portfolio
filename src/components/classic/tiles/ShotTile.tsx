@@ -16,6 +16,9 @@ const SIZES = {
 export function ShotTile({ work, className }: { work: Work; className?: string }) {
   const [main, inset] = work.shots ?? [];
   if (!main) return null;
+  // Longer domain pairs drop the label on wider tiles too, so the links stay on one row.
+  const chars = (work.shots ?? []).reduce((n, s) => n + s.site.length, 0);
+  const labelHide = chars > 30 ? "@max-[26.5rem]/wt:sr-only" : chars > 25 ? "@max-[22rem]/wt:sr-only" : "@max-[19rem]/wt:sr-only";
 
   return (
     <TileShell work={work} className={className}>
@@ -53,7 +56,7 @@ export function ShotTile({ work, className }: { work: Work; className?: string }
         <span className="flex items-center gap-1.5 font-mono text-[9.5px] uppercase leading-none tracking-[0.16em] opacity-75 @max-[23rem]/wt:tracking-[0.12em]">
           <span aria-hidden="true" className="size-[5px] rounded-full bg-[var(--wt-accent)]" />
           {/* Visually hidden at 320px so the links stay on one row */}
-          <span className="@max-[19rem]/wt:sr-only">Live site</span>
+          <span className={labelHide}>Live site</span>
         </span>
         {work.shots?.map((s) => (
           <a
