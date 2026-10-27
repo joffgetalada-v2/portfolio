@@ -183,11 +183,13 @@ export interface Work {
   image?: string;
   // Classic page tiles fall back to an illustration without these.
   shots?: SiteShot[];
+  // Left off the site for now; set to false to show it again.
+  hidden?: boolean;
 }
 
 const shot = (name: string, site: string): SiteShot => ({ src: `/works/${name}.webp`, site, width: 1000, height: 2500 });
 
-export const works: Work[] = [
+const allWorks: Work[] = [
   {
     id: "timex",
     index: "01",
@@ -286,6 +288,7 @@ export const works: Work[] = [
   },
   {
     id: "react-client",
+    hidden: true,
     index: "06",
     title: "EV360 · FineVu Australia",
     client: "Australian brands",
@@ -324,4 +327,11 @@ export const works: Work[] = [
   },
 ];
 
-export const workById = Object.fromEntries(works.map((w) => [w.id, w])) as Record<WorkId, Work>;
+// Visible works, numbered by position so the list, tiles and dialog agree.
+export const works: Work[] = allWorks
+  .filter((w) => !w.hidden)
+  .map((w, i) => ({ ...w, index: String(i + 1).padStart(2, "0") }));
+
+export const workById = Object.fromEntries(
+  allWorks.map((w) => [w.id, works.find((v) => v.id === w.id) ?? w]),
+) as Record<WorkId, Work>;

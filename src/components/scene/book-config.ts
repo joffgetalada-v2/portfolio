@@ -1,4 +1,7 @@
-import type { WorkId } from "@/content/profile";
+import { workById, type WorkId } from "@/content/profile";
+
+// While the client React work is hidden, spread 5 shows the two personal apps instead.
+export const REACT_CLIENT_SHOWN = !workById["react-client"].hidden;
 
 // ---- Book geometry (world units, desk is the XZ plane, y up) ----
 export const PAGE_WIDTH = 1.6;
@@ -95,7 +98,9 @@ const SPREAD_META: Record<number, { label: string; works: WorkId[] }> = {
   2: { label: "Timex & Guess Watches", works: ["timex"] },
   3: { label: "Malbon Golf · Atomic Golf", works: ["malbon", "atomic"] },
   4: { label: "The Artisan Collective · 50+ stores", works: ["artisan", "freelance"] },
-  5: { label: "React projects", works: ["react-client", "react-personal"] },
+  5: REACT_CLIENT_SHOWN
+    ? { label: "React projects", works: ["react-client", "react-personal"] }
+    : { label: "Personal React apps", works: ["react-personal"] },
   6: { label: "Toolkit · Experience", works: [] },
   7: { label: "Process · Contact", works: [] },
 };
@@ -121,6 +126,6 @@ export const FACE_WORK: Partial<Record<FaceId, WorkId>> = {
   atomic: "atomic",
   artisan: "artisan",
   freelance: "freelance",
-  "react-client": "react-client",
+  "react-client": REACT_CLIENT_SHOWN ? "react-client" : "react-personal",
   "react-personal": "react-personal",
 };
