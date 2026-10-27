@@ -77,6 +77,8 @@ export const profile = {
   experience: [
     {
       role: "Senior E-Commerce Engineer (Freelance)",
+      // Hidden for now; set to false to show it again.
+      hidden: true,
       company: "International Clients",
       place: "Remote",
       period: "2016 – Present",
@@ -148,6 +150,9 @@ export const profile = {
   },
   languages: ["English (professional working proficiency)", "Filipino (native)"],
 } as const;
+
+// Experience entries currently shown on the site.
+export const experience = profile.experience.filter((job) => !("hidden" in job && job.hidden));
 
 export type WorkId = "timex" | "malbon" | "atomic" | "artisan" | "freelance" | "react-client" | "react-personal";
 
