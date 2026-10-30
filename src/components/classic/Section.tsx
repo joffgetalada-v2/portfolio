@@ -17,8 +17,13 @@ export function Section({
   wide?: boolean;
 }) {
   const headingId = `${id}-title`;
+  // Off-screen sections skip layout and paint until scrolled near, which keeps the first paint light.
   return (
-    <section id={id} aria-labelledby={headingId} className="scroll-mt-20 border-t border-line py-20 md:py-28">
+    <section
+      id={id}
+      aria-labelledby={headingId}
+      className="scroll-mt-20 border-t border-line py-20 [contain-intrinsic-size:auto_1200px] [content-visibility:auto] md:py-28"
+    >
       <div className={wide ? "grid gap-10 md:gap-14" : "grid gap-10 md:grid-cols-12 md:gap-8"}>
         <div className={wide ? "flex flex-wrap items-end justify-between gap-6" : "md:col-span-4 lg:col-span-3"}>
           <div className={wide ? "" : "md:sticky md:top-28"}>

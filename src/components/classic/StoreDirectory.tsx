@@ -64,6 +64,12 @@ function splitGroups(groups: Group[]): [Group[], Group[]] {
 
 const isWebUrl = (url: string | null): url is string => !!url && /^https?:\/\//i.test(url);
 
+// Entry styles live on the list, so 200+ entries don't each repeat them in the page HTML.
+const LIST =
+  "grid grid-cols-[repeat(auto-fill,minmax(min(100%,13.5rem),1fr))] gap-x-6 gap-y-1 text-[13.5px] leading-snug " +
+  "*:*:block *:*:py-1 *:*:[overflow-wrap:anywhere] *:*:text-ink-muted [&_a]:text-ink/85 [&_a]:decoration-accent " +
+  "[&_a]:underline-offset-4 [&_a]:transition-colors [&_a:hover]:text-ink [&_a:hover]:underline";
+
 export function StoreDirectory() {
   const freelance = workById.freelance;
   const { groups, byIndustry } = groupStores(stores);
@@ -155,9 +161,9 @@ function StoreGroups({ groups, byIndustry }: { groups: Group[]; byIndustry: bool
             {g.label}
             {g.continued && <span className="sr-only"> (continued)</span>}
           </h4>
-          <ul className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,13.5rem),1fr))] gap-x-6 gap-y-1">
+          <ul className={LIST}>
             {g.stores.map((s, i) => (
-              <li key={`${s.name}-${i}`} className="min-w-0">
+              <li key={`${s.name}-${i}`}>
                 <StoreName store={s} />
               </li>
             ))}
@@ -169,27 +175,23 @@ function StoreGroups({ groups, byIndustry }: { groups: Group[]; byIndustry: bool
 }
 
 function StoreName({ store }: { store: Store }) {
-  const body = (
+  const body = store.logo ? (
     <>
-      {store.logo && (
-        // Logos can live on any host, so a plain img rather than next/image.
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={store.logo} alt="" width={20} height={20} loading="lazy" decoding="async" className="size-5 shrink-0 rounded-[4px] bg-white object-contain" />
-      )}
-      <span className="min-w-0 [overflow-wrap:anywhere]">{store.name}</span>
+      {/* Logos can live on any host, so a plain img rather than next/image. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={store.logo} alt="" width={20} height={20} loading="lazy" decoding="async" className="size-5 shrink-0 rounded-[4px] bg-white object-contain" />
+      <span className="min-w-0">{store.name}</span>
     </>
+  ) : (
+    store.name
   );
-  const base = "flex items-center gap-2 py-1 text-[13.5px] leading-snug";
+  // Text-only entries are block (see LIST); with a logo the row lays out as flex.
+  const layout = store.logo ? "!flex items-center gap-2" : undefined;
   return isWebUrl(store.url) ? (
-    <a
-      href={store.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`${base} text-ink/85 decoration-accent underline-offset-4 transition-colors hover:text-ink hover:underline`}
-    >
+    <a href={store.url} target="_blank" rel="noopener noreferrer" className={layout}>
       {body}
     </a>
   ) : (
-    <span className={`${base} text-ink-muted`}>{body}</span>
+    <span className={layout}>{body}</span>
   );
 }

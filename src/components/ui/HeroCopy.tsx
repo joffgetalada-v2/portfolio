@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { profile, upworkUrl } from "@/content/profile";
 import { LAST_PAGE } from "@/components/scene/book-config";
 import { usePortfolio } from "@/lib/store";
@@ -22,6 +23,9 @@ export function HeroCopy() {
   const showIntro = page === 0 || webglFailed;
   const showEnd = page === LAST_PAGE && !webglFailed;
   const showCue = showIntro || showEnd;
+  // The end card's mono label mounts once the book has been opened, see BookNav.
+  const [opened, setOpened] = useState(false);
+  if (page > 0 && !opened) setOpened(true);
 
   return (
     <div className="pointer-events-none absolute inset-0 z-10">
@@ -40,7 +44,7 @@ export function HeroCopy() {
         />
       )}
 
-      {/* Intro. Name and headline are the only h1, the large line above is display copy. */}
+      {/* Intro. The h1 reads name and role; the name is shown in the line under it. */}
       {/* Short desktop screens get less top padding so the button clears the plant. */}
       <div
         data-hidden={showIntro ? undefined : true}
@@ -48,6 +52,7 @@ export function HeroCopy() {
         className={`absolute left-0 top-0 w-full max-w-[42rem] px-4 pt-[5.25rem] md:px-8 md:pt-32 [@media(min-width:768px)_and_(min-height:501px)_and_(max-height:760px)]:pt-[6.5rem] [@media(max-height:500px)]:pt-20 ${fade} data-[hidden]:-translate-y-3`}
       >
         <h1 className="text-[clamp(2.05rem,4.6vw,4rem)] font-medium leading-[0.98] tracking-[-0.04em] text-[#e6eaee]">
+          <span className="sr-only">{profile.name}, </span>
           <span className="block">Senior Shopify Plus</span>{" "}
           <span className="block">
             <em className="font-serif text-[1.08em] font-normal italic tracking-[-0.01em]">Developer</em>
@@ -55,7 +60,7 @@ export function HeroCopy() {
         </h1>
 
         <p className="mt-4 max-w-[27rem] text-[13px] leading-relaxed text-ink-muted md:mt-5 md:text-[15px]">
-          <span className="text-ink">{profile.name}</span>
+          <span aria-hidden="true" className="text-ink">{profile.name}</span>
           <br />
           {subline.map((part, i) => (
             <span key={part}>
@@ -133,7 +138,7 @@ export function HeroCopy() {
         inert={!showEnd}
         className={`absolute left-0 top-0 w-full max-w-[40rem] px-4 pt-[5.25rem] md:px-8 md:pt-32 [@media(max-height:500px)]:pt-20 ${fade} data-[hidden]:-translate-y-3`}
       >
-        <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-muted">The end</p>
+        {opened && <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-muted">The end</p>}
         <p className="mt-3 font-serif text-[clamp(2.4rem,5.2vw,4.5rem)] italic leading-[0.95] tracking-[-0.02em] text-[#e6eaee]">
           That&rsquo;s the folio.
         </p>

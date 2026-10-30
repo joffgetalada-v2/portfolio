@@ -48,6 +48,8 @@ const STEP_MS = 140; // delay between sheets when jumping spreads
 const STEP_FAST_MS = 55;
 const IN_FLIGHT = 0.6; // radians from rest; past this a sheet is mid-turn and ignores clicks
 const AUTO_ANIMATE_S = 8; // no hover on touch, so the open page animates for this long
+const SETTLED_SQ = 1e-7; // camera movement per frame, squared, that counts as at rest
+const SETTLE_MAX_MS = 2000; // reveal anyway after this, e.g. while the pointer keeps moving
 
 function createPageGeometry() {
   const geometry = new BoxGeometry(PAGE_WIDTH, PAGE_HEIGHT, PAGE_DEPTH, PAGE_SEGMENTS, 2);
@@ -265,10 +267,19 @@ export function Book() {
     if (!textures) return;
     let cancelled = false;
     let raf = 0;
-    const reveal = () => {
-      if (!cancelled) usePortfolio.getState().setSceneReady(true);
+    // The canvas fades in over the static poster, so wait for the camera to come to rest first.
+    const last = camera.position.clone();
+    let still = 0;
+    let settleStart = 0;
+    const reveal = (now: number) => {
+      if (cancelled) return;
+      settleStart ||= now;
+      still = camera.position.distanceToSquared(last) < SETTLED_SQ ? still + 1 : 0;
+      last.copy(camera.position);
+      if (still >= 3 || now - settleStart > SETTLE_MAX_MS) usePortfolio.getState().setSceneReady(true);
+      else raf = requestAnimationFrame(reveal);
     };
-    // Compile shaders async and upload one texture per frame behind the loader so early turns don't stall.
+    // Compile shaders async and upload one texture per frame while the poster shows, so early turns don't stall.
     const compiled = Promise.race([
       gl.compileAsync(scene, camera).catch(() => undefined),
       new Promise((resolve) => setTimeout(resolve, 8000)),

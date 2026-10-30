@@ -53,6 +53,9 @@ export function BookNav() {
   const webglFailed = usePortfolio((s) => s.webglFailed);
 
   const open = isBookOpen(page) && !webglFailed;
+  // Mono text mounts on the first open, so a closed book doesn't fetch the mono font.
+  const [opened, setOpened] = useState(false);
+  if (open && !opened) setOpened(true);
 
   // Keep the last spread on screen while the bar fades out.
   const [shown, setShown] = useState<Spread>(SPREADS[0]);
@@ -180,9 +183,11 @@ export function BookNav() {
           </NavButton>
 
           <div className="flex min-w-0 items-center gap-3 px-2 sm:px-3">
-            <span className="font-mono text-[11px] tabular-nums tracking-[0.06em] text-ink-muted">
-              <span className="text-ink">{pad(current.page)}</span> / {pad(TOTAL)}
-            </span>
+            {opened && (
+              <span className="font-mono text-[11px] tabular-nums tracking-[0.06em] text-ink-muted">
+                <span className="text-ink">{pad(current.page)}</span> / {pad(TOTAL)}
+              </span>
+            )}
             <span className="hidden max-w-[22rem] truncate text-[13px] text-ink sm:inline">{current.label}</span>
             {narrow && (
               <span className="flex items-center gap-[3px]" title={sideLabel}>
@@ -202,12 +207,14 @@ export function BookNav() {
           </NavButton>
         </div>
 
-        <p
-          aria-hidden="true"
-          className="hidden font-mono text-[10px] uppercase tracking-[0.16em] text-ink/70 [text-shadow:0_1px_10px_rgba(0,0,0,0.95),0_0_2px_rgba(0,0,0,0.8)] md:pointer-fine:block [@media(max-height:500px)]:hidden"
-        >
-          ← → to turn · Esc to close
-        </p>
+        {opened && (
+          <p
+            aria-hidden="true"
+            className="hidden font-mono text-[10px] uppercase tracking-[0.16em] text-ink/70 [text-shadow:0_1px_10px_rgba(0,0,0,0.95),0_0_2px_rgba(0,0,0,0.8)] md:pointer-fine:block [@media(max-height:500px)]:hidden"
+          >
+            ← → to turn · Esc to close
+          </p>
+        )}
       </nav>
     </>
   );

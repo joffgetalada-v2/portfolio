@@ -11,6 +11,9 @@ import { Lights } from "./Lights";
 import { Props } from "./Props";
 
 const CONTEXT_LOSS_GRACE_MS = 5000;
+// Desk-view rest poses at 1440x900 and 390x844, the poster sizes. CameraRig takes over from here.
+const START_WIDE: [number, number, number] = [0, 4.51, 3.48];
+const START_NARROW: [number, number, number] = [0, 8.32, 4.85];
 
 // Needed for frameloop "demand".
 function StoreInvalidator() {
@@ -30,6 +33,8 @@ export function Scene() {
   const [visible, setVisible] = useState(true);
   const [canvasKey, setCanvasKey] = useState(0);
   const idle = usePortfolio((s) => s.reducedMotion || s.activeWork !== null || s.contactOpen);
+  const ready = usePortfolio((s) => s.sceneReady);
+  const [start] = useState(() => (usePortfolio.getState().narrow ? START_NARROW : START_WIDE));
 
   // Pause rendering while offscreen.
   useEffect(() => {
@@ -41,14 +46,20 @@ export function Scene() {
   }, []);
 
   return (
-    <div ref={wrap} className="absolute inset-0" aria-hidden="true">
+    // Fades in over the poster once ready; until then clicks fall through to it.
+    <div
+      ref={wrap}
+      aria-hidden="true"
+      data-ready={ready || undefined}
+      className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 ease-out data-[ready]:pointer-events-auto data-[ready]:opacity-100"
+    >
       <Canvas
         key={canvasKey}
         shadows="percentage"
         dpr={[1, 2]}
         // Nothing animates on its own with reduced motion or behind a dialog.
         frameloop={!visible ? "never" : idle ? "demand" : "always"}
-        camera={{ fov: 32, near: 0.1, far: 60, position: [0, 6, 5] }}
+        camera={{ fov: 32, near: 0.1, far: 60, position: start }}
         gl={{ antialias: true, powerPreference: "high-performance", toneMapping: ACESFilmicToneMapping, outputColorSpace: SRGBColorSpace }}
         onCreated={({ gl }) => {
           // Context loss is usually temporary (GPU reset, backgrounded mobile tab).

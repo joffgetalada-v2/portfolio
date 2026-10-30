@@ -18,9 +18,6 @@ const COLUMNS = [
 // The marquee moves by one copy (.wt-marquee), the other copies fill the visible height meanwhile.
 const COPIES = 3;
 
-// Column width: about 24% of the tile.
-const SIZES = "(min-width: 1152px) 106px, (min-width: 1024px) 10vw, (min-width: 768px) 11vw, calc(24vw - 8px)";
-
 export function StoresMosaic({ tile, className }: { tile: TileInfo; className?: string }) {
   const columns = COLUMNS.map((_, ci) => storeThumbs.filter((_, i) => i % COLUMNS.length === ci));
   const [big, ...rest] = tile.title.split(" ");
@@ -41,9 +38,7 @@ export function StoresMosaic({ tile, className }: { tile: TileInfo; className?: 
                 {Array.from({ length: COPIES }, (_, copy) => (
                   <div key={copy} aria-hidden={copy > 0 || undefined}>
                     {columns[ci].map((store) => (
-                      <div key={store.domain} className="pb-[11%]">
-                        <StoreCard store={store} decorative={copy > 0} />
-                      </div>
+                      <StoreCard key={store.domain} store={store} decorative={copy > 0} />
                     ))}
                   </div>
                 ))}
@@ -86,23 +81,19 @@ export function StoresMosaic({ tile, className }: { tile: TileInfo; className?: 
   );
 }
 
+// Styled by .wt-card in globals.css: every card renders COPIES times, so its markup stays minimal.
 function StoreCard({ store, decorative }: { store: StoreThumb; decorative: boolean }) {
   return (
-    <div className="overflow-hidden rounded-[6px] shadow-[0_14px_30px_-14px_rgba(0,0,0,0.9)] ring-1 ring-white/10">
-      <div className="flex h-[6px] items-center gap-[2.5px] bg-[#1d1d1b] px-[5px]">
-        <span className="size-[2.5px] rounded-full bg-white/35" />
-        <span className="size-[2.5px] rounded-full bg-white/35" />
-        <span className="size-[2.5px] rounded-full bg-white/35" />
-      </div>
+    <div className="wt-card">
       <Image
         src={store.src}
         alt={decorative ? "" : `${store.domain} home page`}
-        width={480}
-        height={300}
-        sizes={SIZES}
+        width={320}
+        height={200}
+        // Already sized for the ~110px columns. A srcset per card would add ~100 KB to the page HTML.
+        unoptimized
         loading="lazy"
         draggable={false}
-        className="block aspect-[8/5] h-auto w-full select-none bg-white"
       />
     </div>
   );

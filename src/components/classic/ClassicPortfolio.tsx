@@ -193,7 +193,7 @@ export function ClassicPortfolio() {
           </div>
         </Section>
 
-        <section id="contact" aria-labelledby="contact-title" className="scroll-mt-20 border-t border-line py-20 md:py-32">
+        <section id="contact" aria-labelledby="contact-title" className="scroll-mt-20 border-t border-line py-20 [contain-intrinsic-size:auto_900px] [content-visibility:auto] md:py-32">
           <div className="flex items-baseline gap-3 font-mono text-[11px] text-ink-muted">
             <span className="tracking-[0.08em]">(06)</span>
             <h2 id="contact-title" className="uppercase tracking-[0.16em]">

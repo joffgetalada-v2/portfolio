@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Anton, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { LateFonts } from "@/components/LateFonts";
 import { profile } from "@/content/profile";
 import { site } from "@/content/site";
 import "./globals.css";
@@ -9,9 +10,12 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
+// Mono and Anton never show above the fold, so they load after hydration (LateFonts) instead of
+// competing with the hero.
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  preload: false,
 });
 
 const instrumentSerif = Instrument_Serif({
@@ -25,6 +29,7 @@ const anton = Anton({
   variable: "--font-anton",
   subsets: ["latin"],
   weight: "400",
+  preload: false,
 });
 
 const title = `${profile.name} | Senior Shopify Plus Developer`;
@@ -83,9 +88,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${anton.variable} antialiased`}
+      className={`${geistSans.variable} ${instrumentSerif.variable} antialiased`}
     >
-      <body>{children}</body>
+      <body>
+        <LateFonts className={`${geistMono.variable} ${anton.variable}`} />
+        {children}
+      </body>
     </html>
   );
 }
