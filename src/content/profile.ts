@@ -77,8 +77,6 @@ export const profile = {
   experience: [
     {
       role: "Senior E-Commerce Engineer (Freelance)",
-      // Hidden for now; set to false to show it again.
-      hidden: true,
       company: "International Clients",
       place: "Remote",
       period: "2016 – Present",
@@ -288,7 +286,6 @@ const allWorks: Work[] = [
   },
   {
     id: "react-client",
-    hidden: true,
     index: "06",
     title: "EV360 · FineVu Australia",
     client: "Australian brands",
