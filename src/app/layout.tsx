@@ -27,9 +27,9 @@ const anton = Anton({
   weight: "400",
 });
 
-const title = `${profile.name} | Senior E-Commerce Engineer`;
+const title = `${profile.name} | Senior Shopify Plus Developer`;
 const description =
-  "Interactive portfolio of Joffrey Anthony Getalada, a senior e-commerce engineer with 12+ years across Shopify Plus, Salesforce Commerce Cloud (Demandware) and React, including six years on the global Timex and Guess Watches storefronts. Open the book to explore the work.";
+  "Senior Shopify Plus Developer: 100+ Shopify stores delivered, 6 years on Timex & Guess storefronts, plus WordPress, React/Next.js and Salesforce Commerce Cloud.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),

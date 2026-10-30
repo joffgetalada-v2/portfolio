@@ -1,5 +1,5 @@
 // Back matter: toolkit, experience, process and contact.
-import { experience, profile } from "@/content/profile";
+import { experience, profile, upworkUrl } from "@/content/profile";
 import {
   arrow,
   clamp,
@@ -231,7 +231,7 @@ export function drawContact(p: Page) {
     { k: "Email", v: profile.email },
     { k: "LinkedIn", v: bare(profile.links.linkedin) },
     { k: "GitHub", v: bare(profile.links.github) },
-    ...(profile.links.upwork ? [{ k: "Upwork", v: bare(profile.links.upwork) }] : []),
+    ...(upworkUrl ? [{ k: "Upwork", v: bare(upworkUrl) }] : []),
   ];
   const top = 532;
   const colW = (x1 - x0) / rows.length;

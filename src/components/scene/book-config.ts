@@ -97,7 +97,7 @@ const SPREAD_META: Record<number, { label: string; works: WorkId[] }> = {
   1: { label: "Contents · Hello", works: [] },
   2: { label: "Timex & Guess Watches", works: ["timex"] },
   3: { label: "Malbon Golf · Atomic Golf", works: ["malbon", "atomic"] },
-  4: { label: "The Artisan Collective · 50+ stores", works: ["artisan", "freelance"] },
+  4: { label: "The Artisan Collective · 100+ stores", works: ["artisan", "freelance"] },
   5: REACT_CLIENT_SHOWN
     ? { label: "React projects", works: ["react-client", "react-personal"] }
     : { label: "Personal React apps", works: ["react-personal"] },

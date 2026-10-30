@@ -11,7 +11,7 @@ const SHORT_TITLES: Partial<Record<WorkId, string>> = {
   timex: "Timex & Guess",
   malbon: "Malbon Golf",
   artisan: "Artisan Collective",
-  freelance: "50+ stores",
+  freelance: "100+ stores",
   "react-client": "EV360 · FineVu",
   "react-personal": "SulitScan · ImportTax",
 };

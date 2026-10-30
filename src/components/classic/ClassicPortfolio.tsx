@@ -1,4 +1,4 @@
-import { experience, profile } from "@/content/profile";
+import { experience, profile, upworkUrl } from "@/content/profile";
 import { site } from "@/content/site";
 import { Wordmark } from "@/components/ui/BrandGlyph";
 import { ArrowIcon } from "@/components/ui/icons";
@@ -15,7 +15,7 @@ export function ClassicPortfolio() {
   const links = [
     { label: "LinkedIn", href: profile.links.linkedin },
     { label: "GitHub", href: profile.links.github },
-    ...(profile.links.upwork ? [{ label: "Upwork", href: profile.links.upwork }] : []),
+    ...(upworkUrl ? [{ label: "Upwork", href: upworkUrl }] : []),
   ];
 
   return (
@@ -31,26 +31,31 @@ export function ClassicPortfolio() {
 
         <header className="py-16 md:py-24">
           <p className="text-[15px] text-ink-muted">
-            <span className="text-ink">{profile.name}</span> · {profile.role}
+            <span className="text-ink">{profile.name}</span> · {profile.location} · {profile.timezone}
           </p>
           <p className="mt-6 text-[clamp(2.1rem,7.4vw,6.6rem)] font-medium leading-[0.95] tracking-[-0.045em] text-ink">
-            Senior e-commerce engineer for{" "}
-            <em className="font-serif font-normal italic tracking-[-0.02em] text-accent">Shopify Plus</em>{" "}
-            <span className="text-ink-muted">&amp;</span>{" "}
-            <em className="font-serif font-normal italic tracking-[-0.02em] text-accent">Salesforce Commerce Cloud (Demandware)</em>.
+            Senior <em className="font-serif font-normal italic tracking-[-0.02em] text-accent">Shopify Plus</em> developer.
           </p>
+          <p className="mt-6 max-w-[44rem] text-[15px] leading-relaxed text-ink-muted md:text-[17px]">{profile.subline}</p>
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <a
-              href="#contact"
+              href={upworkUrl ?? "#contact"}
+              {...(upworkUrl ? { target: "_blank", rel: "noopener noreferrer" } : {})}
               className="inline-flex h-11 items-center gap-2 rounded-full bg-[#f3f3ef] px-5 text-[14px] font-medium text-[#0b0b0a] transition-colors hover:bg-white"
             >
-              Get in Touch
-              <ArrowIcon className="size-4" />
+              Hire me on Upwork
+              <ArrowIcon dir={upworkUrl ? "up-right" : "right"} className="size-4" />
+            </a>
+            <a
+              href={`mailto:${profile.email}`}
+              className="inline-flex h-11 items-center gap-2 rounded-full border border-white/20 px-5 text-[14px] text-ink transition-colors hover:border-white/45"
+            >
+              Email me
             </a>
             <a
               href={site.cvPath}
               download
-              className="inline-flex h-11 items-center gap-2 rounded-full border border-white/20 px-5 text-[14px] text-ink transition-colors hover:border-white/45"
+              className="inline-flex h-11 items-center gap-2 rounded-full px-3 text-[14px] text-ink-muted underline decoration-line underline-offset-4 transition-colors hover:text-ink"
             >
               <ArrowIcon dir="down" className="size-4" />
               Download CV (PDF)
@@ -252,7 +257,21 @@ export function ClassicPortfolio() {
             <span aria-hidden="true" className="h-3 w-px bg-line" />
             <span>{site.brandTagline}</span>
           </p>
-          <p>Built with Next.js &amp; Three.js</p>
+          <ul className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            {links.map((l) => (
+              <li key={l.label}>
+                <a
+                  href={l.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-6 items-center gap-1 text-ink transition-colors hover:text-accent"
+                >
+                  {l.label}
+                  <ArrowIcon dir="up-right" className="size-3.5" />
+                </a>
+              </li>
+            ))}
+          </ul>
           <a href="#book" className="inline-flex items-center gap-2 text-ink transition-colors hover:text-accent">
             Back to the book
             <ArrowIcon dir="up" className="size-4" />

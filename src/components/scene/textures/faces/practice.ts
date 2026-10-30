@@ -260,20 +260,23 @@ function tileGrid(p: Page, gx: number, gy: number) {
 export function drawFreelance(p: Page) {
   const { ctx } = p;
   surface(p, { tone: COAL, side: "right", dark: true, vignette: 0.3 });
-  chrome(p, { side: "right", spread: spreadOf("freelance"), title: "50+ Shopify stores", folio: folioOf("freelance"), color: CHALK, alpha: 0.72 });
+  chrome(p, { side: "right", spread: spreadOf("freelance"), title: free.title, folio: folioOf("freelance"), color: CHALK, alpha: 0.72 });
   const { x0, x1 } = frame("right");
 
   text(p, `${free.kind} · ${free.period}`, x0, 164, { size: 20, family: "mono", upper: true, track: 0.12, color: LIME });
 
-  const big: TextStyle = { size: 272, family: "display", color: CHALK, track: -0.01 };
-  const top = 196;
-  const base = top + capHeight(p, big, "5");
-  const w50 = text(p, "50", x0 - 8, base, big);
-  text(p, "+", x0 - 8 + w50 + 6, base, { ...big, color: LIME });
-
   const gw = TILE.cols * TILE.w + (TILE.cols - 1) * TILE.gap;
   const gh = TILE.rows * TILE.h + (TILE.rows - 1) * TILE.gap;
   const gx = x1 - gw;
+
+  // The figure comes from the title ("100+ Shopify stores") and shrinks to clear the tile grid.
+  const figure = free.title.match(/^\d+/)?.[0] ?? "";
+  const base0: TextStyle = { size: 272, family: "display", color: CHALK, track: -0.01 };
+  const big: TextStyle = { ...base0, size: Math.min(272, fitSize(p, `${figure}+`, gx - x0 - 24, base0)) };
+  const top = 196;
+  const base = top + capHeight(p, big, "5");
+  const wFig = text(p, figure, x0 - 8, base, big);
+  text(p, "+", x0 - 8 + wFig + 6, base, { ...big, color: LIME });
   if (p.image) drawCover(ctx, p.image, gx, top, gw, gh, 14);
   else tileGrid(p, gx, top);
 

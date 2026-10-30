@@ -4,8 +4,9 @@ export const profile = {
   name: "Joffrey Anthony Getalada",
   shortName: "Joffrey Anthony Getalada",
   firstName: "Joffrey",
-  role: "Senior Software Engineer",
-  headline: "Senior E-Commerce Engineer · Shopify Plus & Salesforce Commerce Cloud (Demandware)",
+  role: "Senior Shopify Plus Developer",
+  headline: "Senior Shopify Plus Developer",
+  subline: "100+ Shopify stores · 6 years on Timex & Guess storefronts · WordPress, React/Next.js, Salesforce Commerce Cloud",
   location: "Cebu, Philippines",
   timezone: "GMT+8",
   availability: "Remote · overlap with US, AU & EU hours",
@@ -16,16 +17,16 @@ export const profile = {
   links: {
     linkedin: "https://linkedin.com/in/joffreygetalada",
     github: "https://github.com/joffgetalada-v2",
-    // Shown in the contact panel when set.
-    upwork: "",
+    // TODO: replace with the Upwork profile URL. Until then the Upwork buttons open the contact panel.
+    upwork: "UPWORK_PROFILE_URL",
   },
   summary:
-    "Senior software engineer with 12+ years building and scaling production e-commerce platforms for brands in the US, Europe, Australia, New Zealand, and Singapore. Deep platform expertise across Shopify Plus and Salesforce Commerce Cloud (Demandware), including six years supporting global Timex and Guess Watches storefronts.",
+    "Senior Shopify Plus developer with 12+ years building e-commerce storefronts for brands in the US, Europe, Australia, New Zealand, and Singapore. 100+ Shopify and Shopify Plus stores delivered end to end, plus six years in-house on the Timex and Guess Watches global storefronts (Shopify and Salesforce Commerce Cloud / Demandware).",
   summaryMore:
-    "Strong in JavaScript and React/Next.js engineering, API and third-party integrations, platform migrations, and Core Web Vitals performance. Diagnoses complex production issues across code, apps, and platform settings. Works independently or in distributed teams, owning code review, testing, and release quality.",
+    "New builds on free themes, free-to-premium theme migrations, premium theme revamps, custom front-end and back-end work, speed optimization, app integrations, and platform migrations. Also WordPress/WooCommerce (custom themes, plugins, migrations) and React/Next.js/Tailwind. Works independently or in distributed teams, owning code review, testing, and release quality.",
   stats: [
     { value: "12+", label: "Years shipping production e-commerce" },
-    { value: "50+", label: "Shopify & Shopify Plus stores" },
+    { value: "100+", label: "Shopify & Shopify Plus stores" },
     { value: "6+", label: "Years on Timex & Guess Watches" },
     { value: "5", label: "Markets: US, EU, AU, NZ, SG" },
   ],
@@ -37,7 +38,7 @@ export const profile = {
     },
     {
       title: "Scale of delivery",
-      body: "50+ Shopify and Shopify Plus stores built, migrated, integrated, or optimized across apparel, golf, furniture, gaming, and lifestyle brands.",
+      body: "100+ Shopify and Shopify Plus stores delivered end to end: new builds, theme migrations and revamps, custom development, speed optimization, app integrations, and platform migrations.",
     },
     {
       title: "Performance without regressions",
@@ -83,7 +84,7 @@ export const profile = {
       start: 2016,
       end: null as number | null,
       points: [
-        "Engineered, migrated, and optimized 50+ Shopify and Shopify Plus stores, owning delivery from requirements and Figma handoff through Git-based development, launch, and post-release monitoring.",
+        "Engineered, migrated, and optimized 100+ Shopify and Shopify Plus stores, owning delivery from requirements and Figma handoff through Git-based development, launch, and post-release monitoring.",
         "Improved page speed on client stores through incremental releases and regression testing, protecting carts, filters, menus, and integrations.",
         "Resolved complex production issues as sole engineer for small businesses and within 3–5 person teams for mid-to-large clients, tracing root causes across theme code, JavaScript, app conflicts, and platform settings.",
         "Integrated and validated third-party systems including Klaviyo, preorder and back-in-stock apps, store locators, analytics, reviews, and marketing platforms.",
@@ -148,6 +149,9 @@ export const profile = {
   },
   languages: ["English (professional working proficiency)", "Filipino (native)"],
 } as const;
+
+// Upwork link only once a real URL is set.
+export const upworkUrl = /^https?:\/\//.test(profile.links.upwork) ? profile.links.upwork : null;
 
 // Experience entries currently shown on the site.
 export const experience = profile.experience.filter((job) => !("hidden" in job && job.hidden));
@@ -267,14 +271,14 @@ const allWorks: Work[] = [
   {
     id: "freelance",
     index: "05",
-    title: "50+ Shopify stores",
+    title: "100+ Shopify stores",
     client: "International clients",
     kind: "Freelance practice",
     platform: "Shopify · Shopify Plus",
     period: "2016 – Present",
     role: "Senior E-Commerce Engineer (Freelance)",
     summary:
-      "Engineered, migrated, and optimized 50+ Shopify and Shopify Plus stores across apparel, golf, furniture, gaming, and lifestyle brands.",
+      "Delivered 100+ Shopify and Shopify Plus stores end to end: new builds on free themes, free-to-premium theme migrations, premium theme revamps, custom front-end and back-end work, speed optimization, app integrations, and platform migrations.",
     highlights: [
       "Owns delivery from requirements and Figma handoff through Git-based development, launch, and post-release monitoring.",
       "Improves page speed through incremental releases and regression testing that protect carts, filters, menus, and integrations.",

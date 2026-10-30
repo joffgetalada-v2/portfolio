@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { profile } from "@/content/profile";
+import { profile, upworkUrl } from "@/content/profile";
 import { site } from "@/content/site";
 import { usePortfolio } from "@/lib/store";
 import { ArrowIcon, CloseIcon } from "./icons";
@@ -35,7 +35,7 @@ export function ContactDialog() {
   const links = [
     { label: "LinkedIn", href: profile.links.linkedin },
     { label: "GitHub", href: profile.links.github },
-    ...(profile.links.upwork ? [{ label: "Upwork", href: profile.links.upwork }] : []),
+    ...(upworkUrl ? [{ label: "Upwork", href: upworkUrl }] : []),
   ];
 
   return (

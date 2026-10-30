@@ -1,13 +1,13 @@
 "use client";
 
-import { profile } from "@/content/profile";
+import { profile, upworkUrl } from "@/content/profile";
 import { LAST_PAGE } from "@/components/scene/book-config";
 import { usePortfolio } from "@/lib/store";
 import { ArrowIcon } from "./icons";
 import { UiKeyframes } from "./UiKeyframes";
 
-// Breaks only between the role and platform names, never inside one.
-const headline = profile.headline.split(/( · | & )/);
+// Breaks only between items, never inside one.
+const subline = profile.subline.split(" · ");
 
 const fade =
   "transition-[opacity,translate,filter] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] data-[hidden]:pointer-events-none data-[hidden]:opacity-0 data-[hidden]:blur-[2px]";
@@ -47,26 +47,54 @@ export function HeroCopy() {
         inert={!showIntro}
         className={`absolute left-0 top-0 w-full max-w-[42rem] px-4 pt-[5.25rem] md:px-8 md:pt-32 [@media(min-width:768px)_and_(min-height:501px)_and_(max-height:760px)]:pt-[6.5rem] [@media(max-height:500px)]:pt-20 ${fade} data-[hidden]:-translate-y-3`}
       >
-        <p className="text-[clamp(2.05rem,4.6vw,4rem)] font-medium leading-[0.98] tracking-[-0.04em] text-[#e6eaee]">
-          <span className="block">Interactive Portfolio</span>{" "}
-          <span className="block text-[#e6eaee]/50">
-            that you can <em className="font-serif text-[1.08em] font-normal italic tracking-[-0.01em] text-[#e6eaee]">explore</em>
+        <h1 className="text-[clamp(2.05rem,4.6vw,4rem)] font-medium leading-[0.98] tracking-[-0.04em] text-[#e6eaee]">
+          <span className="block">Senior Shopify Plus</span>{" "}
+          <span className="block">
+            <em className="font-serif text-[1.08em] font-normal italic tracking-[-0.01em]">Developer</em>
           </span>
-        </p>
-
-        <h1 className="mt-4 max-w-[24rem] text-[13px] leading-relaxed text-ink-muted md:mt-6 md:max-w-[23rem] md:text-[15px]">
-          <span className="text-ink">{profile.name}</span> —{" "}
-          {headline.map((part, i) =>
-            i % 2 ? part : (
-              <span key={i} className="whitespace-nowrap">
-                {part}
-              </span>
-            ),
-          )}
         </h1>
 
+        <p className="mt-4 max-w-[27rem] text-[13px] leading-relaxed text-ink-muted md:mt-5 md:text-[15px]">
+          <span className="text-ink">{profile.name}</span>
+          <br />
+          {subline.map((part, i) => (
+            <span key={part}>
+              {i > 0 && " · "}
+              <span className="whitespace-nowrap">{part}</span>
+            </span>
+          ))}
+        </p>
+
+        <div className="mt-5 flex flex-wrap items-center gap-2.5 md:mt-6 [@media(max-height:500px)]:mt-3">
+          {upworkUrl ? (
+            <a
+              href={upworkUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="pointer-events-auto inline-flex h-10 items-center gap-2 rounded-full bg-[#f3f3ef] px-4 text-[13px] font-medium text-[#0b0b0a] transition-colors hover:bg-white"
+            >
+              Hire me on Upwork
+              <ArrowIcon dir="up-right" className="size-4" />
+            </a>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setContactOpen(true)}
+              className="pointer-events-auto inline-flex h-10 items-center gap-2 rounded-full bg-[#f3f3ef] px-4 text-[13px] font-medium text-[#0b0b0a] transition-colors hover:bg-white"
+            >
+              Hire me on Upwork
+            </button>
+          )}
+          <a
+            href={`mailto:${profile.email}`}
+            className="pointer-events-auto inline-flex h-10 items-center rounded-full border border-white/20 bg-white/[0.03] px-4 text-[13px] text-ink backdrop-blur-sm transition-colors duration-200 hover:border-white/45 hover:bg-white/[0.08]"
+          >
+            Email me
+          </a>
+        </div>
+
         {webglFailed ? (
-          <div className="mt-6 max-w-[28rem] rounded-2xl border border-line bg-white/[0.03] p-4 text-[14px] leading-relaxed text-ink-muted md:mt-8">
+          <div className="mt-6 max-w-[28rem] rounded-2xl border border-line bg-white/[0.03] p-4 text-[14px] leading-relaxed text-ink-muted md:mt-7">
             <p>
               The 3D book needs WebGL, which isn&rsquo;t available in this browser right now. Everything in it is also
               on the classic page below.
@@ -81,23 +109,21 @@ export function HeroCopy() {
             </a>
           </div>
         ) : (
-          <>
-            {/* Switch on pointer type, not width, so touch laptops get the touch copy. */}
-            <p className="mt-5 flex items-center gap-2.5 text-[12px] tracking-[0.005em] text-ink-muted md:mt-7 md:text-[13px] [@media(max-height:500px)]:mt-4">
-              <span aria-hidden="true" className="size-1.5 shrink-0 animate-[cb-breathe_2.4s_ease-in-out_infinite] rounded-full bg-accent" />
-              <span className="hidden pointer-fine:inline">Click the book to open it · click pages to turn</span>
-              <span className="pointer-fine:hidden">Tap the book to open it · swipe to turn pages</span>
-            </p>
+          // Pointer type, not width, picks the copy, so touch laptops get the touch hint.
+          <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] tracking-[0.005em] text-ink-muted md:mt-5 md:text-[13px] [@media(max-height:500px)]:mt-3">
+            <span aria-hidden="true" className="size-1.5 shrink-0 animate-[cb-breathe_2.4s_ease-in-out_infinite] rounded-full bg-accent" />
+            <span className="hidden pointer-fine:inline">Click the book or pages to explore</span>
+            <span className="pointer-fine:hidden">Tap the book, swipe to turn pages</span>
             <button
               type="button"
               data-focus-target="intro"
               onClick={openBook}
-              className="group pointer-events-auto mt-4 inline-flex h-10 items-center gap-2 rounded-full border border-white/20 bg-white/[0.03] pl-4 pr-3.5 text-[13px] text-ink backdrop-blur-sm transition-colors duration-200 hover:border-white/45 hover:bg-white/[0.08] md:mt-5"
+              className="group pointer-events-auto -my-2 inline-flex items-center gap-1.5 py-2 text-ink underline decoration-white/30 underline-offset-4 transition-colors hover:decoration-white"
             >
               Open the book
-              <ArrowIcon className="size-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+              <ArrowIcon className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
             </button>
-          </>
+          </div>
         )}
       </div>
 

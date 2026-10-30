@@ -1,9 +1,9 @@
-import { profile } from "@/content/profile";
+import { profile, upworkUrl } from "@/content/profile";
 import { site } from "@/content/site";
 
 // schema.org Person. "<" is escaped so the JSON can't close the script tag.
 export function JsonLd() {
-  const sameAs = [profile.links.linkedin, profile.links.github, profile.links.upwork].filter(Boolean);
+  const sameAs = [profile.links.linkedin, profile.links.github, upworkUrl].filter(Boolean);
 
   const person = {
     "@context": "https://schema.org",
