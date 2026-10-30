@@ -1,4 +1,4 @@
-// Spread 3: Malbon Golf (left) and Atomic Golf (right).
+// Spread 2: Malbon Golf (left) and Atomic Golf (right).
 import { workById } from "@/content/profile";
 import {
   cached,

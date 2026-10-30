@@ -1,15 +1,14 @@
 import type { CSSProperties } from "react";
-import type { Work } from "@/content/profile";
 import { BrowserWindow } from "./BrowserWindow";
-import { TileBackdrop, TileChip, TileShell, TileStage } from "./TileShell";
+import { TileBackdrop, TileChip, TileShell, TileStage, type TileInfo } from "./TileShell";
 
 // No screenshot for this project, so the window shows an illustrated storefront.
-export function ArtisanTile({ work, className }: { work: Work; className?: string }) {
+export function ArtisanTile({ tile, className, ratio }: { tile: TileInfo; className?: string; ratio?: string }) {
   return (
-    <TileShell work={work} className={className} decorative>
+    <TileShell tile={tile} className={className} ratio={ratio} decorative>
       <TileBackdrop />
 
-      <TileStage work={work}>
+      <TileStage tile={tile}>
         <BrowserWindow leg="12s" page={C.page} className="absolute inset-0">
           <Storefront />
         </BrowserWindow>

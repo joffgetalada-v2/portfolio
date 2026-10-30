@@ -1,4 +1,4 @@
-// Spread 2: Timex & Guess Watches, dial hero (left) and detail page (right).
+// Spread 5: Timex & Guess Watches, dial hero (left) and detail page (right).
 import { workById } from "@/content/profile";
 import {
   brandGlyph,

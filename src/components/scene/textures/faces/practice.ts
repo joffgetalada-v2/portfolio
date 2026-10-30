@@ -1,4 +1,4 @@
-// Spread 4: The Artisan Collective (left) and freelance work (right).
+// Spread 3: freelance work (left) and The Artisan Collective (right).
 import { profile, workById } from "@/content/profile";
 import {
   bezierPath,
@@ -22,7 +22,7 @@ import {
   type Path,
   type TextStyle,
 } from "../draw-utils";
-import { chrome, folioOf, frame, spreadOf, surface } from "../paper";
+import { chrome, folioOf, frame, sideOf, spreadOf, surface, type Side } from "../paper";
 
 // ---- Artisan ----
 const artisan = workById.artisan;
@@ -31,15 +31,23 @@ const BROWN = artisan.palette.ink;
 const TERRA = artisan.palette.accent;
 
 const LANES = ["Products", "Content", "SEO"] as const;
-const NODE = { ax: 72, bx: 948, w: 220, y: 470, h: 176 };
+const NODE = { w: 220, y: 470, h: 176 };
 
-let lanePaths: Path[] | null = null;
-function lanes(): Path[] {
-  if (lanePaths) return lanePaths;
-  const a0 = NODE.ax + NODE.w;
-  const b0 = NODE.bx;
+// Nodes sit flush with the text frame, so they follow the page side.
+function nodeX(side: Side) {
+  const { x0, x1 } = frame(side);
+  return { ax: x0, bx: x1 - NODE.w };
+}
+
+const lanePaths = new Map<Side, Path[]>();
+function lanes(side: Side): Path[] {
+  const hit = lanePaths.get(side);
+  if (hit) return hit;
+  const { ax, bx } = nodeX(side);
+  const a0 = ax + NODE.w;
+  const b0 = bx;
   const mid = NODE.y + NODE.h / 2;
-  lanePaths = LANES.map((_, i) => {
+  const paths = LANES.map((_, i) => {
     const off = (i - 1) * 44;
     const spread = (i - 1) * 74;
     return bezierPath(
@@ -55,7 +63,8 @@ function lanes(): Path[] {
       48,
     );
   });
-  return lanePaths;
+  lanePaths.set(side, paths);
+  return paths;
 }
 
 function token(ctx: Ctx, kind: number, x: number, y: number, a: number) {
@@ -100,9 +109,10 @@ function token(ctx: Ctx, kind: number, x: number, y: number, a: number) {
 
 export function drawArtisan(p: Page) {
   const { ctx, t } = p;
+  const side = sideOf("artisan");
   surface(p, {
     tone: KRAFT,
-    side: "left",
+    side,
     key: "artisan",
     fibres: 1400,
     fibreColor: "rgba(110,78,44,0.13)",
@@ -110,20 +120,20 @@ export function drawArtisan(p: Page) {
     grain: 0.36,
     vignette: 0.1,
   });
-  chrome(p, { side: "left", spread: spreadOf("artisan"), title: "The Artisan Collective", folio: folioOf("artisan"), color: BROWN, alpha: 0.78 });
-  const { x0, x1 } = frame("left");
+  chrome(p, { side, spread: spreadOf("artisan"), title: "The Artisan Collective", folio: folioOf("artisan"), color: BROWN, alpha: 0.78 });
+  const { x0, x1 } = frame(side);
 
   text(p, `${artisan.kind} · ${artisan.role}`, x0, 164, { size: 20, family: "mono", upper: true, track: 0.12, color: TERRA });
   const title: TextStyle = { size: 136, family: "serif", color: BROWN, track: -0.012 };
   text(p, "The Artisan", x0 - 4, 296, title);
   text(p, "Collective", x0 - 4, 410, { ...title, italic: true, color: TERRA });
 
-  para(p, artisan.summary, 740, 222, x1 - 740, { size: 22, lh: 32, color: BROWN, track: -0.004 });
+  para(p, artisan.summary, x0 + 668, 222, x1 - x0 - 668, { size: 22, lh: 32, color: BROWN, track: -0.004 });
 
   if (p.image) {
     drawCover(ctx, p.image, x0, 448, x1 - x0, 210, 14);
   } else {
-    const paths = lanes();
+    const paths = lanes(side);
     ctx.strokeStyle = "rgba(43,33,26,0.28)";
     ctx.lineWidth = 1.5;
     paths.forEach((pa) => strokePath(ctx, pa));
@@ -156,7 +166,8 @@ export function drawArtisan(p: Page) {
     });
 
     // Nodes.
-    const { ax, bx, w, y, h } = NODE;
+    const { ax, bx } = nodeX(side);
+    const { w, y, h } = NODE;
     rrect(ctx, ax, y, w, h, 14);
     ctx.fillStyle = "rgba(255,255,255,0.35)";
     ctx.fill();
@@ -259,9 +270,10 @@ function tileGrid(p: Page, gx: number, gy: number) {
 
 export function drawFreelance(p: Page) {
   const { ctx } = p;
-  surface(p, { tone: COAL, side: "right", dark: true, vignette: 0.3 });
-  chrome(p, { side: "right", spread: spreadOf("freelance"), title: free.title, folio: folioOf("freelance"), color: CHALK, alpha: 0.72 });
-  const { x0, x1 } = frame("right");
+  const side = sideOf("freelance");
+  surface(p, { tone: COAL, side, dark: true, vignette: 0.3 });
+  chrome(p, { side, spread: spreadOf("freelance"), title: free.title, folio: folioOf("freelance"), color: CHALK, alpha: 0.72 });
+  const { x0, x1 } = frame(side);
 
   text(p, `${free.kind} · ${free.period}`, x0, 164, { size: 20, family: "mono", upper: true, track: 0.12, color: LIME });
 

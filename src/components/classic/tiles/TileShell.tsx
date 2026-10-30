@@ -1,28 +1,40 @@
 import type { CSSProperties, ReactNode } from "react";
-import type { Work } from "@/content/profile";
+import type { SiteShot } from "@/content/profile";
 
-// Exposes the palette as --wt-bg / --wt-ink / --wt-accent. Sticky only from 640px tall, otherwise
-// the tile runs off the bottom on landscape phones.
+// What a tile shows. A Work fits as is; projects map onto it.
+export interface TileInfo {
+  title: string;
+  platform: string;
+  palette: { bg: string; ink: string; accent: string };
+  /** Corner number, e.g. "01". */
+  index?: string;
+  shots?: SiteShot[];
+}
+
+// Exposes the palette as --wt-bg / --wt-ink / --wt-accent.
 export function TileShell({
-  work,
+  tile,
   className,
+  ratio = "aspect-[5/4]",
   decorative = false,
   children,
 }: {
-  work: Work;
+  tile: TileInfo;
   className?: string;
+  /** Tailwind aspect class. */
+  ratio?: string;
   /** aria-hidden, for tiles that only repeat the facts next to them. */
   decorative?: boolean;
   children: ReactNode;
 }) {
-  const { bg, ink, accent } = work.palette;
+  const { bg, ink, accent } = tile.palette;
   const style = { "--wt-bg": bg, "--wt-ink": ink, "--wt-accent": accent, backgroundColor: bg, color: ink } as CSSProperties;
   const Tag = decorative ? "div" : "figure";
   return (
     <Tag
       aria-hidden={decorative || undefined}
       style={style}
-      className={`wt group/wt @container/wt relative isolate aspect-[5/4] overflow-hidden rounded-[18px] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.9)] ring-1 ring-white/[0.06] md:self-start [@media(min-width:768px)_and_(min-height:640px)]:sticky [@media(min-width:768px)_and_(min-height:640px)]:top-28 ${className ?? ""}`}
+      className={`wt group/wt @container/wt relative isolate ${ratio} overflow-hidden rounded-[18px] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.9)] ring-1 ring-white/[0.06] ${className ?? ""}`}
     >
       {children}
     </Tag>
@@ -30,7 +42,7 @@ export function TileShell({
 }
 
 // inFlow: sits in the TileStage column, so a label that wraps pushes the windows down.
-export function TileMeta({ work, inFlow = false }: { work: Work; inFlow?: boolean }) {
+export function TileMeta({ tile, inFlow = false }: { tile: TileInfo; inFlow?: boolean }) {
   const place = inFlow
     ? "relative shrink-0 px-4 pb-3.5 pt-4 sm:px-5 sm:pb-4 sm:pt-5"
     : "absolute inset-x-4 top-4 sm:inset-x-5 sm:top-5";
@@ -41,9 +53,9 @@ export function TileMeta({ work, inFlow = false }: { work: Work; inFlow?: boolea
     >
       <span className="flex min-w-0 items-start gap-2">
         <span className="mt-[0.5em] h-[3px] w-4 shrink-0 bg-[var(--wt-accent)]" />
-        <span className="text-balance opacity-80">{work.platform}</span>
+        <span className="text-balance opacity-80">{tile.platform}</span>
       </span>
-      <span className="shrink-0 opacity-80">No. {work.index}</span>
+      {tile.index && <span className="shrink-0 opacity-80">No. {tile.index}</span>}
     </div>
   );
 }
@@ -51,10 +63,10 @@ export function TileMeta({ work, inFlow = false }: { work: Work; inFlow?: boolea
 // Windows overhang the tile's bottom edge by CROP px. --wt-crop lets the scroll motion land the
 // capture's last pixel on that edge (see .wt-pin in globals.css).
 const CROP = 28;
-export function TileStage({ work, children }: { work: Work; children: ReactNode }) {
+export function TileStage({ tile, children }: { tile: TileInfo; children: ReactNode }) {
   return (
     <div className="absolute inset-0 flex flex-col">
-      <TileMeta work={work} inFlow />
+      <TileMeta tile={tile} inFlow />
       <div
         style={{ "--wt-crop": `${CROP}px`, marginBottom: -CROP } as CSSProperties}
         className="relative mx-4 min-h-0 flex-1 sm:mx-5"

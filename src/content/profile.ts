@@ -153,9 +153,6 @@ export const profile = {
 // Upwork link only once a real URL is set.
 export const upworkUrl = /^https?:\/\//.test(profile.links.upwork) ? profile.links.upwork : null;
 
-// Experience entries currently shown on the site.
-export const experience = profile.experience.filter((job) => !("hidden" in job && job.hidden));
-
 export type WorkId = "timex" | "malbon" | "atomic" | "artisan" | "freelance" | "react-client" | "react-personal";
 
 /** Live-site screenshot for the classic page work tiles. */
@@ -185,37 +182,15 @@ export interface Work {
   image?: string;
   // Classic page tiles fall back to an illustration without these.
   shots?: SiteShot[];
-  // Left off the site for now; set to false to show it again.
-  hidden?: boolean;
 }
 
-const shot = (name: string, site: string): SiteShot => ({ src: `/works/${name}.webp`, site, width: 1000, height: 2500 });
+export const shot = (name: string, site: string): SiteShot => ({ src: `/works/${name}.webp`, site, width: 1000, height: 2500 });
 
-const allWorks: Work[] = [
-  {
-    id: "timex",
-    index: "01",
-    title: "Timex & Guess Watches",
-    client: "Timex Group · TMX Philippines Inc.",
-    kind: "Enterprise storefronts",
-    platform: "Shopify · Salesforce Commerce Cloud (Demandware)",
-    period: "Jun 2018 – Dec 2024",
-    role: "Senior Systems Analyst, E-Commerce",
-    summary:
-      "Six years building and maintaining production code for the global Timex and Guess Watches storefronts across international markets.",
-    highlights: [
-      "Built and maintained production storefront code on Shopify and Salesforce Commerce Cloud (Demandware) using JavaScript, Liquid, HTML5, and CSS3/SASS.",
-      "Refined product pages, navigation, content modules, and checkout-related interfaces with product, design, marketing, and QA teams.",
-      "Found bottlenecks with Lighthouse and GTmetrix, optimized front-end assets, and verified Core Web Vitals before deployment.",
-      "Reduced recurring defects by documenting development procedures and standardizing quality checks in Agile/Scrum workflows in Jira.",
-    ],
-    stack: ["Salesforce Commerce Cloud (Demandware)", "Shopify", "Liquid", "JavaScript", "SASS", "Lighthouse", "GTmetrix", "Jira"],
-    palette: { bg: "#0d1b2a", ink: "#f4efe6", accent: "#c9a227" },
-    shots: [shot("timex", "timex.com"), shot("guess", "guesswatches.com")],
-  },
+// Case studies shown in the 3D book and its dialog. The classic page lists projects.ts.
+export const works: Work[] = [
   {
     id: "malbon",
-    index: "02",
+    index: "01",
     title: "Malbon Golf / Buckets Club",
     client: "Malbon Golf",
     kind: "Lifestyle golf brand",
@@ -234,7 +209,7 @@ const allWorks: Work[] = [
   },
   {
     id: "atomic",
-    index: "03",
+    index: "02",
     title: "Atomic Golf",
     client: "Atomic Golf",
     kind: "Golf entertainment venue",
@@ -249,6 +224,26 @@ const allWorks: Work[] = [
     stack: ["Shopify", "Liquid", "Framer → Shopify", "Responsive design"],
     palette: { bg: "#f2f0ea", ink: "#111111", accent: "#ff4f1f" },
     shots: [shot("atomic", "atomicgolf.com")],
+  },
+  {
+    id: "freelance",
+    index: "03",
+    title: "100+ Shopify stores",
+    client: "International clients",
+    kind: "Freelance practice",
+    platform: "Shopify · Shopify Plus",
+    period: "2016 – Present",
+    role: "Senior E-Commerce Engineer (Freelance)",
+    summary:
+      "Delivered 100+ Shopify and Shopify Plus stores end to end: new builds on free themes, free-to-premium theme migrations, premium theme revamps, custom front-end and back-end work, speed optimization, app integrations, and platform migrations.",
+    highlights: [
+      "Owns delivery from requirements and Figma handoff through Git-based development, launch, and post-release monitoring.",
+      "Improves page speed through incremental releases and regression testing that protect carts, filters, menus, and integrations.",
+      "Integrates and validates Klaviyo, preorder and back-in-stock apps, store locators, analytics, reviews, and marketing platforms.",
+      "Traces root causes across theme code, JavaScript, app conflicts, and platform settings, solo or in 3–5 person teams.",
+    ],
+    stack: ["Shopify Plus", "Liquid", "Shopify CLI", "Klaviyo", "Git", "Figma"],
+    palette: { bg: "#111111", ink: "#f5f5f0", accent: "#95bf47" },
   },
   {
     id: "artisan",
@@ -269,28 +264,8 @@ const allWorks: Work[] = [
     palette: { bg: "#efe6d8", ink: "#2b211a", accent: "#a4532f" },
   },
   {
-    id: "freelance",
-    index: "05",
-    title: "100+ Shopify stores",
-    client: "International clients",
-    kind: "Freelance practice",
-    platform: "Shopify · Shopify Plus",
-    period: "2016 – Present",
-    role: "Senior E-Commerce Engineer (Freelance)",
-    summary:
-      "Delivered 100+ Shopify and Shopify Plus stores end to end: new builds on free themes, free-to-premium theme migrations, premium theme revamps, custom front-end and back-end work, speed optimization, app integrations, and platform migrations.",
-    highlights: [
-      "Owns delivery from requirements and Figma handoff through Git-based development, launch, and post-release monitoring.",
-      "Improves page speed through incremental releases and regression testing that protect carts, filters, menus, and integrations.",
-      "Integrates and validates Klaviyo, preorder and back-in-stock apps, store locators, analytics, reviews, and marketing platforms.",
-      "Traces root causes across theme code, JavaScript, app conflicts, and platform settings, solo or in 3–5 person teams.",
-    ],
-    stack: ["Shopify Plus", "Liquid", "Shopify CLI", "Klaviyo", "Git", "Figma"],
-    palette: { bg: "#111111", ink: "#f5f5f0", accent: "#95bf47" },
-  },
-  {
     id: "react-client",
-    index: "06",
+    index: "05",
     title: "EV360 · FineVu Australia",
     client: "Australian brands",
     kind: "React client builds",
@@ -309,7 +284,7 @@ const allWorks: Work[] = [
   },
   {
     id: "react-personal",
-    index: "07",
+    index: "06",
     title: "SulitScan PH · ImportTax PH",
     client: "Personal projects",
     kind: "Personal products",
@@ -326,13 +301,27 @@ const allWorks: Work[] = [
     palette: { bg: "#f2efe7", ink: "#151513", accent: "#16a34a" },
     shots: [shot("sulitscan", "sulitscan.com"), shot("importtax", "importtaxph.com")],
   },
+  {
+    id: "timex",
+    index: "07",
+    title: "Timex & Guess Watches",
+    client: "Timex Group · TMX Philippines Inc.",
+    kind: "Enterprise storefronts",
+    platform: "Shopify · Salesforce Commerce Cloud (Demandware)",
+    period: "Jun 2018 – Dec 2024",
+    role: "Senior Systems Analyst, E-Commerce",
+    summary:
+      "Six years building and maintaining production code for the global Timex and Guess Watches storefronts across international markets.",
+    highlights: [
+      "Built and maintained production storefront code on Shopify and Salesforce Commerce Cloud (Demandware) using JavaScript, Liquid, HTML5, and CSS3/SASS.",
+      "Refined product pages, navigation, content modules, and checkout-related interfaces with product, design, marketing, and QA teams.",
+      "Found bottlenecks with Lighthouse and GTmetrix, optimized front-end assets, and verified Core Web Vitals before deployment.",
+      "Reduced recurring defects by documenting development procedures and standardizing quality checks in Agile/Scrum workflows in Jira.",
+    ],
+    stack: ["Salesforce Commerce Cloud (Demandware)", "Shopify", "Liquid", "JavaScript", "SASS", "Lighthouse", "GTmetrix", "Jira"],
+    palette: { bg: "#0d1b2a", ink: "#f4efe6", accent: "#c9a227" },
+    shots: [shot("timex", "timex.com"), shot("guess", "guesswatches.com")],
+  },
 ];
 
-// Visible works, numbered by position so the list, tiles and dialog agree.
-export const works: Work[] = allWorks
-  .filter((w) => !w.hidden)
-  .map((w, i) => ({ ...w, index: String(i + 1).padStart(2, "0") }));
-
-export const workById = Object.fromEntries(
-  allWorks.map((w) => [w.id, works.find((v) => v.id === w.id) ?? w]),
-) as Record<WorkId, Work>;
+export const workById = Object.fromEntries(works.map((w) => [w.id, w])) as Record<WorkId, Work>;

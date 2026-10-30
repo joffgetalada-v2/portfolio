@@ -1,5 +1,5 @@
 // Back matter: toolkit, experience, process and contact.
-import { experience, profile, upworkUrl } from "@/content/profile";
+import { profile, upworkUrl } from "@/content/profile";
 import {
   arrow,
   clamp,
@@ -90,7 +90,7 @@ export function drawExperience(p: Page) {
   para(p, `${ed.school} · ${ed.year}`, x0, ey + 6, 400, { size: 18, lh: 25, color: PAPER.muted });
 
   // Timeline, oldest first.
-  const items = [...experience].reverse();
+  const items = [...profile.experience].reverse();
   const lx = 640;
   const top = 182;
   const bottom = 742;

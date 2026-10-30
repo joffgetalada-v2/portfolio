@@ -1,30 +1,29 @@
-import type { Work } from "@/content/profile";
 import { ArrowIcon } from "@/components/ui/icons";
 import { BrowserWindow } from "./BrowserWindow";
 import { ShotImage } from "./ShotImage";
-import { TileBackdrop, TileChip, TileShell, TileStage } from "./TileShell";
+import { TileBackdrop, TileChip, TileShell, TileStage, type TileInfo } from "./TileShell";
 
-// Window widths for next/image. Tile is 5/12 cols from lg (capped at 1152px), 6/12 at md, full width
-// below, minus 2 x 20px padding (2 x 16px on phones). Two-window tiles split 78% / 48%.
+// Window widths for next/image. Tiles sit in a two-column card grid from md (capped at 1152px), full
+// width below, minus 2 x 20px padding (2 x 16px on phones). Two-window tiles split 78% / 48%.
 const SIZES = {
-  single: "(min-width: 1152px) 390px, (min-width: 1024px) calc(41.7vw - 90px), (min-width: 768px) calc(50vw - 84px), calc(100vw - 64px)",
-  main: "(min-width: 1152px) 304px, (min-width: 1024px) calc(32.5vw - 70px), (min-width: 768px) calc(39vw - 66px), calc(78vw - 50px)",
-  inset: "(min-width: 1152px) 187px, (min-width: 1024px) calc(20vw - 43px), (min-width: 768px) calc(24vw - 40px), calc(48vw - 31px)",
+  single: "(min-width: 1152px) 484px, (min-width: 1024px) calc(50vw - 92px), (min-width: 768px) calc(50vw - 80px), calc(100vw - 64px)",
+  main: "(min-width: 1152px) 378px, (min-width: 1024px) calc(39vw - 72px), (min-width: 768px) calc(39vw - 62px), calc(78vw - 50px)",
+  inset: "(min-width: 1152px) 232px, (min-width: 1024px) calc(24vw - 44px), (min-width: 768px) calc(24vw - 38px), calc(48vw - 31px)",
 };
 
 // With two shots, the second window overlaps the first's lower-right corner.
-export function ShotTile({ work, className }: { work: Work; className?: string }) {
-  const [main, inset] = work.shots ?? [];
+export function ShotTile({ tile, className, ratio }: { tile: TileInfo; className?: string; ratio?: string }) {
+  const [main, inset] = tile.shots ?? [];
   if (!main) return null;
   // Longer domain pairs drop the label on wider tiles too, so the links stay on one row.
-  const chars = (work.shots ?? []).reduce((n, s) => n + s.site.length, 0);
+  const chars = (tile.shots ?? []).reduce((n, s) => n + s.site.length, 0);
   const labelHide = chars > 30 ? "@max-[26.5rem]/wt:sr-only" : chars > 25 ? "@max-[22rem]/wt:sr-only" : "@max-[19rem]/wt:sr-only";
 
   return (
-    <TileShell work={work} className={className}>
+    <TileShell tile={tile} className={className} ratio={ratio}>
       <TileBackdrop />
 
-      <TileStage work={work}>
+      <TileStage tile={tile}>
         <BrowserWindow
           address={main.site}
           leg="15s"
@@ -58,7 +57,7 @@ export function ShotTile({ work, className }: { work: Work; className?: string }
           {/* Visually hidden at 320px so the links stay on one row */}
           <span className={labelHide}>Live site</span>
         </span>
-        {work.shots?.map((s) => (
+        {tile.shots?.map((s) => (
           <a
             key={s.site}
             href={`https://${s.site}`}

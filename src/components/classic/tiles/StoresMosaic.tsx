@@ -1,8 +1,7 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
-import type { Work } from "@/content/profile";
 import { storeThumbs, type StoreThumb } from "@/content/stores";
-import { TileChip, TileMeta, TileShell } from "./TileShell";
+import { TileChip, TileMeta, TileShell, type TileInfo } from "./TileShell";
 
 // Wall of store home pages in drifting columns. Each store sits in one column only, so neighbouring
 // columns never show the same one.
@@ -22,14 +21,14 @@ const COPIES = 3;
 // Column width: about 24% of the tile.
 const SIZES = "(min-width: 1152px) 106px, (min-width: 1024px) 10vw, (min-width: 768px) 11vw, calc(24vw - 8px)";
 
-export function StoresMosaic({ work, className }: { work: Work; className?: string }) {
+export function StoresMosaic({ tile, className }: { tile: TileInfo; className?: string }) {
   const columns = COLUMNS.map((_, ci) => storeThumbs.filter((_, i) => i % COLUMNS.length === ci));
-  const [big, ...rest] = work.title.split(" ");
+  const [big, ...rest] = tile.title.split(" ");
   const plus = big.endsWith("+");
   const figure = plus ? big.slice(0, -1) : big;
 
   return (
-    <TileShell work={work} className={className}>
+    <TileShell tile={tile} className={className}>
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="wt-wall absolute -inset-x-[16%] -inset-y-[36%] flex rotate-[-10deg] gap-[2%]">
           {COLUMNS.map((col, ci) => (
@@ -58,7 +57,7 @@ export function StoresMosaic({ work, className }: { work: Work; className?: stri
         <span className="absolute inset-0 bg-[radial-gradient(110%_85%_at_0%_100%,#111111_16%,rgba(17,17,17,0.8)_40%,transparent_70%)]" />
       </div>
 
-      <TileMeta work={work} />
+      <TileMeta tile={tile} />
 
       {/* Shared row so a narrow tile wraps the label instead of running it under the chip. */}
       <div aria-hidden="true" className="absolute inset-x-4 bottom-4 flex items-end justify-between gap-3 sm:inset-x-5 sm:bottom-5">

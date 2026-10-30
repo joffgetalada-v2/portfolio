@@ -1,7 +1,6 @@
-// Spread 5: React client builds (left) and personal products (right).
-// With the client work hidden, each page shows one personal app instead.
+// Spread 4: React client builds (left) and personal products (right).
 import { workById, type Work } from "@/content/profile";
-import { REACT_CLIENT_SHOWN, SPREADS } from "../../book-config";
+import { SPREADS } from "../../book-config";
 import {
   cached,
   chipRow,
@@ -44,8 +43,6 @@ interface Theme {
   edge: string;
   shadow: string;
   skeleton: string;
-  /** Index into work.shots when the page shows a single app. */
-  solo?: number;
 }
 
 const client = workById["react-client"];
@@ -89,28 +86,19 @@ const PERSONAL: Theme = {
   skeleton: "rgba(21,21,19,0.06)",
 };
 
-const LEFT: Theme = REACT_CLIENT_SHOWN ? CLIENT : { ...CLIENT, work: personal, solo: 0 };
-const RIGHT: Theme = REACT_CLIENT_SHOWN ? PERSONAL : { ...PERSONAL, solo: 1 };
-
 // Design px. Windows sit on the spine side, copy on the outer side.
 const WIN_W = 292;
 const WIN_GAP = 24;
 const BAR_H = 40;
 const COL_W = 440;
 const WIN_Y = [[338, 772], [372, 806]] as const;
-// One window fills the pair's footprint.
-const SOLO_W = WIN_W * 2 + WIN_GAP;
-const SOLO_Y = [338, 806] as const;
 
 function layout(th: Theme) {
   const { x0, x1 } = frame(th.side);
   const pair = WIN_W * 2 + WIN_GAP;
   const wx = th.side === "left" ? x1 - pair : x0;
   const cx = th.side === "left" ? x0 : x1 - COL_W;
-  const wins =
-    th.solo === undefined
-      ? WIN_Y.map(([top, bottom], i) => ({ x: wx + i * (WIN_W + WIN_GAP), y: top, w: WIN_W, h: bottom - top, shot: i }))
-      : [{ x: wx, y: SOLO_Y[0], w: SOLO_W, h: SOLO_Y[1] - SOLO_Y[0], shot: th.solo }];
+  const wins = WIN_Y.map(([top, bottom], i) => ({ x: wx + i * (WIN_W + WIN_GAP), y: top, w: WIN_W, h: bottom - top, shot: i }));
   return { x0, x1, col: cx, wins };
 }
 
@@ -210,7 +198,7 @@ function windowFrame(p: Page, th: Theme, win: Win, domain: string) {
 // Copy, windows and surface. Everything except the scrolling captures.
 function staticLayer(p: Page, th: Theme) {
   const keys = (["sans", "serif", "mono"] as const).map((f) => fontKey(p, f)).join("|");
-  pageLayer(p, `${th.face}:${th.solo ?? "pair"}:${keys}`, (ctx) => {
+  pageLayer(p, `${th.face}:${keys}`, (ctx) => {
     const page: Page = { ...p, ctx, t: 0 };
     const L = layout(th);
     const last = L.wins[L.wins.length - 1];
@@ -232,33 +220,24 @@ function staticLayer(p: Page, th: Theme) {
       alpha: th.dark ? 0.72 : 0.78,
     });
 
-    const { work, solo } = th;
-    // Kind, with a small atom. One app per page reads as a single product.
-    const kind = solo === undefined ? work.kind : work.kind.replace(/s$/, "");
+    const { work } = th;
+    // Kind, with a small atom.
     atom(ctx, L.x0 + 13, 157, 13, 5, th.accentText, 1.6);
-    text(page, `${kind} · ${work.role}`, L.x0 + 38, 164, { size: 20, family: "mono", upper: true, track: 0.12, color: th.accentText });
+    text(page, `${work.kind} · ${work.role}`, L.x0 + 38, 164, { size: 20, family: "mono", upper: true, track: 0.12, color: th.accentText });
 
-    // "A · B" title, the second name in italic. A single name italicises its last word.
+    // "A · B" title, the second name in italic.
     const names = work.title.split(" · ");
     const title: TextStyle = { size: 124, family: "serif", color: th.ink, track: -0.01 };
-    const name = solo === undefined ? "" : names[solo];
-    const cut = name.lastIndexOf(" ");
-    const parts =
-      solo === undefined
-        ? [
-            { str: names[0], st: title },
-            { str: "  ·  ", st: { ...title, color: th.accent } },
-            { str: names[1], st: { ...title, italic: true } },
-          ]
-        : [
-            { str: name.slice(0, cut + 1), st: title },
-            { str: name.slice(cut + 1), st: { ...title, italic: true } },
-          ];
+    const parts = [
+      { str: names[0], st: title },
+      { str: "  ·  ", st: { ...title, color: th.accent } },
+      { str: names[1], st: { ...title, italic: true } },
+    ];
     const full = parts.reduce((n, r) => n + measure(page, r.str, r.st), 0);
     const k = Math.min(1, (L.x1 - L.x0 + 4) / full);
     runs(page, parts.map((r) => ({ str: r.str, st: { ...r.st, size: r.st.size * k } })), L.x0 - 4, 284);
 
-    // Stack chips, right-aligned on the label row. A single app sets them at the foot of the copy.
+    // Stack chips, right-aligned on the label row.
     const chipSt = {
       size: 18,
       family: "mono" as const,
@@ -267,31 +246,19 @@ function staticLayer(p: Page, th: Theme) {
       h: 36,
       padX: 13,
     };
-    const cx = L.col;
-    if (solo === undefined) {
-      const chipsW = work.stack.reduce((n, s) => n + measure(page, s, chipSt) + chipSt.padX * 2 + 8, -8);
-      chipRow(page, work.stack, L.x1 - chipsW, 157, L.x1 + 1, chipSt, 8);
-    } else {
-      // Clear of the folio below
-      const cy = 742;
-      line(ctx, cx, cy - 46, cx + COL_W, cy - 46, th.rule);
-      chipRow(page, work.stack, cx + 44, cy, cx + COL_W, chipSt, 8);
-    }
+    const chipsW = work.stack.reduce((n, s) => n + measure(page, s, chipSt) + chipSt.padX * 2 + 8, -8);
+    chipRow(page, work.stack, L.x1 - chipsW, 157, L.x1 + 1, chipSt, 8);
 
     // Copy column
+    const cx = L.col;
     let y = 372;
     const body: TextStyle = { size: 23, color: th.ink, track: -0.004 };
     const named = /^([^:]{2,24}):\s+(.*)$/;
-    // A single app keeps its own highlight and the shared lines.
-    const items = work.highlights.filter((hl) => solo === undefined || (hl.match(named)?.[1] ?? name) === name);
-    items.forEach((hl, i) => {
+    work.highlights.forEach((hl, i) => {
       const m = hl.match(named);
       line(ctx, cx, y - 30, cx + COL_W, y - 30, th.rule);
       text(page, pad2(i + 1), cx, y, { size: 18, family: "mono", color: th.accentText, track: 0.04 });
-      if (m && solo !== undefined) {
-        // The name is already the title
-        y = para(page, m[2].charAt(0).toUpperCase() + m[2].slice(1), cx + 44, y, COL_W - 44, { ...body, size: 30, lh: 42 }) + 48;
-      } else if (m) {
+      if (m) {
         text(page, m[1], cx + 44, y, { size: 18, family: "mono", upper: true, track: 0.1, color: th.ink });
         y = para(page, m[2].charAt(0).toUpperCase() + m[2].slice(1), cx + 44, y + 36, COL_W - 44, { ...body, lh: 32 }) + 42;
       } else {
@@ -374,9 +341,9 @@ function drawSpreadPage(p: Page, th: Theme) {
 }
 
 export function drawReactClient(p: Page) {
-  drawSpreadPage(p, LEFT);
+  drawSpreadPage(p, CLIENT);
 }
 
 export function drawReactPersonal(p: Page) {
-  drawSpreadPage(p, RIGHT);
+  drawSpreadPage(p, PERSONAL);
 }

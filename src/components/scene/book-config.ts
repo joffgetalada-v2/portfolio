@@ -1,7 +1,4 @@
-import { workById, type WorkId } from "@/content/profile";
-
-// While the client React work is hidden, spread 5 shows the two personal apps instead.
-export const REACT_CLIENT_SHOWN = !workById["react-client"].hidden;
+import type { WorkId } from "@/content/profile";
 
 // ---- Book geometry (world units, desk is the XZ plane, y up) ----
 export const PAGE_WIDTH = 1.6;
@@ -51,14 +48,14 @@ export type FaceId =
   | "cover"
   | "contents"
   | "intro"
-  | "timex-hero"
-  | "timex-detail"
   | "malbon"
   | "atomic"
-  | "artisan"
   | "freelance"
+  | "artisan"
   | "react-client"
   | "react-personal"
+  | "timex-hero"
+  | "timex-detail"
   | "toolkit"
   | "experience"
   | "process"
@@ -73,11 +70,11 @@ export interface Sheet {
 // One sheet per leaf. Spread n shows SHEETS[n-1].back on the left and SHEETS[n].front on the right.
 export const SHEETS: Sheet[] = [
   { front: "cover", back: "contents" },
-  { front: "intro", back: "timex-hero" },
-  { front: "timex-detail", back: "malbon" },
-  { front: "atomic", back: "artisan" },
-  { front: "freelance", back: "react-client" },
-  { front: "react-personal", back: "toolkit" },
+  { front: "intro", back: "malbon" },
+  { front: "atomic", back: "freelance" },
+  { front: "artisan", back: "react-client" },
+  { front: "react-personal", back: "timex-hero" },
+  { front: "timex-detail", back: "toolkit" },
   { front: "experience", back: "process" },
   { front: "contact", back: "back-cover" },
 ];
@@ -95,12 +92,10 @@ export interface Spread {
 
 const SPREAD_META: Record<number, { label: string; works: WorkId[] }> = {
   1: { label: "Contents · Hello", works: [] },
-  2: { label: "Timex & Guess Watches", works: ["timex"] },
-  3: { label: "Malbon Golf · Atomic Golf", works: ["malbon", "atomic"] },
-  4: { label: "The Artisan Collective · 100+ stores", works: ["artisan", "freelance"] },
-  5: REACT_CLIENT_SHOWN
-    ? { label: "React projects", works: ["react-client", "react-personal"] }
-    : { label: "Personal React apps", works: ["react-personal"] },
+  2: { label: "Malbon Golf · Atomic Golf", works: ["malbon", "atomic"] },
+  3: { label: "100+ stores · The Artisan Collective", works: ["freelance", "artisan"] },
+  4: { label: "React projects", works: ["react-client", "react-personal"] },
+  5: { label: "Timex & Guess Watches", works: ["timex"] },
   6: { label: "Toolkit · Experience", works: [] },
   7: { label: "Process · Contact", works: [] },
 };
@@ -120,12 +115,12 @@ export const COVER_FACES: FaceId[] = ["cover", "back-cover"];
 
 // Maps a page to its case study for click/hover.
 export const FACE_WORK: Partial<Record<FaceId, WorkId>> = {
-  "timex-hero": "timex",
-  "timex-detail": "timex",
   malbon: "malbon",
   atomic: "atomic",
-  artisan: "artisan",
   freelance: "freelance",
-  "react-client": REACT_CLIENT_SHOWN ? "react-client" : "react-personal",
+  artisan: "artisan",
+  "react-client": "react-client",
   "react-personal": "react-personal",
+  "timex-hero": "timex",
+  "timex-detail": "timex",
 };

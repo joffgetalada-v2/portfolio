@@ -1,4 +1,4 @@
-import { experience, profile, upworkUrl } from "@/content/profile";
+import { profile, upworkUrl } from "@/content/profile";
 import { site } from "@/content/site";
 import { Wordmark } from "@/components/ui/BrandGlyph";
 import { ArrowIcon } from "@/components/ui/icons";
@@ -102,8 +102,8 @@ export function ClassicPortfolio() {
           wide
           aside={
             <p className="max-w-[24rem] text-[14px] leading-relaxed text-ink-muted">
-              Enterprise storefronts, Shopify Plus brands, a WordPress rebuild and a long-running freelance practice.
-              The same projects that fill the pages of the book.
+              Projects by platform: Shopify and Shopify Plus, WordPress and WooCommerce, React and Next.js, and
+              Salesforce Commerce Cloud (Demandware). The Shopify section also lists the stores I&rsquo;ve worked on.
             </p>
           }
         >
@@ -112,7 +112,7 @@ export function ClassicPortfolio() {
 
         <Section id="experience" n="03" title="Experience">
           <ol className="relative">
-            {experience.map((job) => (
+            {profile.experience.map((job) => (
               <li key={`${job.company}-${job.period}`} className="grid gap-3 border-t border-line py-8 first:border-t-0 first:pt-0 md:grid-cols-9 md:gap-8 md:py-10 md:first:pt-0">
                 <div className="md:col-span-3">
                   <p className="flex items-center gap-2.5 font-mono text-[11.5px] tabular-nums text-ink">
