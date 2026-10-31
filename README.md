@@ -31,7 +31,7 @@ In development, http://localhost:3000/dev/faces renders every book page side by 
 | Store screenshots in the mosaic tile | `src/content/stores.ts`, images in `public/works/stores/` |
 | Still of the desk shown before the 3D scene loads | `public/poster/` |
 | Brand name (logo, cover, page titles) | `src/content/site.ts` |
-| CV download | `public/Joffrey-Getalada-CV.pdf` |
+| CV download | `public/Joffrey-Getalada-CV.pdf`, printed from `cv/Joffrey-Getalada-CV.html` |
 | Book page artwork | `src/components/scene/textures/` |
 | Desk props (cup, plant, pen, business cards) | `src/components/scene/props/` |
 | Share image (Open Graph) | `src/app/opengraph-image.tsx`, fonts in `assets/fonts/` |
@@ -40,17 +40,18 @@ Options in `profile.ts`:
 
 - `links.upwork`: Upwork profile URL. Shown in the contact panel and on the classic page when set.
 - `showPhone`: shows the phone number publicly. Off by default.
-- `works[].image`: screenshot path, e.g. `"/works/malbon.jpg"` in `public/works/`. Replaces the
+- `works[].image`: screenshot path, e.g. `"/works/gameology.webp"` in `public/works/`. Replaces the
   illustration on the book page.
 
-`projects.ts` drives the category tabs (Shopify, WordPress, React, SFCC in that order). Fields left as
+`projects.ts` drives the category tabs (Shopify, WordPress, React in that order). Fields left as
 `null` are hidden on the card; fill them only with confirmed facts. In `shopify-stores.json`, setting
 `industry` on any entry switches the list from A to Z to grouping by industry, and `logo` (a URL or a
 path in `public/`) shows a logo next to the name.
 
 The posters in `public/poster/` are captures of the closed-book desk view at 390x844, 768x1024,
 1024x768 and 1440x900 (all 2x). If the desk, lighting or camera changes, capture them again, or the
-fade from poster to live scene will jump.
+fade from poster to live scene will jump. They are WebP from sharp at effort 6: quality 88 for the
+390x844 and 1440x900 files, 80 for the other two.
 
 ## Deployment
 

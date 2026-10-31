@@ -1,0 +1,415 @@
+<!doctype html>
+<!--
+  CV source. Edit the text here, then print from Chrome: Destination "Save as PDF", Paper "Letter",
+  Margins "Default", Headers and footers off, Background graphics on. Save over public/Joffrey-Getalada-CV.pdf.
+  Page 1 is full: if a line is added above the Timex role, that role moves to page 2 and the CV runs to 3 pages.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Joffrey Anthony Getalada - CV</title>
+<meta name="author" content="Joffrey Anthony Getalada">
+<meta name="description" content="Senior Shopify Plus Developer">
+<style>
+  @font-face {
+    font-family: "Geist";
+    src: url("../assets/fonts/Geist-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Geist";
+    src: url("../assets/fonts/Geist-Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Instrument Serif";
+    src: url("../assets/fonts/InstrumentSerif-Italic.ttf") format("truetype");
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  :root {
+    --ink: #151513;
+    --muted: #5d5d58;
+    --accent: #8a6a2f;
+    --line: #d9d5cc;
+  }
+
+  @page {
+    size: letter;
+    margin: 0.5in 0.55in;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    margin: 0;
+    background: #fff;
+    color: var(--ink);
+    font-family: "Geist", Arial, sans-serif;
+    font-size: 9.5pt;
+    line-height: 1.32;
+    font-variant-ligatures: none;
+    font-feature-settings: "liga" 0, "clig" 0;
+    hyphens: none;
+  }
+
+  /* On screen, show the page as a sheet. */
+  @media screen {
+    body {
+      background: #ebe9e4;
+      padding: 24px 0;
+    }
+    main {
+      width: 8.5in;
+      min-height: 11in;
+      margin: 0 auto;
+      padding: 0.5in 0.55in;
+      background: #fff;
+      box-shadow: 0 1px 4px rgb(0 0 0 / 0.12);
+    }
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  p,
+  ul,
+  h1,
+  h2,
+  h3 {
+    margin: 0;
+  }
+
+  /* Header */
+  .name {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 27pt;
+    line-height: 1;
+    letter-spacing: -0.005em;
+  }
+
+  .title {
+    margin-top: 4pt;
+    font-weight: 500;
+    font-size: 12pt;
+    line-height: 1.25;
+  }
+
+  .title-sub {
+    font-size: 10pt;
+    line-height: 1.3;
+    color: var(--muted);
+  }
+
+  .meta {
+    margin-top: 5pt;
+    padding-top: 5pt;
+    border-top: 0.75pt solid var(--ink);
+    font-size: 9pt;
+    line-height: 1.45;
+    color: var(--muted);
+  }
+
+  .meta a {
+    color: var(--ink);
+  }
+
+  .meta .item {
+    white-space: nowrap;
+  }
+
+  .sep {
+    color: #b9b4a9;
+  }
+
+  /* Sections */
+  section {
+    margin-top: 8.5pt;
+  }
+
+  h2 {
+    margin-bottom: 4pt;
+    padding-bottom: 2.5pt;
+    border-bottom: 0.75pt solid var(--line);
+    font-size: 8.5pt;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    break-after: avoid;
+  }
+
+  h3 {
+    margin: 6pt 0 2pt;
+    font-size: 9pt;
+    font-weight: 500;
+    color: var(--muted);
+    break-after: avoid;
+  }
+
+  h3:first-of-type {
+    margin-top: 0;
+  }
+
+  ul {
+    padding-left: 12pt;
+  }
+
+  li {
+    padding-left: 2pt;
+    break-inside: avoid;
+  }
+
+  li + li {
+    margin-top: 1pt;
+  }
+
+  li::marker {
+    color: var(--accent);
+  }
+
+  .label,
+  .job-role,
+  .project-name {
+    font-weight: 500;
+  }
+
+  /* Skills sit flush left, one group per line. */
+  .plain {
+    list-style: none;
+    padding-left: 0;
+    font-size: 9pt;
+  }
+
+  .plain li {
+    padding-left: 0;
+  }
+
+  /* Experience */
+  .job {
+    break-inside: avoid;
+  }
+
+  .job + .job {
+    margin-top: 7pt;
+  }
+
+  .job-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12pt;
+  }
+
+  .job-head .job-role {
+    margin: 0;
+    font-size: 10.25pt;
+    color: var(--ink);
+  }
+
+  .job-dates {
+    flex: none;
+    font-size: 9pt;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .job-org {
+    margin-bottom: 2pt;
+    font-size: 9pt;
+    color: var(--muted);
+  }
+
+  /* Projects */
+  .projects {
+    font-size: 9pt;
+  }
+
+  .projects li + li {
+    margin-top: 2pt;
+  }
+
+  .project-meta {
+    color: var(--muted);
+  }
+
+  .project-link {
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .nowrap {
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1 class="name">Joffrey Anthony Getalada</h1>
+    <p class="title">Senior Shopify Plus Developer</p>
+    <p class="title-sub">WordPress · React/Next.js · Salesforce Commerce Cloud (SFCC/Demandware)</p>
+    <p class="meta">
+      <span class="item">Cebu, Philippines (GMT+8)</span> <span class="sep">|</span> <span class="item">Remote</span> <span class="sep">|</span> <span class="item">Overlap with US, AU &amp; EU hours</span><br>
+      <span class="item"><a href="tel:+639171744467">+63 917 174 4467</a></span> <span class="sep">|</span> <span class="item"><a href="mailto:joffgetalada@gmail.com">joffgetalada@gmail.com</a></span> <span class="sep">|</span> <span class="item"><a href="https://linkedin.com/in/joffreygetalada">linkedin.com/in/joffreygetalada</a></span><br>
+      <span class="item"><a href="https://github.com/joffgetalada-v2">github.com/joffgetalada-v2</a></span> <span class="sep">|</span> <span class="item"><a href="https://www.upwork.com/freelancers/joffreyanthonyg">upwork.com/freelancers/joffreyanthonyg</a></span>
+    </p>
+  </header>
+
+  <section>
+    <h2>Professional Summary</h2>
+    <p>Senior Shopify Plus developer with 12+ years in e-commerce for brands in the US, Europe, Australia, New Zealand, and Singapore. Delivered 100+ Shopify and Shopify Plus stores end to end and spent 6+ years in-house on the Timex and Guess Watches storefronts (Shopify and Salesforce Commerce Cloud). Also builds with WordPress/WooCommerce and React/Next.js. Uses AI as a coding assistant only, preferring to write the code and check every change personally.</p>
+  </section>
+
+  <section>
+    <h2>Core Strengths</h2>
+    <ul>
+      <li><span class="label">Enterprise commerce:</span> 6+ years on international Timex and Guess Watches storefronts on Shopify and SFCC.</li>
+      <li><span class="label">Scale of delivery:</span> 100+ Shopify and Shopify Plus stores delivered end to end, including new builds, theme migrations and revamps, custom development, speed optimization, app integrations, and platform migrations.</li>
+      <li><span class="label">Performance without regressions:</span> Core Web Vitals improvements shipped incrementally with regression testing.</li>
+      <li><span class="label">Remote delivery:</span> 10+ years across time zones, from requirements and Figma handoff to launch and ongoing support.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Technical Skills</h2>
+    <ul class="plain">
+      <li><span class="label">Languages &amp; Frameworks:</span> JavaScript (ES6+), jQuery, React, Next.js, PHP, Laravel, Python, Django, HTML5, CSS3/SASS, Bootstrap, <span class="nowrap">Tailwind CSS</span></li>
+      <li><span class="label">Platforms:</span> Shopify, Shopify Plus, Liquid, Shopify CLI, Salesforce Commerce Cloud (Demandware), WooCommerce, WordPress</li>
+      <li><span class="label">Engineering:</span> REST API &amp; third-party integrations, platform migrations, performance optimization (Core Web Vitals), technical SEO, accessibility, debugging &amp; root-cause analysis, cross-browser testing</li>
+      <li><span class="label">Data &amp; Tools:</span> MySQL, Git, GitHub, GitLab, Bitbucket, Jira, Figma, Google Lighthouse, GTmetrix, Agile/Scrum</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Professional Experience</h2>
+
+    <div class="job">
+      <div class="job-head">
+        <h3 class="job-role">Senior E-Commerce Engineer (Freelance)</h3>
+        <span class="job-dates">2016 – Present</span>
+      </div>
+      <p class="job-org">International Clients | Remote</p>
+      <ul>
+        <li>Engineered, migrated, and optimized 100+ Shopify and Shopify Plus stores, owning delivery from requirements and Figma handoff through Git-based development, launch, and post-release monitoring.</li>
+        <li>Improved page speed on client stores through incremental releases and regression testing, protecting carts, filters, menus, and integrations.</li>
+        <li>Resolved complex production issues as sole engineer for small businesses and within 3–5 person teams for <span class="nowrap">mid-to-large</span> clients, tracing root causes across theme code, JavaScript, app conflicts, and platform settings.</li>
+        <li>Integrated and validated third-party systems including Klaviyo, preorder and back-in-stock apps, store locators, analytics, reviews, and marketing platforms.</li>
+        <li>Led a full storefront rebuild for The Artisan Collective on WordPress and WooCommerce, including product and content transfer and SEO preservation.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-head">
+        <h3 class="job-role">Senior Systems Analyst, E-Commerce</h3>
+        <span class="job-dates">Jun 2018 – Dec 2024</span>
+      </div>
+      <p class="job-org">TMX Philippines Inc. (Timex Group) | Cebu, Philippines</p>
+      <ul>
+        <li>Built and maintained production code for Timex and Guess Watches storefronts across international markets on Shopify and Salesforce Commerce Cloud (Demandware), using JavaScript, Liquid, HTML5, and CSS3/SASS.</li>
+        <li>Improved purchase journeys by refining product pages, navigation, content modules, and checkout-related interfaces with product, design, marketing, and QA teams.</li>
+        <li>Used Lighthouse and GTmetrix to find bottlenecks, optimize front-end assets, and verify Core Web Vitals before deployment.</li>
+        <li>Reduced recurring defects by documenting development procedures and standardizing quality checks within Agile/Scrum workflows in Jira.</li>
+        <li>Retained for 6+ years supporting evolving commerce platforms and global business priorities.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-head">
+        <h3 class="job-role">Full Stack WordPress Developer</h3>
+        <span class="job-dates">Sep 2016 – Jun 2018</span>
+      </div>
+      <p class="job-org">Monstar Lab Cebu, Inc. | Cebu, Philippines</p>
+      <ul>
+        <li>Built custom WordPress themes, plugins, and reusable templates with PHP, MySQL, JavaScript, HTML5, and CSS3.</li>
+        <li>Developed the Yoshinoya website from the ground up and a responsive site for Nuat Thai Spa.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-head">
+        <h3 class="job-role">Full Stack WordPress Developer</h3>
+        <span class="job-dates">Mar 2015 – Mar 2016</span>
+      </div>
+      <p class="job-org">Social Media Enterprise Pte. Ltd. | Singapore</p>
+      <ul>
+        <li>Developed and maintained WordPress and Laravel applications for multiple clients, covering front-end features, PHP functionality, database updates, and technical SEO.</li>
+        <li>Managed website and server migrations with backups, DNS and hosting changes, and production validation to protect service continuity.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-head">
+        <h3 class="job-role">IT Administrator</h3>
+        <span class="job-dates">Mar 2014 – Mar 2015</span>
+      </div>
+      <p class="job-org">Expressions International | Singapore</p>
+      <ul>
+        <li>Maintained the online store, advertising websites, and day-to-day IT operations; built HTML email templates for marketing campaigns.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Selected Projects</h2>
+    <div class="projects">
+    <h3>Shopify / Shopify Plus</h3>
+    <ul>
+      <li><span class="project-name">Gameology</span> <span class="project-meta">(Shopify, Australia)</span>: Theme customization (custom sections, templates, front-end changes). <a class="project-link" href="https://www.gameology.com.au">gameology.com.au</a></li>
+      <li><span class="project-name">Timex &amp; Guess Watches</span> <span class="project-meta">(SFCC &amp; Shopify)</span>: Multi-market product pages, navigation, and checkout-related UI. <a class="project-link" href="https://timex.com">timex.com</a></li>
+      <li><span class="project-name">Malbon Golf / Buckets Club</span> <span class="project-meta">(Shopify Plus)</span>: Front-end and mobile enhancements, speed work, and support. <a class="project-link" href="https://malbon.com">malbon.com</a></li>
+      <li><span class="project-name">Atomic Golf</span> <span class="project-meta">(Shopify)</span>: Framer to Shopify content migration; reusable Liquid sections and landing pages. <a class="project-link" href="https://atomicgolf.com">atomicgolf.com</a></li>
+      <li><span class="project-name">Dash Cams R Us</span> <span class="project-meta">(Shopify, Australia)</span>: Shopify store with custom templates and a mega menu. <a class="project-link" href="https://dashcamsrus.com.au">dashcamsrus.com.au</a></li>
+    </ul>
+
+    <h3>WordPress / WooCommerce</h3>
+    <ul>
+      <li><span class="project-name">The Artisan Collective</span> <span class="project-meta">(WooCommerce)</span>: Led a full storefront rebuild with product and content transfer; SEO preserved.</li>
+      <li><span class="project-name">City Mazda</span> <span class="project-meta">(WordPress, Australia)</span>: Dealer website and campaign landing pages. <a class="project-link" href="https://www.citymazda.com.au">citymazda.com.au</a></li>
+      <li><span class="project-name">Cega</span> <span class="project-meta">(WordPress)</span>: Main developer for the website (PHP, MySQL, HTML, CSS). <a class="project-link" href="https://www.cega-jp.com">cega-jp.com</a></li>
+      <li><span class="project-name">Yoshinoya</span> <span class="project-meta">(WordPress, Monstar Lab Cebu)</span>: Developed the website from the ground up. <a class="project-link" href="https://www.yoshinoya.com">yoshinoya.com</a></li>
+      <li><span class="project-name">Nuat Thai Spa</span> <span class="project-meta">(WordPress, Monstar Lab Cebu)</span>: Main developer for the responsive website. <a class="project-link" href="https://cebu-massage-spa.com">cebu-massage-spa.com</a></li>
+      <li><span class="project-name">QQEnglish</span> <span class="project-meta">(WordPress)</span>: Maintained the websites, fixed bugs, and built new pages and functionality. <a class="project-link" href="https://qqenglish.jp">qqenglish.jp</a></li>
+      <li><span class="project-name">Appstars</span> <span class="project-meta">(WordPress)</span>: Maintained the websites, fixed bugs, and built new pages and functionality. <a class="project-link" href="https://www.appstars.io">appstars.io</a></li>
+      <li><span class="project-name">Rusty Wallace Chevrolet</span> <span class="project-meta">(WordPress)</span>: Maintained the site, content, and blog. <a class="project-link" href="https://rustywallacechevrolet.com">rustywallacechevrolet.com</a></li>
+      <li><span class="project-name">Monican Marketing</span> <span class="project-meta">(WordPress, Divi)</span>: Maintained the site, content, and blog. <a class="project-link" href="https://monicanmarketing.com">monicanmarketing.com</a></li>
+    </ul>
+
+    <h3>React / Next.js</h3>
+    <ul>
+      <li><span class="project-name">EV360</span> <span class="project-meta">(Next.js, Australia)</span>: Site for an independent EV battery health-check service, with online booking. <a class="project-link" href="https://ev360.com.au">ev360.com.au</a></li>
+      <li><span class="project-name">FineVu Australia</span> <span class="project-meta">(Next.js)</span>: Dash cam brand site with product pages and warranty information. <a class="project-link" href="https://www.finevuaustralia.com.au">finevuaustralia.com.au</a></li>
+      <li><span class="project-name">SulitScan PH</span> <span class="project-meta">(Next.js, personal project)</span>: Curated deals with fake-discount checks and shopping guides. <a class="project-link" href="https://sulitscan.com">sulitscan.com</a></li>
+      <li><span class="project-name">ImportTax PH</span> <span class="project-meta">(Next.js, personal project)</span>: Free calculator for Philippine customs duty and 12% VAT. <a class="project-link" href="https://importtaxph.com">importtaxph.com</a></li>
+    </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Education</h2>
+    <p><span class="label">Bachelor of Science in Information Technology</span> | University of Cebu – Banilad, Philippines | 2009</p>
+  </section>
+
+  <section>
+    <h2>Additional Information</h2>
+    <p><span class="label">Languages:</span> English (professional working proficiency), Filipino (native)</p>
+  </section>
+</main>
+</body>
+</html>
