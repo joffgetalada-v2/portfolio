@@ -48,10 +48,12 @@ export type FaceId =
   | "cover"
   | "contents"
   | "intro"
-  | "malbon"
+  | "gameology"
   | "atomic"
   | "freelance"
   | "artisan"
+  | "dashcamsrus"
+  | "city-mazda"
   | "react-client"
   | "react-personal"
   | "timex-hero"
@@ -70,9 +72,10 @@ export interface Sheet {
 // One sheet per leaf. Spread n shows SHEETS[n-1].back on the left and SHEETS[n].front on the right.
 export const SHEETS: Sheet[] = [
   { front: "cover", back: "contents" },
-  { front: "intro", back: "malbon" },
+  { front: "intro", back: "gameology" },
   { front: "atomic", back: "freelance" },
-  { front: "artisan", back: "react-client" },
+  { front: "artisan", back: "dashcamsrus" },
+  { front: "city-mazda", back: "react-client" },
   { front: "react-personal", back: "timex-hero" },
   { front: "timex-detail", back: "toolkit" },
   { front: "experience", back: "process" },
@@ -92,12 +95,13 @@ export interface Spread {
 
 const SPREAD_META: Record<number, { label: string; works: WorkId[] }> = {
   1: { label: "Contents · Hello", works: [] },
-  2: { label: "Malbon Golf · Atomic Golf", works: ["malbon", "atomic"] },
+  2: { label: "Gameology · Atomic Golf", works: ["gameology", "atomic"] },
   3: { label: "100+ stores · The Artisan Collective", works: ["freelance", "artisan"] },
-  4: { label: "React projects", works: ["react-client", "react-personal"] },
-  5: { label: "Timex & Guess Watches", works: ["timex"] },
-  6: { label: "Toolkit · Experience", works: [] },
-  7: { label: "Process · Contact", works: [] },
+  4: { label: "Dash Cams R Us · City Mazda", works: ["dashcamsrus", "city-mazda"] },
+  5: { label: "React projects", works: ["react-client", "react-personal"] },
+  6: { label: "Timex & Guess Watches", works: ["timex"] },
+  7: { label: "Toolkit · Experience", works: [] },
+  8: { label: "Process · Contact", works: [] },
 };
 
 export const SPREADS: Spread[] = SHEETS.slice(1).map((sheet, i) => {
@@ -115,10 +119,12 @@ export const COVER_FACES: FaceId[] = ["cover", "back-cover"];
 
 // Maps a page to its case study for click/hover.
 export const FACE_WORK: Partial<Record<FaceId, WorkId>> = {
-  malbon: "malbon",
+  gameology: "gameology",
   atomic: "atomic",
   freelance: "freelance",
   artisan: "artisan",
+  dashcamsrus: "dashcamsrus",
+  "city-mazda": "city-mazda",
   "react-client": "react-client",
   "react-personal": "react-personal",
   "timex-hero": "timex",

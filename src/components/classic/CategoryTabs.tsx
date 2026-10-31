@@ -107,7 +107,7 @@ export function CategoryTabs({ panels, label }: { panels: CategoryPanel[]; label
   return (
     <div>
       {enhanced ? (
-        <div role="tablist" aria-label={label} className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
+        <div role="tablist" aria-label={label} className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap [&>:last-child:nth-child(odd)]:col-span-2">
           {panels.map((p, i) => {
             const selected = p.id === active;
             return (
@@ -134,7 +134,7 @@ export function CategoryTabs({ panels, label }: { panels: CategoryPanel[]; label
         </div>
       ) : (
         <nav aria-label={label}>
-          <ul className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
+          <ul className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap [&>:last-child:nth-child(odd)]:col-span-2">
             {panels.map((p) => (
               <li key={p.id} className="grid">
                 <a href={`#${p.id}`} className={`${PILL} ${IDLE}`}>

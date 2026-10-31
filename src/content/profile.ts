@@ -17,13 +17,12 @@ export const profile = {
   links: {
     linkedin: "https://linkedin.com/in/joffreygetalada",
     github: "https://github.com/joffgetalada-v2",
-    // TODO: replace with the Upwork profile URL. Until then the Upwork buttons open the contact panel.
-    upwork: "UPWORK_PROFILE_URL",
+    upwork: "https://www.upwork.com/freelancers/joffreyanthonyg",
   },
   summary:
     "Senior Shopify Plus developer with 12+ years building e-commerce storefronts for brands in the US, Europe, Australia, New Zealand, and Singapore. 100+ Shopify and Shopify Plus stores delivered end to end, plus six years in-house on the Timex and Guess Watches global storefronts (Shopify and Salesforce Commerce Cloud / Demandware).",
   summaryMore:
-    "New builds on free themes, free-to-premium theme migrations, premium theme revamps, custom front-end and back-end work, speed optimization, app integrations, and platform migrations. Also WordPress/WooCommerce (custom themes, plugins, migrations) and React/Next.js/Tailwind. Works independently or in distributed teams, owning code review, testing, and release quality.",
+    "New builds on free themes, free-to-premium theme migrations, premium theme revamps, custom front-end and back-end work, speed optimization, app integrations, and platform migrations. Also WordPress/WooCommerce (custom themes, plugins, migrations) and React/Next.js/Tailwind. Works independently or in distributed teams, owning code review, testing, and release quality. Uses AI as a coding assistant only, preferring to write the code and check every change personally.",
   stats: [
     { value: "12+", label: "Years shipping production e-commerce" },
     { value: "100+", label: "Shopify & Shopify Plus stores" },
@@ -153,7 +152,16 @@ export const profile = {
 // Upwork link only once a real URL is set.
 export const upworkUrl = /^https?:\/\//.test(profile.links.upwork) ? profile.links.upwork : null;
 
-export type WorkId = "timex" | "malbon" | "atomic" | "artisan" | "freelance" | "react-client" | "react-personal";
+export type WorkId =
+  | "gameology"
+  | "atomic"
+  | "freelance"
+  | "artisan"
+  | "dashcamsrus"
+  | "city-mazda"
+  | "react-client"
+  | "react-personal"
+  | "timex";
 
 /** Live-site screenshot for the classic page work tiles. */
 export interface SiteShot {
@@ -178,7 +186,7 @@ export interface Work {
   stack: string[];
   // Used by the book page artwork and the case-study dialog.
   palette: { bg: string; ink: string; accent: string };
-  // e.g. "/works/malbon.jpg", replaces the illustration on the book page.
+  // e.g. "/works/gameology.webp", replaces the illustration on the book page.
   image?: string;
   // Classic page tiles fall back to an illustration without these.
   shots?: SiteShot[];
@@ -189,23 +197,21 @@ export const shot = (name: string, site: string): SiteShot => ({ src: `/works/${
 // Case studies shown in the 3D book and its dialog. The classic page lists projects.ts.
 export const works: Work[] = [
   {
-    id: "malbon",
+    id: "gameology",
     index: "01",
-    title: "Malbon Golf / Buckets Club",
-    client: "Malbon Golf",
-    kind: "Lifestyle golf brand",
-    platform: "Shopify Plus",
-    role: "Front-end engineer",
-    summary: "Front-end enhancements, mobile improvements, performance work, and ongoing production support for a Shopify Plus golf lifestyle brand.",
+    title: "Gameology",
+    client: "Gameology",
+    kind: "Board game retailer",
+    platform: "Shopify",
+    role: "Shopify developer",
+    summary: "Theme customization for an Australian board game store: custom sections, templates, and front-end changes on the existing Shopify theme.",
     highlights: [
-      "Front-end enhancements across the storefront.",
-      "Mobile improvements for shoppers on small screens.",
-      "Performance work on the live store.",
-      "Ongoing production support.",
+      "Built custom sections and templates on the existing theme.",
+      "Made front-end changes to the storefront.",
     ],
-    stack: ["Shopify Plus", "Liquid", "JavaScript", "CSS3/SASS"],
-    palette: { bg: "#1f3b2d", ink: "#f2ede0", accent: "#e4572e" },
-    shots: [shot("malbon", "malbon.com")],
+    stack: ["Shopify", "Liquid"],
+    palette: { bg: "#1b1b1e", ink: "#f5f5f5", accent: "#b78d3a" },
+    shots: [shot("gameology", "gameology.com.au")],
   },
   {
     id: "atomic",
@@ -264,8 +270,36 @@ export const works: Work[] = [
     palette: { bg: "#efe6d8", ink: "#2b211a", accent: "#a4532f" },
   },
   {
-    id: "react-client",
+    id: "dashcamsrus",
     index: "05",
+    title: "Dash Cams R Us",
+    client: "Dash Cams R Us",
+    kind: "Dash cam retailer",
+    platform: "Shopify",
+    role: "Shopify developer",
+    summary: "Shopify store for an Australian dash cam retailer, with custom templates and a mega menu.",
+    highlights: ["Custom templates for the store.", "Mega menu navigation."],
+    stack: ["Shopify", "Liquid"],
+    palette: { bg: "#0b0d0c", ink: "#f4f7f5", accent: "#24ff4f" },
+    shots: [shot("dashcamsrus", "dashcamsrus.com.au")],
+  },
+  {
+    id: "city-mazda",
+    index: "06",
+    title: "City Mazda",
+    client: "City Mazda",
+    kind: "Mazda dealership",
+    platform: "WordPress",
+    role: "WordPress developer",
+    summary: "Dealer website and campaign landing pages on WordPress.",
+    highlights: ["Dealer website on WordPress.", "Campaign landing pages."],
+    stack: ["WordPress"],
+    palette: { bg: "#f5f5f5", ink: "#191919", accent: "#8e1c2e" },
+    shots: [shot("citymazda", "citymazda.com.au")],
+  },
+  {
+    id: "react-client",
+    index: "07",
     title: "EV360 · FineVu Australia",
     client: "Australian brands",
     kind: "React client builds",
@@ -284,7 +318,7 @@ export const works: Work[] = [
   },
   {
     id: "react-personal",
-    index: "06",
+    index: "08",
     title: "SulitScan PH · ImportTax PH",
     client: "Personal projects",
     kind: "Personal products",
@@ -303,7 +337,7 @@ export const works: Work[] = [
   },
   {
     id: "timex",
-    index: "07",
+    index: "09",
     title: "Timex & Guess Watches",
     client: "Timex Group · TMX Philippines Inc.",
     kind: "Enterprise storefronts",

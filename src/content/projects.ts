@@ -1,21 +1,21 @@
-import { shot, type SiteShot } from "./profile";
+import { shot, workById, type SiteShot } from "./profile";
 
 // Project cards on the classic page. Fill unknowns (null) only with confirmed facts.
 
-export type Category = "shopify" | "wordpress" | "react" | "sfcc";
+export type Category = "shopify" | "wordpress" | "react";
 
 // Page order, tabs and anchors all follow this list.
 export const CATEGORIES: { id: Category; label: string; short: string }[] = [
   { id: "shopify", label: "Shopify / Shopify Plus", short: "Shopify" },
   { id: "wordpress", label: "WordPress / WooCommerce", short: "WordPress" },
   { id: "react", label: "React / Next.js", short: "React" },
-  { id: "sfcc", label: "Salesforce Commerce Cloud (Demandware)", short: "SFCC" },
 ];
 
 export const SHOPIFY_TAGS = [
   "New build (free theme)",
   "Free → premium theme migration",
   "Premium theme revamp",
+  "Theme customization",
   "Shopify Plus",
   "Speed optimization",
   "App integration",
@@ -48,6 +48,38 @@ export interface Project {
 
 export const projects: Project[] = [
   // ---- Shopify / Shopify Plus ----
+  {
+    id: "gameology",
+    name: "Gameology",
+    client: "Gameology",
+    country: "Australia",
+    platform: "Shopify",
+    category: "shopify",
+    subTags: ["Theme customization"],
+    year: null, // TODO
+    scope: "Theme customization: custom sections, templates, and front-end changes on the existing theme.",
+    stack: ["Shopify", "Liquid"],
+    result: null, // TODO
+    link: "https://www.gameology.com.au",
+    screenshots: [shot("gameology", "gameology.com.au")],
+    palette: workById.gameology.palette,
+  },
+  {
+    id: "timex",
+    name: "Timex & Guess Watches",
+    client: "Timex Group · TMX Philippines Inc.",
+    country: null, // multi-market
+    platform: "Salesforce Commerce Cloud (Demandware) · Shopify",
+    category: "shopify",
+    subTags: [],
+    year: "2018–2024",
+    scope: "Multi-market storefronts on SFCC and Shopify: product pages, navigation, content modules, checkout-related UI, and Core Web Vitals.",
+    stack: ["Salesforce Commerce Cloud (Demandware)", "Shopify", "Liquid", "JavaScript", "SASS", "Lighthouse", "GTmetrix", "Jira"],
+    result: "Retained for six years; recurring defects reduced through documented procedures and standard quality checks.",
+    link: "https://timex.com",
+    screenshots: [shot("timex", "timex.com"), shot("guess", "guesswatches.com")],
+    palette: { bg: "#0d1b2a", ink: "#f4efe6", accent: "#c9a227" },
+  },
   {
     id: "malbon",
     name: "Malbon Golf / Buckets Club",
@@ -92,28 +124,12 @@ export const projects: Project[] = [
     scope: "Shopify store with custom templates and a mega menu.",
     stack: ["Shopify", "Liquid"],
     result: null, // TODO
-    link: null, // TODO
-    screenshots: [], // TODO
-    palette: { bg: "#101418", ink: "#eef2f6", accent: "#95bf47" },
+    link: "https://dashcamsrus.com.au",
+    screenshots: [shot("dashcamsrus", "dashcamsrus.com.au")],
+    palette: workById.dashcamsrus.palette,
   },
 
   // ---- WordPress / WooCommerce ----
-  {
-    id: "city-mazda",
-    name: "City Mazda",
-    client: "City Mazda",
-    country: null, // TODO
-    platform: "WordPress",
-    category: "wordpress",
-    subTags: [],
-    year: null, // TODO
-    scope: "Dealer website and campaign landing pages.",
-    stack: ["WordPress"],
-    result: null, // TODO
-    link: null, // TODO
-    screenshots: [],
-    palette: { bg: "#151515", ink: "#f2f2f2", accent: "#c8102e" },
-  },
   {
     id: "artisan",
     name: "The Artisan Collective",
@@ -131,6 +147,38 @@ export const projects: Project[] = [
     palette: { bg: "#efe6d8", ink: "#2b211a", accent: "#a4532f" },
   },
   {
+    id: "city-mazda",
+    name: "City Mazda",
+    client: "City Mazda",
+    country: "Australia",
+    platform: "WordPress",
+    category: "wordpress",
+    subTags: [],
+    year: null, // TODO
+    scope: "Dealer website and campaign landing pages.",
+    stack: ["WordPress"],
+    result: null, // TODO
+    link: "https://www.citymazda.com.au",
+    screenshots: [shot("citymazda", "citymazda.com.au")],
+    palette: workById["city-mazda"].palette,
+  },
+  {
+    id: "cega",
+    name: "Cega",
+    client: "Cega",
+    country: null, // TODO
+    platform: "WordPress",
+    category: "wordpress",
+    subTags: [],
+    year: null, // TODO
+    scope: "Main developer for the website.",
+    stack: ["WordPress", "PHP", "MySQL", "HTML", "CSS"],
+    result: null, // TODO
+    link: "https://www.cega-jp.com",
+    screenshots: [shot("cega", "cega-jp.com")],
+    palette: { bg: "#f3f1ec", ink: "#1a1a1a", accent: "#c8102e" },
+  },
+  {
     id: "yoshinoya",
     name: "Yoshinoya",
     client: "Yoshinoya",
@@ -142,25 +190,89 @@ export const projects: Project[] = [
     scope: "Developed the website from the ground up at Monstar Lab Cebu.",
     stack: ["WordPress", "PHP", "MySQL", "JavaScript"],
     result: null, // TODO
-    link: null, // TODO
-    screenshots: [],
+    link: "https://www.yoshinoya.com",
+    screenshots: [shot("yoshinoya", "yoshinoya.com")],
     palette: { bg: "#f4efe6", ink: "#1d1a16", accent: "#e8730c" },
   },
   {
     id: "nuat-thai",
     name: "Nuat Thai Spa",
     client: "Nuat Thai Spa",
+    country: "Philippines",
+    platform: "WordPress",
+    category: "wordpress",
+    subTags: [],
+    year: null, // TODO
+    scope: "Main developer for the responsive website, built at Monstar Lab Cebu.",
+    stack: ["WordPress", "PHP", "MySQL", "Bootstrap 3"],
+    result: null, // TODO
+    link: "https://cebu-massage-spa.com",
+    screenshots: [shot("nuat-thai", "cebu-massage-spa.com")],
+    palette: { bg: "#efe8dc", ink: "#2a2118", accent: "#8a6a3b" },
+  },
+  {
+    id: "qqenglish",
+    name: "QQEnglish",
+    client: "QQEnglish",
     country: null, // TODO
     platform: "WordPress",
     category: "wordpress",
     subTags: [],
     year: null, // TODO
-    scope: "Responsive website, built at Monstar Lab Cebu.",
-    stack: ["WordPress", "PHP"],
+    scope: "Maintained the websites, fixed bugs, and built new pages and functionality.",
+    stack: ["WordPress", "PHP", "MySQL", "HTML", "CSS", "jQuery"],
     result: null, // TODO
-    link: null, // TODO
-    screenshots: [],
-    palette: { bg: "#efe8dc", ink: "#2a2118", accent: "#8a6a3b" },
+    link: "https://qqenglish.jp",
+    screenshots: [shot("qqenglish", "qqenglish.jp")],
+    palette: { bg: "#f2f5fa", ink: "#14213d", accent: "#e63946" },
+  },
+  {
+    id: "appstars",
+    name: "Appstars",
+    client: "Appstars",
+    country: null, // TODO
+    platform: "WordPress",
+    category: "wordpress",
+    subTags: [],
+    year: null, // TODO
+    scope: "Maintained the websites, fixed bugs, and built new pages and functionality.",
+    stack: ["WordPress", "PHP", "MySQL", "Bootstrap 3"],
+    result: null, // TODO
+    link: "https://www.appstars.io",
+    screenshots: [shot("appstars", "appstars.io")],
+    palette: { bg: "#0f172a", ink: "#e2e8f0", accent: "#38bdf8" },
+  },
+  {
+    id: "rusty-wallace",
+    name: "Rusty Wallace Chevrolet",
+    client: "Rusty Wallace Chevrolet",
+    country: null, // TODO
+    platform: "WordPress",
+    category: "wordpress",
+    subTags: [],
+    year: null, // TODO
+    scope: "Maintained the website and updated content and the blog.",
+    stack: ["WordPress", "Bootstrap 3", "HTML", "CSS", "jQuery"],
+    result: null, // TODO
+    link: "https://rustywallacechevrolet.com",
+    screenshots: [], // no capture: the live site blocks automated browsers
+    palette: { bg: "#111418", ink: "#f1f3f5", accent: "#d4a017" },
+  },
+  {
+    id: "monican",
+    name: "Monican Marketing",
+    client: "Monican Marketing",
+    country: null, // TODO
+    platform: "WordPress · Divi",
+    category: "wordpress",
+    subTags: [],
+    year: null, // TODO
+    scope: "Maintained the website and updated content and the blog.",
+    stack: ["WordPress", "Divi", "HTML", "CSS"],
+    result: null, // TODO
+    link: "https://monicanmarketing.com",
+    screenshots: [], // no capture: the domain now redirects to another site
+    palette: { bg: "#fbf7f2", ink: "#1f1b16", accent: "#7c3aed" },
   },
 
   // ---- React / Next.js ----
@@ -227,24 +339,6 @@ export const projects: Project[] = [
     link: "https://importtaxph.com",
     screenshots: [shot("importtax", "importtaxph.com")],
     palette: { bg: "#0f1115", ink: "#eef0f4", accent: "#f59e0b" },
-  },
-
-  // ---- Salesforce Commerce Cloud (Demandware) ----
-  {
-    id: "timex",
-    name: "Timex & Guess Watches",
-    client: "Timex Group · TMX Philippines Inc.",
-    country: null, // multi-market
-    platform: "Salesforce Commerce Cloud (Demandware) · Shopify",
-    category: "sfcc",
-    subTags: [],
-    year: "2018–2024",
-    scope: "Multi-market storefronts on SFCC and Shopify: product pages, navigation, content modules, checkout-related UI, and Core Web Vitals.",
-    stack: ["Salesforce Commerce Cloud (Demandware)", "Shopify", "Liquid", "JavaScript", "SASS", "Lighthouse", "GTmetrix", "Jira"],
-    result: "Retained for six years; recurring defects reduced through documented procedures and standard quality checks.",
-    link: "https://timex.com",
-    screenshots: [shot("timex", "timex.com"), shot("guess", "guesswatches.com")],
-    palette: { bg: "#0d1b2a", ink: "#f4efe6", accent: "#c9a227" },
   },
 ];
 

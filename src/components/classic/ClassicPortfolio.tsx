@@ -102,8 +102,8 @@ export function ClassicPortfolio() {
           wide
           aside={
             <p className="max-w-[24rem] text-[14px] leading-relaxed text-ink-muted">
-              Projects by platform: Shopify and Shopify Plus, WordPress and WooCommerce, React and Next.js, and
-              Salesforce Commerce Cloud (Demandware). The Shopify section also lists the stores I&rsquo;ve worked on.
+              Projects by platform: Shopify and Shopify Plus, WordPress and WooCommerce, and React and Next.js.
+              The Shopify section also lists the stores I&rsquo;ve worked on.
             </p>
           }
         >

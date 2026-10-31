@@ -9,7 +9,6 @@ import { ArrowIcon, CloseIcon } from "./icons";
 // Button labels, falls back to the work title.
 const SHORT_TITLES: Partial<Record<WorkId, string>> = {
   timex: "Timex & Guess",
-  malbon: "Malbon Golf",
   artisan: "Artisan Collective",
   freelance: "100+ stores",
   "react-client": "EV360 · FineVu",

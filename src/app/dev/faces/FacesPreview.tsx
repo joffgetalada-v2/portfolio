@@ -137,7 +137,7 @@ export function FacesPreview() {
   const timings = useRef(new Map<FaceId, Timing>());
 
   useEffect(() => {
-    // e.g. ?face=malbon&t=1.5&size=mobile&animate=1
+    // e.g. ?face=gameology&t=1.5&size=mobile&animate=1
     const q = new URLSearchParams(window.location.search);
     const f = q.get("face") as FaceId | null;
     loadFaceFonts().then((ff) => {

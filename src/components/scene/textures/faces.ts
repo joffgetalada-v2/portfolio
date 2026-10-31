@@ -3,7 +3,9 @@ import { W, type Page } from "./draw-utils";
 import { drawContact, drawExperience, drawProcess, drawToolkit } from "./faces/back";
 import { drawBackCover, drawCover } from "./faces/covers";
 import { drawContents, drawIntro } from "./faces/front";
-import { drawAtomic, drawMalbon } from "./faces/golf";
+import { drawGameology } from "./faces/gameology";
+import { drawAtomic } from "./faces/golf";
+import { drawCityMazda, drawDashcams } from "./faces/motoring";
 import { drawArtisan, drawFreelance } from "./faces/practice";
 import { drawReactClient, drawReactPersonal } from "./faces/react";
 import { drawTimexDetail, drawTimexHero } from "./faces/timex";
@@ -31,10 +33,12 @@ export const faces: FaceRegistry = {
   intro: face(drawIntro),
   "timex-hero": face(drawTimexHero),
   "timex-detail": face(drawTimexDetail),
-  malbon: face(drawMalbon),
+  gameology: face(drawGameology, { shots: true }),
   atomic: face(drawAtomic),
   artisan: face(drawArtisan),
   freelance: face(drawFreelance),
+  dashcamsrus: face(drawDashcams, { shots: true }),
+  "city-mazda": face(drawCityMazda, { shots: true }),
   "react-client": face(drawReactClient, { shots: true }),
   "react-personal": face(drawReactPersonal, { shots: true }),
   toolkit: face(drawToolkit),

@@ -188,7 +188,7 @@ export function drawProcess(p: Page) {
 }
 
 // ---- Contact ----
-const bare = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+const bare = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
 
 export function drawContact(p: Page) {
   const { ctx, t } = p;
@@ -233,25 +233,29 @@ export function drawContact(p: Page) {
     { k: "GitHub", v: bare(profile.links.github) },
     ...(upworkUrl ? [{ k: "Upwork", v: bare(upworkUrl) }] : []),
   ];
+  // Two per row so long URLs keep full size.
   const top = 532;
-  const colW = (x1 - x0) / rows.length;
+  const pitch = 74;
+  const colW = (x1 - x0) / 2;
   line(ctx, x0, top - 40, x1, top - 40, PAPER.line);
   rows.forEach((r, i) => {
-    const x = x0 + i * colW;
-    text(p, r.k, x, top, label);
+    const x = x0 + (i % 2) * colW;
+    const y = top + Math.floor(i / 2) * pitch;
+    text(p, r.k, x, y, label);
     const size = Math.min(23, (23 * (colW - 30)) / Math.max(1, measure(p, r.v, { size: 23, weight: 500 })));
-    text(p, r.v, x, top + 38, { size, weight: 500, color: PAPER.ink, track: -0.01 });
+    text(p, r.v, x, y + 36, { size, weight: 500, color: PAPER.ink, track: -0.01 });
   });
 
-  text(p, "Based in", x0, 640, label);
-  text(p, `${profile.location} · ${profile.timezone}`, x0, 676, { size: 23, weight: 500, color: PAPER.ink });
-  text(p, profile.availability, x0, 710, { size: 20, color: PAPER.muted });
+  const below = top + Math.ceil(rows.length / 2) * pitch + 16;
+  text(p, "Based in", x0, below, label);
+  text(p, `${profile.location} · ${profile.timezone}`, x0, below + 34, { size: 23, weight: 500, color: PAPER.ink });
+  text(p, profile.availability, x0, below + 64, { size: 20, color: PAPER.muted });
 
   // CTA
   const cta = "Get in touch";
   const cw = measure(p, cta, { size: 22, weight: 600 }) + 92;
   const bx = x1 - cw;
-  const by = 652;
+  const by = below - 10;
   rrect(ctx, bx, by, cw, 64, 32);
   ctx.fillStyle = PAPER.ink;
   ctx.fill();
