@@ -67,12 +67,13 @@ export function ContactDialog() {
 
           <h2
             id={TITLE_ID}
-            className="mt-6 max-w-[26rem] font-serif text-[clamp(2.3rem,7vw,3.4rem)] italic leading-[0.95] tracking-[-0.015em] text-ink sm:mt-8"
+            className="mt-6 max-w-[26rem] text-balance font-serif text-[clamp(2.3rem,7vw,3.4rem)] italic leading-[0.95] tracking-[-0.015em] text-ink sm:mt-8"
           >
-            Let&rsquo;s build your next storefront.
+            {profile.contact.headline}
           </h2>
 
           <div id={DESC_ID} className="mt-5 space-y-1 text-[13.5px] leading-relaxed text-ink-muted">
+            <p className="mb-4 text-[15px] text-ink/85">{profile.contact.line}</p>
             <p className="flex items-center gap-2.5">
               <span aria-hidden="true" className="relative flex size-2">
                 <span className="absolute inset-0 animate-ping rounded-full bg-accent/60" />

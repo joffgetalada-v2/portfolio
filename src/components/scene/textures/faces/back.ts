@@ -5,6 +5,7 @@ import {
   clamp,
   easeInOut,
   easeOut,
+  fitSize,
   fract,
   line,
   measure,
@@ -137,11 +138,11 @@ export function drawExperience(p: Page) {
 export function drawProcess(p: Page) {
   const { ctx, t } = p;
   paper(p, "left");
-  chrome(p, { side: "left", spread: spreadOf("process"), title: "Process", folio: folioOf("process"), color: PAPER.ink });
+  chrome(p, { side: "left", spread: spreadOf("process"), title: "How I help", folio: folioOf("process"), color: PAPER.ink });
   const { x0, x1 } = frame("left");
 
   const hw = text(p, "How I ", x0 - 4, 250, { size: 168, family: "serif", color: PAPER.ink });
-  text(p, "work", x0 - 4 + hw, 250, { size: 168, family: "serif", italic: true, color: PAPER.accent });
+  text(p, "help", x0 - 4 + hw, 250, { size: 168, family: "serif", italic: true, color: PAPER.accent });
 
   text(p, "Markets", x1, 168, { ...label, align: "right" });
   const half = Math.ceil(profile.markets.length / 2);
@@ -190,6 +191,22 @@ export function drawProcess(p: Page) {
 // ---- Contact ----
 const bare = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
 
+// Two lines, split where the longer one is shortest.
+function balance(p: Page, str: string, st: TextStyle): [string, string] {
+  const words = str.split(" ");
+  let best: [string, string] = [str, ""];
+  let bestW = Infinity;
+  for (let i = 1; i < words.length; i++) {
+    const pair: [string, string] = [words.slice(0, i).join(" "), words.slice(i).join(" ")];
+    const w = Math.max(measure(p, pair[0], st), measure(p, pair[1], st));
+    if (w < bestW) {
+      bestW = w;
+      best = pair;
+    }
+  }
+  return best;
+}
+
 export function drawContact(p: Page) {
   const { ctx, t } = p;
   paper(p, "right");
@@ -197,9 +214,18 @@ export function drawContact(p: Page) {
   const { x0, x1 } = frame("right");
 
   text(p, "Say hello", x0, 164, { ...label, color: PAPER.accent });
-  const head: TextStyle = { size: 128, family: "serif", italic: true, color: PAPER.ink, track: -0.01 };
-  text(p, "Let’s build your", x0 - 4, 286, head);
-  const lw = text(p, "next storefront.", x0 - 4, 424, head);
+  // Headline sized so the longer line, and the cursor after the last one, fit the frame.
+  const head0: TextStyle = { size: 128, family: "serif", italic: true, color: PAPER.ink, track: -0.01 };
+  const [l1, l2] = balance(p, profile.contact.headline, head0);
+  const size = Math.min(fitSize(p, l1, x1 - x0 + 4, head0), fitSize(p, l2, x1 - x0 - 42, head0));
+  const head = { ...head0, size };
+  const k = size / 128;
+  const y1 = 164 + 122 * k;
+  const y2 = y1 + 138 * k;
+  text(p, l1, x0 - 4, y1, head);
+  const lw = text(p, l2, x0 - 4, y2, head);
+  // Below any descenders on the last line.
+  const uy = y2 + Math.max(26 * k, ctx.measureText(l2).actualBoundingBoxDescent + 10 * k);
 
   // Underline sweep and blinking cursor.
   const cycle = 3.2;
@@ -215,15 +241,15 @@ export function drawContact(p: Page) {
   }
   if (u1 > u0) {
     ctx.fillStyle = PAPER.accent;
-    ctx.fillRect(x0 + lw * u0, 450, lw * (u1 - u0) - 4, 4);
+    ctx.fillRect(x0 + lw * u0, uy, lw * (u1 - u0) - 4, 4);
   }
   const blink = t > 0 ? fract(t * 1.1) < 0.55 : true;
   if (blink) {
     ctx.save();
-    ctx.translate(x0 + lw + 12, 424);
+    ctx.translate(x0 + lw + 12 * k, y2);
     ctx.transform(1, 0, -0.2, 1, 0, 0);
     ctx.fillStyle = PAPER.accent;
-    ctx.fillRect(0, -96, 5, 112);
+    ctx.fillRect(0, -96 * k, 5, 112 * k);
     ctx.restore();
   }
 

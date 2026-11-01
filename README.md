@@ -24,7 +24,7 @@ In development, http://localhost:3000/dev/faces renders every book page side by 
 
 | What | Where |
 | --- | --- |
-| Name, summary, stats, skills, experience, contact links | `src/content/profile.ts` |
+| Name, pitch, services ("How I help"), summary, stats, process, skills, experience, contact links | `src/content/profile.ts` |
 | Project cards on the classic page, by category | `src/content/projects.ts` |
 | Case studies in the book and its dialog | `works` in `src/content/profile.ts` |
 | "Stores I've worked on" list | `src/content/shopify-stores.json` |

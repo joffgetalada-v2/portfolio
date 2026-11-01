@@ -101,7 +101,7 @@ const SPREAD_META: Record<number, { label: string; works: WorkId[] }> = {
   5: { label: "React projects", works: ["react-client", "react-personal"] },
   6: { label: "Timex & Guess Watches", works: ["timex"] },
   7: { label: "Toolkit · Experience", works: [] },
-  8: { label: "Process · Contact", works: [] },
+  8: { label: "How I help · Contact", works: [] },
 };
 
 export const SPREADS: Spread[] = SHEETS.slice(1).map((sheet, i) => {

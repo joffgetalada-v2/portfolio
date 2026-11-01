@@ -22,19 +22,34 @@ function idFromHash(ids: string[], hash: string) {
   }
 }
 
+function targetOf(hash: string) {
+  try {
+    const id = decodeURIComponent(hash.replace(/^#/, ""));
+    return id ? document.getElementById(id) : null;
+  } catch {
+    return null;
+  }
+}
+
+// Panel to show for a #hash: the panel itself, or the one holding the target (a project card).
+function panelFor(ids: string[], hash: string) {
+  const el = targetOf(hash);
+  return el ? (ids.find((id) => document.getElementById(id)?.contains(el)) ?? null) : null;
+}
+
 const PILL =
   "inline-flex h-11 min-w-0 items-center justify-between gap-2.5 rounded-full border px-4 text-[14px] transition-colors sm:justify-start";
 const IDLE = "border-white/20 text-ink hover:border-white/45";
 const SELECTED = "border-transparent bg-[#f3f3ef] text-[#0b0b0a]";
 
 // Server HTML and no-JS: every panel in order under plain anchor links. Once hydrated: WAI-ARIA tabs,
-// only the active panel shows, and #id links pick their tab.
+// only the active panel shows, and #id links to a panel or to anything inside one pick their tab.
 export function CategoryTabs({ panels, label }: { panels: CategoryPanel[]; label: string }) {
   const enhanced = useSyncExternalStore(noSubscribe, () => true, () => false);
   const idsKey = panels.map((p) => p.id).join(" ");
   // Only read once enhanced, so the hash can't cause a hydration mismatch.
   const [active, setActive] = useState(
-    () => (typeof window !== "undefined" && idFromHash(idsKey.split(" "), window.location.hash)) || panels[0].id,
+    () => (typeof window !== "undefined" && panelFor(idsKey.split(" "), window.location.hash)) || panels[0].id,
   );
   const tabs = useRef(new Map<string, HTMLButtonElement>());
 
@@ -42,14 +57,13 @@ export function CategoryTabs({ panels, label }: { panels: CategoryPanel[]; label
   // that the others are hidden.
   useEffect(() => {
     if (!enhanced) return;
-    const id = idFromHash(idsKey.split(" "), window.location.hash);
-    if (id) document.getElementById(id)?.scrollIntoView();
+    if (panelFor(idsKey.split(" "), window.location.hash)) targetOf(window.location.hash)?.scrollIntoView();
   }, [enhanced, idsKey]);
 
   useEffect(() => {
     const ids = idsKey.split(" ");
     const select = (hash: string) => {
-      const id = idFromHash(ids, hash);
+      const id = panelFor(ids, hash);
       if (id) flushSync(() => setActive(id));
       return id;
     };
@@ -59,8 +73,7 @@ export function CategoryTabs({ panels, label }: { panels: CategoryPanel[]; label
       if (a instanceof HTMLAnchorElement && a.origin === location.origin && a.pathname === location.pathname) select(a.hash);
     };
     const onHashChange = () => {
-      const id = select(location.hash);
-      if (id) document.getElementById(id)?.scrollIntoView();
+      if (select(location.hash)) targetOf(location.hash)?.scrollIntoView();
     };
     // Find-in-page revealed a hidden panel.
     const onMatch = (e: Event) => {

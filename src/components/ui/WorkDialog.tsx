@@ -9,6 +9,7 @@ import { titleLines } from "./titleLines";
 
 const TITLE_ID = "work-dialog-title";
 const pad = (n: number) => String(n).padStart(2, "0");
+const LABEL = "mt-9 font-mono text-[10.5px] uppercase tracking-[0.16em] text-ink-muted";
 
 export function WorkDialog() {
   const activeWork = usePortfolio((s) => s.activeWork);
@@ -152,7 +153,10 @@ export function WorkDialog() {
           <div className="min-w-0">
             <p className="font-serif text-[clamp(1.35rem,2.6vw,1.7rem)] leading-[1.25] tracking-[-0.005em] text-ink">{work.summary}</p>
 
-            <h3 className="mt-9 font-mono text-[10.5px] uppercase tracking-[0.16em] text-ink-muted">Highlights</h3>
+            <h3 className={LABEL}>The goal</h3>
+            <p className="mt-3 text-[15px] leading-relaxed text-ink/90">{work.goal}</p>
+
+            <h3 className={LABEL}>{work.period?.endsWith("Present") ? "What I do" : "What I did"}</h3>
             <ol className="mt-3 divide-y divide-line border-y border-line">
               {work.highlights.map((h, n) => (
                 <li key={h} className="flex gap-4 py-3.5 text-[14.5px] leading-relaxed text-ink/90">
@@ -164,7 +168,17 @@ export function WorkDialog() {
               ))}
             </ol>
 
-            <h3 className="mt-9 font-mono text-[10.5px] uppercase tracking-[0.16em] text-ink-muted">Stack</h3>
+            <h3 className={LABEL}>Why it matters</h3>
+            <p className="mt-3 text-[15px] leading-relaxed text-ink/90">{work.value}</p>
+
+            {work.result && (
+              <>
+                <h3 className={LABEL}>Result</h3>
+                <p className="mt-3 border-l border-accent pl-4 font-serif text-[1.2rem] leading-snug text-ink">{work.result}</p>
+              </>
+            )}
+
+            <h3 className={LABEL}>Stack</h3>
             <ul className="mt-3 flex flex-wrap gap-2">
               {work.stack.map((s) => (
                 <li key={s} className="rounded-full border border-line px-3 py-1.5 font-mono text-[11.5px] text-ink/85">

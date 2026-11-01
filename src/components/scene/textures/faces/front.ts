@@ -104,10 +104,14 @@ export function drawIntro(p: Page) {
     { str: second, st: { ...b, size: b.size * k } },
   ], x0 - 4, 284);
 
-  const headSize = fitSize(p, profile.headline, cw, { size: 26, weight: 500 });
-  text(p, profile.headline, x0, 350, { size: headSize, weight: 500, color: PAPER.muted, track: -0.005 });
+  // Platforms (the classic page tabs), since the summary below already opens with the role.
+  const platforms = "Shopify / Shopify Plus · WordPress / WooCommerce · React / Next.js";
+  const headSize = fitSize(p, platforms, cw, { size: 26, weight: 500 });
+  text(p, platforms, x0, 350, { size: headSize, weight: 500, color: PAPER.muted, track: -0.005 });
 
-  para(p, profile.summary, x0, 414, 780, { size: 24, lh: 35, color: PAPER.ink, track: -0.003 });
+  // First sentence only: the stats below carry the numbers.
+  const lead = profile.summary.slice(0, profile.summary.indexOf(". ") + 1);
+  para(p, lead, x0, 424, 780, { size: 32, lh: 44, color: PAPER.ink, track: -0.01 });
 
   // Stats
   const statTop = 606;

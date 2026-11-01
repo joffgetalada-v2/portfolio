@@ -3,6 +3,7 @@ import { site } from "@/content/site";
 import { Wordmark } from "@/components/ui/BrandGlyph";
 import { ArrowIcon } from "@/components/ui/icons";
 import { Label, Section } from "./Section";
+import { Services } from "./Services";
 import { WorkList } from "./WorkList";
 
 // First sentence gets full ink, the rest is muted.
@@ -36,7 +37,15 @@ export function ClassicPortfolio() {
           <p className="mt-6 text-[clamp(2.1rem,7.4vw,6.6rem)] font-medium leading-[0.95] tracking-[-0.045em] text-ink">
             Senior <em className="font-serif font-normal italic tracking-[-0.02em] text-accent">Shopify Plus</em> developer.
           </p>
-          <p className="mt-6 max-w-[44rem] text-[15px] leading-relaxed text-ink-muted md:text-[17px]">{profile.subline}</p>
+          <p className="mt-7 max-w-[42rem] text-pretty text-[17px] leading-[1.5] tracking-[-0.01em] text-ink md:text-[20px]">{profile.pitch}</p>
+          <p className="mt-4 max-w-[44rem] text-[13px] leading-relaxed text-ink-muted md:text-[14px]">
+            {profile.subline.split(" · ").map((part, i) => (
+              <span key={part}>
+                {i > 0 && " · "}
+                <span className="whitespace-nowrap">{part}</span>
+              </span>
+            ))}
+          </p>
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <a
               href={upworkUrl ?? "#contact"}
@@ -63,7 +72,35 @@ export function ClassicPortfolio() {
           </div>
         </header>
 
-        <Section id="about" n="01" title="About">
+        <Section
+          id="services"
+          n="01"
+          title={
+            <>
+              How I help your store <span className="not-italic">make money</span>
+            </>
+          }
+          wide
+          aside={<p className="max-w-[30rem] text-pretty text-[15px] leading-relaxed text-ink/80">{profile.audience}</p>}
+        >
+          <Services />
+        </Section>
+
+        <Section
+          id="work"
+          n="02"
+          title={
+            <>
+              Selected <span className="not-italic">work</span>
+            </>
+          }
+          wide
+          aside={<p className="max-w-[26rem] text-[14px] leading-relaxed text-ink-muted">{profile.workIntro}</p>}
+        >
+          <WorkList />
+        </Section>
+
+        <Section id="about" n="03" title="About">
           <p className="max-w-[46rem] text-pretty text-[clamp(1.3rem,2.2vw,1.75rem)] leading-[1.32] tracking-[-0.02em] text-ink/60">
             <span className="text-ink">{summaryLead}</span> {summaryRest}
           </p>
@@ -92,25 +129,28 @@ export function ClassicPortfolio() {
         </Section>
 
         <Section
-          id="work"
-          n="02"
+          id="process"
+          n="04"
           title={
             <>
-              Selected <span className="not-italic">work</span>
+              How we&rsquo;ll <span className="not-italic">work together</span>
             </>
           }
-          wide
-          aside={
-            <p className="max-w-[24rem] text-[14px] leading-relaxed text-ink-muted">
-              Projects by platform: Shopify and Shopify Plus, WordPress and WooCommerce, and React and Next.js.
-              The Shopify section also lists the stores I&rsquo;ve worked on.
-            </p>
-          }
         >
-          <WorkList />
+          <ol className="grid gap-x-10 gap-y-9 sm:grid-cols-2">
+            {profile.process.map((s, i) => (
+              <li key={s.title} className="border-t border-line pt-5">
+                <p className="flex items-baseline gap-3">
+                  <span className="font-mono text-[11px] text-accent">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="text-[17px] font-medium tracking-[-0.015em] text-ink">{s.title}</span>
+                </p>
+                <p className="mt-2.5 text-[15px] leading-relaxed text-ink-muted">{s.body}</p>
+              </li>
+            ))}
+          </ol>
         </Section>
 
-        <Section id="experience" n="03" title="Experience">
+        <Section id="experience" n="05" title="Experience">
           <ol className="relative">
             {profile.experience.map((job) => (
               <li key={`${job.company}-${job.period}`} className="grid gap-3 border-t border-line py-8 first:border-t-0 first:pt-0 md:grid-cols-9 md:gap-8 md:py-10 md:first:pt-0">
@@ -141,7 +181,7 @@ export function ClassicPortfolio() {
           </ol>
         </Section>
 
-        <Section id="skills" n="04" title="Skills">
+        <Section id="skills" n="06" title="Skills">
           <div className="grid gap-x-10 gap-y-10 sm:grid-cols-2">
             {profile.skills.map((g) => (
               <div key={g.group} className="border-t border-line pt-5 sm:last:odd:col-span-2">
@@ -160,7 +200,7 @@ export function ClassicPortfolio() {
 
         <Section
           id="education"
-          n="05"
+          n="07"
           title={
             <>
               Education <span className="not-italic text-ink-muted">&amp;</span> languages
@@ -195,15 +235,16 @@ export function ClassicPortfolio() {
 
         <section id="contact" aria-labelledby="contact-title" className="scroll-mt-20 border-t border-line py-20 [contain-intrinsic-size:auto_900px] [content-visibility:auto] md:py-32">
           <div className="flex items-baseline gap-3 font-mono text-[11px] text-ink-muted">
-            <span className="tracking-[0.08em]">(06)</span>
+            <span className="tracking-[0.08em]">(08)</span>
             <h2 id="contact-title" className="uppercase tracking-[0.16em]">
               Contact
             </h2>
           </div>
-          <p className="mt-8 max-w-[15ch] font-serif text-[clamp(2.9rem,8.4vw,7.5rem)] italic leading-[0.92] tracking-[-0.025em] text-ink">
-            Let&rsquo;s build your next storefront.
+          <p className="mt-8 max-w-[16ch] text-balance font-serif text-[clamp(2.9rem,8.4vw,7.5rem)] italic leading-[0.92] tracking-[-0.025em] text-ink">
+            {profile.contact.headline}
           </p>
-          <p className="mt-8 flex items-start gap-2.5 text-[14px] leading-relaxed text-ink-muted">
+          <p className="mt-8 max-w-[36rem] text-pretty text-[17px] leading-relaxed text-ink/80 md:text-[19px]">{profile.contact.line}</p>
+          <p className="mt-6 flex items-start gap-2.5 text-[14px] leading-relaxed text-ink-muted">
             <span aria-hidden="true" className="mt-[0.55em] size-2 shrink-0 rounded-full bg-accent" />
             {profile.availability} · {profile.location}
           </p>

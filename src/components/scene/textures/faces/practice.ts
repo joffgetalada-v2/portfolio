@@ -187,7 +187,8 @@ export function drawArtisan(p: Page) {
 
   const top = 724;
   const gap = 28;
-  const colW = (x1 - x0 - gap * 3) / 4;
+  const n = artisan.highlights.length;
+  const colW = (x1 - x0 - gap * (n - 1)) / n;
   artisan.highlights.forEach((hl, i) => {
     const x = x0 + i * (colW + gap);
     line(ctx, x, top - 36, x + colW, top - 36, "rgba(43,33,26,0.22)");

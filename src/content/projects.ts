@@ -37,6 +37,8 @@ export interface Project {
   // What I did, 1–2 lines.
   scope: string;
   stack: string[];
+  // Why it matters to the business: purpose, not a measured result.
+  value: string | null;
   // Metric if there is one, otherwise a qualitative outcome. null when not confirmed.
   result: string | null;
   link: string | null;
@@ -59,6 +61,7 @@ export const projects: Project[] = [
     year: null, // TODO
     scope: "Theme customization: custom sections, templates, and front-end changes on the existing theme.",
     stack: ["Shopify", "Liquid"],
+    value: "Custom sections and templates on the existing theme give the store new layouts without paying for a full rebuild.",
     result: null, // TODO
     link: "https://www.gameology.com.au",
     screenshots: [shot("gameology", "gameology.com.au")],
@@ -75,7 +78,8 @@ export const projects: Project[] = [
     year: "2018–2024",
     scope: "Multi-market storefronts on SFCC and Shopify: product pages, navigation, content modules, checkout-related UI, and Core Web Vitals.",
     stack: ["Salesforce Commerce Cloud (Demandware)", "Shopify", "Liquid", "JavaScript", "SASS", "Lighthouse", "GTmetrix", "Jira"],
-    result: "Retained for six years; recurring defects reduced through documented procedures and standard quality checks.",
+    value: "Product pages, navigation, and checkout-related screens are where shoppers decide to buy, so changes were checked before release.",
+    result: "Retained for 6+ years; recurring defects reduced through documented procedures and standard quality checks.",
     link: "https://timex.com",
     screenshots: [shot("timex", "timex.com"), shot("guess", "guesswatches.com")],
     palette: { bg: "#0d1b2a", ink: "#f4efe6", accent: "#c9a227" },
@@ -91,6 +95,7 @@ export const projects: Project[] = [
     year: null, // TODO
     scope: "Front-end enhancements, mobile improvements, performance work, and ongoing production support.",
     stack: ["Shopify Plus", "Liquid", "JavaScript", "CSS3/SASS"],
+    value: "Mobile and speed work serve shoppers on phones, and ongoing support gives the brand a developer who already knows the store.",
     result: null, // TODO
     link: "https://malbon.com",
     screenshots: [shot("malbon", "malbon.com")],
@@ -107,6 +112,7 @@ export const projects: Project[] = [
     year: null, // TODO
     scope: "Moved marketing content from Framer to Shopify, built reusable Liquid sections and responsive landing pages for faster campaign delivery.",
     stack: ["Shopify", "Liquid", "Responsive design"],
+    value: "Campaign pages moved into Shopify from a separate Framer site, and reusable sections let new landing pages go up faster.",
     result: null, // TODO
     link: "https://atomicgolf.com",
     screenshots: [shot("atomic", "atomicgolf.com")],
@@ -123,6 +129,7 @@ export const projects: Project[] = [
     year: null, // TODO
     scope: "Shopify store with custom templates and a mega menu.",
     stack: ["Shopify", "Liquid"],
+    value: "A mega menu and custom templates shorten the path from the homepage to the right dash cam.",
     result: null, // TODO
     link: "https://dashcamsrus.com.au",
     screenshots: [shot("dashcamsrus", "dashcamsrus.com.au")],
@@ -141,7 +148,8 @@ export const projects: Project[] = [
     year: null, // TODO
     scope: "Led a full storefront rebuild on WordPress and WooCommerce, with product and content transfer.",
     stack: ["WordPress", "WooCommerce", "PHP", "Technical SEO", "Data migration"],
-    result: "SEO preserved through the move.",
+    value: "Preserving SEO through the rebuild protects the Google traffic the store had already earned.",
+    result: "SEO preserved through the rebuild.",
     link: null, // TODO
     screenshots: [],
     palette: { bg: "#efe6d8", ink: "#2b211a", accent: "#a4532f" },
@@ -157,6 +165,7 @@ export const projects: Project[] = [
     year: null, // TODO
     scope: "Dealer website and campaign landing pages.",
     stack: ["WordPress"],
+    value: "Campaign landing pages give each promotion one clear page to send visitors to, instead of the home page.",
     result: null, // TODO
     link: "https://www.citymazda.com.au",
     screenshots: [shot("citymazda", "citymazda.com.au")],
@@ -173,6 +182,7 @@ export const projects: Project[] = [
     year: null, // TODO
     scope: "Main developer for the website.",
     stack: ["WordPress", "PHP", "MySQL", "HTML", "CSS"],
+    value: "One main developer means one person who knows the whole site and how its parts fit together.",
     result: null, // TODO
     link: "https://www.cega-jp.com",
     screenshots: [shot("cega", "cega-jp.com")],
@@ -189,6 +199,7 @@ export const projects: Project[] = [
     year: null, // TODO
     scope: "Developed the website from the ground up at Monstar Lab Cebu.",
     stack: ["WordPress", "PHP", "MySQL", "JavaScript"],
+    value: "Built from the ground up, so the site fits the brand instead of a stock template.",
     result: null, // TODO
     link: "https://www.yoshinoya.com",
     screenshots: [shot("yoshinoya", "yoshinoya.com")],
@@ -205,6 +216,7 @@ export const projects: Project[] = [
     year: null, // TODO
     scope: "Main developer for the responsive website, built at Monstar Lab Cebu.",
     stack: ["WordPress", "PHP", "MySQL", "Bootstrap 3"],
+    value: "A responsive site lets customers find the spa and its services as easily on a phone as on a desktop.",
     result: null, // TODO
     link: "https://cebu-massage-spa.com",
     screenshots: [shot("nuat-thai", "cebu-massage-spa.com")],
@@ -221,6 +233,7 @@ export const projects: Project[] = [
     year: null, // TODO
     scope: "Maintained the websites, fixed bugs, and built new pages and functionality.",
     stack: ["WordPress", "PHP", "MySQL", "HTML", "CSS", "jQuery"],
+    value: "Ongoing bug fixes plus new pages and functionality keep the sites working and up to date.",
     result: null, // TODO
     link: "https://qqenglish.jp",
     screenshots: [shot("qqenglish", "qqenglish.jp")],
@@ -237,6 +250,7 @@ export const projects: Project[] = [
     year: null, // TODO
     scope: "Maintained the websites, fixed bugs, and built new pages and functionality.",
     stack: ["WordPress", "PHP", "MySQL", "Bootstrap 3"],
+    value: "One developer handling bug fixes, new pages, and new features keeps the live sites current without a rebuild.",
     result: null, // TODO
     link: "https://www.appstars.io",
     screenshots: [shot("appstars", "appstars.io")],
@@ -253,6 +267,7 @@ export const projects: Project[] = [
     year: null, // TODO
     scope: "Maintained the website and updated content and the blog.",
     stack: ["WordPress", "Bootstrap 3", "HTML", "CSS", "jQuery"],
+    value: "Keeping content and the blog current shows visitors the dealership is active and up to date.",
     result: null, // TODO
     link: "https://rustywallacechevrolet.com",
     screenshots: [], // no capture: the live site blocks automated browsers
@@ -269,6 +284,7 @@ export const projects: Project[] = [
     year: null, // TODO
     scope: "Maintained the website and updated content and the blog.",
     stack: ["WordPress", "Divi", "HTML", "CSS"],
+    value: "Regular maintenance plus content and blog updates keep the site working and give visitors something new to read.",
     result: null, // TODO
     link: "https://monicanmarketing.com",
     screenshots: [], // no capture: the domain now redirects to another site
@@ -287,6 +303,7 @@ export const projects: Project[] = [
     year: null, // TODO
     scope: "Next.js site for an independent EV battery health-check service, with online booking.",
     stack: ["React", "Next.js"],
+    value: "Online booking lets customers book a battery health check without a phone call.",
     result: null, // TODO
     link: "https://ev360.com.au",
     screenshots: [shot("ev360", "ev360.com.au")],
@@ -303,6 +320,7 @@ export const projects: Project[] = [
     year: null, // TODO
     scope: "Product site for a dash cam brand: front and rear dash cams, product pages, and warranty information.",
     stack: ["React", "Next.js"],
+    value: "Product and warranty pages answer the questions buyers have before choosing a dash cam.",
     result: null, // TODO
     link: "https://www.finevuaustralia.com.au",
     screenshots: [shot("finevu", "finevuaustralia.com.au")],
@@ -319,6 +337,7 @@ export const projects: Project[] = [
     year: null, // TODO
     scope: "Curated Shopee PH and Sephora PH deals with buyer notes, fake-discount checks, and shopping guides.",
     stack: ["React", "Next.js"],
+    value: "Fake-discount checks and buyer notes give shoppers a reason to trust the deals listed.",
     result: null, // TODO
     link: "https://sulitscan.com",
     screenshots: [shot("sulitscan", "sulitscan.com")],
@@ -335,6 +354,7 @@ export const projects: Project[] = [
     year: null, // TODO
     scope: "Free calculator for Philippine customs duty and 12% VAT on international orders.",
     stack: ["React", "Next.js"],
+    value: "Shoppers can estimate duty and 12% VAT before ordering from abroad, so the final cost is not a surprise.",
     result: null, // TODO
     link: "https://importtaxph.com",
     screenshots: [shot("importtax", "importtaxph.com")],
@@ -343,3 +363,6 @@ export const projects: Project[] = [
 ];
 
 export const projectsIn = (category: Category) => projects.filter((p) => p.category === category);
+export const projectById = Object.fromEntries(projects.map((p) => [p.id, p])) as Record<string, Project | undefined>;
+// In-page anchor of a project card.
+export const projectAnchor = (id: string) => `project-${id}`;

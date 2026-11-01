@@ -1,4 +1,4 @@
-import type { Project } from "@/content/projects";
+import { projectAnchor, type Project } from "@/content/projects";
 import { ArrowIcon } from "@/components/ui/icons";
 import { ArtisanTile } from "./tiles/ArtisanTile";
 import { ShotTile } from "./tiles/ShotTile";
@@ -9,7 +9,9 @@ import { TypeTile } from "./tiles/TypeTile";
 const RATIO = "aspect-[8/5]";
 
 export function ProjectCard({ project, n }: { project: Project; n: number }) {
-  const titleId = `project-${project.id}`;
+  // The article id is the target of the "Proof" links in the services section.
+  const anchor = projectAnchor(project.id);
+  const titleId = `${anchor}-title`;
   const meta = [
     { term: "Client", value: project.client },
     { term: "Platform", value: project.platform },
@@ -26,7 +28,7 @@ export function ProjectCard({ project, n }: { project: Project; n: number }) {
   };
 
   return (
-    <article aria-labelledby={titleId} className="flex min-w-0 flex-col">
+    <article id={anchor} aria-labelledby={titleId} className="flex min-w-0 scroll-mt-24 flex-col">
       <ProjectTile project={project} tile={tile} />
 
       <h3 id={titleId} className="mt-7 text-[clamp(1.45rem,2.4vw,1.85rem)] font-medium leading-[1.1] tracking-[-0.025em] text-ink">
@@ -64,8 +66,15 @@ export function ProjectCard({ project, n }: { project: Project; n: number }) {
         </ul>
       )}
 
+      {project.value && (
+        <div className="mt-6 border-l border-white/20 pl-4">
+          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-muted">Why it matters</p>
+          <p className="mt-1.5 text-[15px] leading-relaxed text-ink/80">{project.value}</p>
+        </div>
+      )}
+
       {project.result && (
-        <div className="mt-6 border-l border-accent pl-4">
+        <div className={`${project.value ? "mt-4" : "mt-6"} border-l border-accent pl-4`}>
           <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-muted">Result</p>
           <p className="mt-1.5 font-serif text-[1.2rem] leading-snug text-ink">{project.result}</p>
         </div>

@@ -44,12 +44,12 @@ export function HeroCopy() {
         />
       )}
 
-      {/* Intro. The h1 reads name and role; the name is shown in the line under it. */}
-      {/* Short desktop screens get less top padding so the button clears the plant. */}
+      {/* Intro. The h1 reads name and role; the header shows the name. */}
+      {/* Short screens and narrow phones get less top padding so the buttons clear the plant and the book. */}
       <div
         data-hidden={showIntro ? undefined : true}
         inert={!showIntro}
-        className={`absolute left-0 top-0 w-full max-w-[42rem] px-4 pt-[5.25rem] md:px-8 md:pt-32 [@media(min-width:768px)_and_(min-height:501px)_and_(max-height:760px)]:pt-[6.5rem] [@media(max-height:500px)]:pt-20 ${fade} data-[hidden]:-translate-y-3`}
+        className={`absolute left-0 top-0 w-full max-w-[42rem] px-4 pt-[5.25rem] md:px-8 md:pt-32 [@media(min-width:768px)_and_(min-height:501px)_and_(max-height:760px)]:pt-[6.5rem] [@media(max-width:767px)_and_(max-height:700px),(max-width:374px)]:pt-[4.5rem] [@media(max-height:500px)]:pt-20 ${fade} data-[hidden]:-translate-y-3`}
       >
         <h1 className="text-[clamp(2.05rem,4.6vw,4rem)] font-medium leading-[0.98] tracking-[-0.04em] text-[#e6eaee]">
           <span className="sr-only">{profile.name}, </span>
@@ -59,9 +59,11 @@ export function HeroCopy() {
           </span>
         </h1>
 
-        <p className="mt-4 max-w-[27rem] text-[13px] leading-relaxed text-ink-muted md:mt-5 md:text-[15px]">
-          <span aria-hidden="true" className="text-ink">{profile.name}</span>
-          <br />
+        {/* Short or narrow phones and landscape get a tighter pitch so the buttons stay clear of the book. */}
+        <p className="mt-4 max-w-[25rem] text-[13px] leading-normal text-ink/90 md:text-[15px] md:leading-[1.45] [@media(max-width:767px)_and_(max-height:700px),(max-width:374px),(max-height:500px)]:mt-3 [@media(max-width:767px)_and_(max-height:700px),(max-width:374px),(max-height:500px)]:text-[12.5px]/[1.4]">
+          {profile.pitch}
+        </p>
+        <p className="mt-1.5 max-w-[25rem] text-[11.5px] leading-snug text-ink-muted md:text-[12.5px]">
           {subline.map((part, i) => (
             <span key={part}>
               {i > 0 && " · "}
@@ -70,7 +72,7 @@ export function HeroCopy() {
           ))}
         </p>
 
-        <div className="mt-5 flex flex-wrap items-center gap-2.5 md:mt-6 [@media(max-height:500px)]:mt-3">
+        <div className="mt-5 flex flex-wrap items-center gap-2.5 [@media(max-height:500px)]:mt-3 [@media(max-width:767px)_and_(max-height:700px),(max-width:374px)]:mt-3">
           {upworkUrl ? (
             <a
               href={upworkUrl}

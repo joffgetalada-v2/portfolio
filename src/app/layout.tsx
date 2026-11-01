@@ -34,7 +34,7 @@ const anton = Anton({
 
 const title = `${profile.name} | Senior Shopify Plus Developer`;
 const description =
-  "Senior Shopify Plus Developer: 100+ Shopify stores delivered, 6 years on Timex & Guess storefronts, plus WordPress, React/Next.js and Salesforce Commerce Cloud.";
+  "Senior Shopify Plus Developer for business owners: product pages, speed, campaign pages, and migrations. 100+ Shopify stores, 6+ years on Timex & Guess.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),

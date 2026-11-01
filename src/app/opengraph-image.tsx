@@ -10,7 +10,7 @@ export const contentType = "image/png";
 
 // Broken by hand so a platform name never splits across lines.
 const HEADLINE = ["Senior Shopify Plus Developer", "WordPress · React/Next.js ·", "Salesforce Commerce Cloud (Demandware)"];
-const FACTS = "12+ years · 100+ Shopify stores · 6 years on Timex & Guess";
+const FACTS = "12+ years · 100+ Shopify stores · 6+ years on Timex & Guess";
 const PLACE = `${profile.location} · Remote`;
 // Last name on its own line.
 const NAME_WORDS = profile.name.split(" ");
