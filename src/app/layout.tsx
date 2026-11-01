@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Anton, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { LateFonts } from "@/components/LateFonts";
+import { VercelInsights } from "@/components/VercelInsights";
 import { profile } from "@/content/profile";
 import { site } from "@/content/site";
 import "./globals.css";
@@ -93,6 +94,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body>
         <LateFonts className={`${geistMono.variable} ${anton.variable}`} />
         {children}
+        <VercelInsights />
       </body>
     </html>
   );
