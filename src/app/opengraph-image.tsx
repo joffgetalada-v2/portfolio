@@ -4,12 +4,12 @@ import { ImageResponse } from "next/og";
 import { profile } from "@/content/profile";
 import { site } from "@/content/site";
 
-export const alt = `${profile.name} — ${profile.headline}`;
+export const alt = `${profile.name}, ${profile.headline} for business owners`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-// Broken by hand so a platform name never splits across lines.
-const HEADLINE = ["Senior Shopify Plus Developer", "WordPress · React/Next.js ·", "Salesforce Commerce Cloud (Demandware)"];
+// Broken by hand to fit the column; the first sentence of profile.summary, shortened.
+const HEADLINE = ["Senior Shopify Plus Developer", "for business owners who want a store", "that loads fast and is easy to shop."];
 const FACTS = "12+ years · 100+ Shopify stores · 6+ years on Timex & Guess";
 const PLACE = `${profile.location} · Remote`;
 // Last name on its own line.

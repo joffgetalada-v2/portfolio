@@ -167,6 +167,7 @@ export function ClassicPortfolio() {
                 <div className="min-w-0 md:col-span-6">
                   <h3 className="text-[clamp(1.25rem,2vw,1.5rem)] font-medium leading-snug tracking-[-0.02em] text-ink">{job.role}</h3>
                   <p className="mt-1 font-serif text-[1.2rem] italic text-ink-muted">{job.company}</p>
+                  {"note" in job && <p className="mt-2 text-[13.5px] leading-snug text-ink-muted">{job.note}</p>}
                   <ul className="mt-5 space-y-2.5">
                     {job.points.map((p) => (
                       <li key={p} className="flex gap-3 text-[15px] leading-relaxed text-ink/80">

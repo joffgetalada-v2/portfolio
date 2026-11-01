@@ -25,6 +25,12 @@ export function Services() {
           </h3>
           <p className="mt-4 text-[15px] leading-relaxed text-ink/85">{s.problem}</p>
           <p className="mt-3 text-[15px] leading-relaxed text-ink-muted">{s.approach}</p>
+          {"result" in s && (
+            <div className="mt-5 border-l border-accent pl-4">
+              <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-muted">Typical result</p>
+              <p className="mt-1.5 text-[15px] leading-snug text-ink">{s.result}</p>
+            </div>
+          )}
           {/* mt-auto keeps the proof at the bottom of each item */}
           <div className="mt-auto pt-6">
             <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-muted">Proof</p>

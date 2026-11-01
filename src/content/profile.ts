@@ -68,6 +68,8 @@ export const profile = {
       approach: "I find what slows each page with Lighthouse and GTmetrix, optimize front-end assets and Core Web Vitals, and ship fixes in small, tested releases so carts, filters, menus, and apps keep working.",
       proofIds: ["timex", "malbon"],
       proofNote: "Timex & Guess: Core Web Vitals verified before deployment. Malbon Golf: performance and mobile work on Shopify Plus.",
+      // Owner's typical before/after range; no per-client records were kept.
+      result: "Typical Google PageSpeed scores on stores I've optimized: 20–30 to 50–70 on mobile, 45–50 to 70–90 on desktop.",
     },
     {
       outcome: "Launch campaign pages faster",
@@ -142,11 +144,13 @@ export const profile = {
       company: "International Clients",
       place: "Remote",
       period: "2016 – Present",
+      // Shown under the company.
+      note: "Part-time alongside employment 2016 – 2024, full-time since 2025",
       start: 2016,
       end: null as number | null,
       points: [
         "Built, migrated, and optimized 100+ Shopify and Shopify Plus stores, owning delivery from requirements and Figma handoff through Git-based development, launch, and post-release monitoring.",
-        "Optimized page speed on client stores in small, regression-tested releases that protect carts, filters, menus, and integrations, the parts that take orders.",
+        "Optimized page speed on client stores in small, regression-tested releases; typical Google PageSpeed scores went from 20–30 to 50–70 on mobile and from 45–50 to 70–90 on desktop.",
         "Resolved complex production issues on live stores as sole engineer for small businesses and within 3–5 person teams for mid-to-large clients, tracing root causes across theme code, JavaScript, app conflicts, and platform settings.",
         "Integrated and validated Klaviyo, preorder and back-in-stock apps, store locators, analytics, reviews, and marketing platforms, the tools stores use to capture and keep customers.",
         "Led a full storefront rebuild for The Artisan Collective on WordPress and WooCommerce, moving products and content and preserving SEO to protect existing search traffic.",
@@ -331,7 +335,7 @@ export const works: Work[] = [
       "Traces root causes across theme code, JavaScript, app conflicts, and platform settings, solo or in 3–5 person teams.",
     ],
     value: "One developer owning the work means fewer handoffs, and regression testing on each release protects the carts, filters, menus, and integrations that take orders.",
-    result: "100+ Shopify and Shopify Plus stores delivered.",
+    result: "100+ Shopify and Shopify Plus stores delivered. Typical PageSpeed scores after speed work: 50–70 on mobile and 70–90 on desktop, up from 20–30 and 45–50.",
     stack: ["Shopify Plus", "Liquid", "Shopify CLI", "Klaviyo", "Git", "Figma"],
     palette: { bg: "#111111", ink: "#f5f5f0", accent: "#95bf47" },
   },

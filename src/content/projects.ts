@@ -273,23 +273,6 @@ export const projects: Project[] = [
     screenshots: [], // no capture: the live site blocks automated browsers
     palette: { bg: "#111418", ink: "#f1f3f5", accent: "#d4a017" },
   },
-  {
-    id: "monican",
-    name: "Monican Marketing",
-    client: "Monican Marketing",
-    country: null, // TODO
-    platform: "WordPress · Divi",
-    category: "wordpress",
-    subTags: [],
-    year: null, // TODO
-    scope: "Maintained the website and updated content and the blog.",
-    stack: ["WordPress", "Divi", "HTML", "CSS"],
-    value: "Regular maintenance plus content and blog updates keep the site working and give visitors something new to read.",
-    result: null, // TODO
-    link: "https://monicanmarketing.com",
-    screenshots: [], // no capture: the domain now redirects to another site
-    palette: { bg: "#fbf7f2", ink: "#1f1b16", accent: "#7c3aed" },
-  },
 
   // ---- React / Next.js ----
   {
