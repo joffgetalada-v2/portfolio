@@ -22,7 +22,7 @@ function idFromHash(ids: string[], hash: string) {
   }
 }
 
-function targetOf(hash: string) {
+export function targetOf(hash: string) {
   try {
     const id = decodeURIComponent(hash.replace(/^#/, ""));
     return id ? document.getElementById(id) : null;
@@ -109,6 +109,7 @@ export function CategoryTabs({ panels, label }: { panels: CategoryPanel[]; label
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLButtonElement>, i: number) => {
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
     const last = panels.length - 1;
     const keys: Record<string, number> = { ArrowRight: i === last ? 0 : i + 1, ArrowLeft: i === 0 ? last : i - 1, Home: 0, End: last };
     const next = keys[e.key];

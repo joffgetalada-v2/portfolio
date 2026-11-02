@@ -72,9 +72,11 @@ export function ClassicPortfolio() {
           </div>
         </header>
 
+        {/* Eager, so #work and the project card links land where they should at every width. */}
         <Section
           id="services"
           n="01"
+          eager
           title={
             <>
               How I help your store <span className="not-italic">make money</span>

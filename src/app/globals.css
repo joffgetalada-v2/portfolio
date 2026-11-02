@@ -315,3 +315,189 @@ body {
     opacity: 1;
   }
 }
+
+/* ---- Services (components/classic/ServicePicker.tsx), visuals keep their own CSS ---- */
+
+/* Below lg: an accordion, each title above its text. */
+.svc-list {
+  position: relative;
+  display: grid;
+  border-bottom: 1px solid var(--line);
+  overflow-anchor: none;
+}
+.svc-bar {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 1px;
+  transform-origin: top;
+  background: var(--accent);
+  pointer-events: none;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.svc-row {
+  border-top: 1px solid var(--line);
+  color: var(--ink);
+}
+.svc-row > button {
+  display: flex;
+  width: 100%;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding-block: 1.25rem;
+  text-align: left;
+  transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.svc-row > [aria-disabled] {
+  cursor: default;
+}
+.svc-num {
+  width: 1.5rem;
+  flex-shrink: 0;
+  font-family: var(--font-geist-mono);
+  font-size: 11px;
+  color: var(--accent);
+}
+.svc-title {
+  min-width: 0;
+  flex: 1;
+  font-size: clamp(1.15rem, 1.7vw, 1.35rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+/* An arrow toward the text: right on closed items, turned down to the open one's text. */
+.svc-icon {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  align-self: center;
+  color: var(--ink-muted);
+  transition-property: transform, opacity, color;
+  transition-duration: 0.3s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+[aria-expanded="true"] > .svc-icon {
+  color: var(--accent);
+  transform: rotate(90deg);
+}
+/* Below the fixed header. */
+.svc-row,
+.svc-region {
+  scroll-margin-top: 5rem;
+}
+.svc-body {
+  padding-block: 0.25rem 2.5rem;
+}
+.svc-frame {
+  position: relative;
+  margin-bottom: 2rem;
+  aspect-ratio: 400 / 222;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--bg-raised);
+  box-shadow:
+    0 26px 50px -22px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(237, 237, 234, 0.1);
+}
+@media (width >= 48rem) {
+  .svc-frame {
+    max-width: 36rem;
+  }
+}
+/* From lg: the titles in a list, the open item's text beside them. Closed items share its cell and
+   self-start keeps them at zero height, a stretched one would sit on top and take its clicks. */
+@media (width >= 64rem) {
+  .svc-list {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    grid-template-rows: repeat(var(--n), auto) 1fr;
+    column-gap: 3.5rem;
+    border-bottom-width: 0;
+  }
+  .svc-bar {
+    display: block;
+  }
+  .svc-row {
+    grid-column-start: 1;
+  }
+  .svc-row:last-of-type {
+    border-bottom: 1px solid var(--line);
+  }
+  .svc-row > button {
+    padding-block: 1.5rem;
+    padding-left: 1.25rem;
+    color: color-mix(in oklab, var(--ink) 50%, transparent);
+  }
+  .svc-row > [aria-expanded="true"] {
+    color: var(--ink);
+  }
+  .svc-icon {
+    color: var(--accent);
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  [aria-expanded="true"] > .svc-icon {
+    opacity: 1;
+    transform: none;
+  }
+  .svc-region {
+    grid-column-start: 2;
+    grid-row: 1 / -1;
+    align-self: start;
+  }
+  .svc-body {
+    padding-block: 0;
+  }
+  .svc-frame {
+    max-width: none;
+  }
+}
+@media (width >= 64rem) and (hover: hover) {
+  .svc-row > button:hover {
+    color: var(--ink);
+  }
+}
+@media (width >= 80rem) {
+  .svc-list {
+    column-gap: 5rem;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* The open item's text fades and rises in each time it opens (ServicePicker restarts it). */
+  .svc-region:not([hidden]) > .svc-body {
+    animation: svc-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  /* Rise in on scroll: each row below lg, the whole list from lg so the accent bar stays in line. */
+  @supports (animation-timeline: view()) {
+    @media (width < 64rem) {
+      .svc-row {
+        animation: svc-rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 90%;
+      }
+    }
+    @media (width >= 64rem) {
+      .svc-list {
+        animation: svc-rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 260px;
+      }
+    }
+  }
+}
+
+@keyframes svc-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+@keyframes svc-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}

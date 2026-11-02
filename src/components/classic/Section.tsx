@@ -7,6 +7,7 @@ export function Section({
   aside,
   children,
   wide = false,
+  eager = false,
 }: {
   id: string;
   n: string;
@@ -15,14 +16,18 @@ export function Section({
   children: ReactNode;
   /** Put the heading above the content instead of beside it. */
   wide?: boolean;
+  /** Lay out with the page rather than when scrolled near, so its real height is known from the start. */
+  eager?: boolean;
 }) {
   const headingId = `${id}-title`;
   // Off-screen sections skip layout and paint until scrolled near, which keeps the first paint light.
+  // Until then each counts as 1200px tall, so a #link to a section further down can land off target
+  // once the ones above it render. An eager section skips that.
   return (
     <section
       id={id}
       aria-labelledby={headingId}
-      className="scroll-mt-20 border-t border-line py-20 [contain-intrinsic-size:auto_1200px] [content-visibility:auto] md:py-28"
+      className={`scroll-mt-20 border-t border-line py-20 md:py-28 ${eager ? "" : "[contain-intrinsic-size:auto_1200px] [content-visibility:auto]"}`}
     >
       <div className={wide ? "grid gap-10 md:gap-14" : "grid gap-10 md:grid-cols-12 md:gap-8"}>
         <div className={wide ? "flex flex-wrap items-end justify-between gap-6" : "md:col-span-4 lg:col-span-3"}>
