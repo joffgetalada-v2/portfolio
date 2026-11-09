@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Anton, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { LateFonts } from "@/components/LateFonts";
+import { SmoothScroll } from "@/components/SmoothScroll";
 import { VercelInsights } from "@/components/VercelInsights";
 import { profile } from "@/content/profile";
 import { site } from "@/content/site";
@@ -92,7 +93,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${instrumentSerif.variable} antialiased`}
     >
       <body>
-        <LateFonts className={`${geistMono.variable} ${anton.variable}`} />
+        <LateFonts
+          className={`${geistMono.variable} ${anton.variable}`}
+          families={[geistMono.style.fontFamily, anton.style.fontFamily]}
+        />
+        <SmoothScroll />
         {children}
         <VercelInsights />
       </body>

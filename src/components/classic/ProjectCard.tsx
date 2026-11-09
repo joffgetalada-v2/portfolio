@@ -28,7 +28,7 @@ export function ProjectCard({ project, n }: { project: Project; n: number }) {
   };
 
   return (
-    <article id={anchor} aria-labelledby={titleId} className="flex min-w-0 scroll-mt-24 flex-col">
+    <article id={anchor} aria-labelledby={titleId} className="flex min-w-0 scroll-mt-4 flex-col">
       <ProjectTile project={project} tile={tile} />
 
       <h3 id={titleId} className="mt-7 text-[clamp(1.45rem,2.4vw,1.85rem)] font-medium leading-[1.1] tracking-[-0.025em] text-ink">

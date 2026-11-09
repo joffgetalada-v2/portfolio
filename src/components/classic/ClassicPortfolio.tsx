@@ -19,8 +19,10 @@ export function ClassicPortfolio() {
     ...(upworkUrl ? [{ label: "Upwork", href: upworkUrl }] : []),
   ];
 
+  // The negative margin cancels the header's scroll padding (globals.css): #classic opens at the very top,
+  // where the masthead's own padding clears the header.
   return (
-    <main id="classic" className="relative scroll-mt-0 bg-bg text-ink">
+    <main id="classic" className="relative -scroll-mt-20 bg-bg text-ink">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Masthead */}
         <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b border-line pb-5 pt-24 font-mono text-[10.5px] uppercase tracking-[0.16em] text-ink-muted md:pt-28">
@@ -72,11 +74,9 @@ export function ClassicPortfolio() {
           </div>
         </header>
 
-        {/* Eager, so #work and the project card links land where they should at every width. */}
         <Section
           id="services"
           n="01"
-          eager
           title={
             <>
               How I help your store <span className="not-italic">make money</span>
@@ -236,7 +236,7 @@ export function ClassicPortfolio() {
           </div>
         </Section>
 
-        <section id="contact" aria-labelledby="contact-title" className="scroll-mt-20 border-t border-line py-20 [contain-intrinsic-size:auto_900px] [content-visibility:auto] md:py-32">
+        <section id="contact" aria-labelledby="contact-title" className="-scroll-mt-px border-t border-line py-20 [contain-intrinsic-size:auto_900px] [content-visibility:auto] md:py-32">
           <div className="flex items-baseline gap-3 font-mono text-[11px] text-ink-muted">
             <span className="tracking-[0.08em]">(08)</span>
             <h2 id="contact-title" className="uppercase tracking-[0.16em]">

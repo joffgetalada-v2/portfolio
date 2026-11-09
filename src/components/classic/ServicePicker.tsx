@@ -14,7 +14,7 @@ import {
 } from "react";
 import { flushSync } from "react-dom";
 import { ArrowIcon } from "@/components/ui/icons";
-import { targetOf } from "./CategoryTabs";
+import { targetOf } from "@/lib/hash";
 
 // Decorative animations, fetched only once the section comes near the screen. If the chunk fails to load
 // (offline, or a newer deploy removed it), the frame stays empty instead of taking the page down.
@@ -74,8 +74,9 @@ export function ServicePicker({ items, prompt }: { items: ServiceItem[]; prompt:
     const top = (e: Element) => e.getBoundingClientRect().top;
     const to = title && (title.contains(el) || (el === regions.current[i] && top(title) < top(el))) ? title : el;
     // Where it sits once the rows have risen into place (globals.css), so it lands just below the header
-    // whether it rises on the way or not.
-    let y = top(to) + scrollY - parseFloat(getComputedStyle(to).scrollMarginTop);
+    // (the page's scroll padding) whether it rises on the way or not.
+    const pad = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+    let y = top(to) + scrollY - pad - parseFloat(getComputedStyle(to).scrollMarginTop);
     for (let e: Element | null = to; e; e = e.parentElement) y -= new DOMMatrixReadOnly(getComputedStyle(e).transform).m42;
     scrollTo({ top: y, behavior: "instant" });
   };
@@ -110,15 +111,6 @@ export function ServicePicker({ items, prompt }: { items: ServiceItem[]; prompt:
     if (l?.i === open) {
       landing.current = null;
       show(l.i, l.el);
-      // Around load the browser also scrolls to the #target on its own, smoothly and measuring the rows
-      // mid-rise, so show it again when that scroll ends. Only briefly, so the reader's own scroll is left alone.
-      const again = () => show(l.i, l.el);
-      const watch = () => {
-        addEventListener("scrollend", again, { once: true });
-        setTimeout(() => removeEventListener("scrollend", again), 1500);
-      };
-      if (document.readyState === "complete") watch();
-      else addEventListener("load", watch, { once: true });
     }
   }, [open]);
 

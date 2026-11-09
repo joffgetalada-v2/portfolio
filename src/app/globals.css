@@ -28,10 +28,26 @@
   --font-display: var(--font-anton);
 }
 
+/* The fixed header's height: #links land below it, and scroll anchoring holds on to what is below it, so
+   text that reflows further up (late fonts, sections laying out) leaves what the reader sees in place. */
 html {
   background: var(--bg);
   color-scheme: dark;
-  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+/* Smooth in-page scrolling, switched on at the reader's first interaction (components/SmoothScroll.tsx). */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-smooth] {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Sections further down lay out only when scrolled near (content-visibility, Section.tsx). Once the URL
+   points into the page, lay them all out at their real size, so the browser lands on the target and a
+   smooth scroll ends where it should. */
+#classic:is(:target, :has(:target)) section {
+  content-visibility: visible;
 }
 
 body {
@@ -53,16 +69,15 @@ body {
   }
 }
 
+/* No transition time: even a near-zero one holds a change back a frame, so scrolling to a #link would
+   measure a margin that is about to drop. Delays still apply. */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: 0s !important;
   }
 }
 
@@ -383,11 +398,6 @@ body {
   color: var(--accent);
   transform: rotate(90deg);
 }
-/* Below the fixed header. */
-.svc-row,
-.svc-region {
-  scroll-margin-top: 5rem;
-}
 .svc-body {
   padding-block: 0.25rem 2.5rem;
 }
@@ -499,5 +509,31 @@ body {
   from {
     opacity: 0;
     transform: translateY(24px);
+  }
+}
+
+/* ---- Work tabs (components/classic/CategoryTabs.tsx) ---- */
+
+/* The server HTML lists every panel under plain links. Until the tabs take over, show only the panel they
+   will open: the one holding the #link target, else the first. The page then keeps its height and the
+   browser can land on a card in any panel. Without JS, a <noscript> style shows every panel again. */
+.tabs-pending > div:nth-child(n + 3):not(:target),
+.tabs-pending .tabs-label {
+  display: none;
+}
+.tabs-pending > div:nth-child(n + 3):has(:target) {
+  display: block;
+}
+.tabs-pending:has(> div:nth-child(n + 3):target, > div:nth-child(n + 3) :target) > div:nth-child(2) {
+  display: none;
+}
+/* Its pill looks selected, as the tabs will show it (SELECTED in CategoryTabs), one line per panel. */
+@media (scripting: enabled) {
+  .tabs-pending:not(:has(> div:nth-child(n + 3):target, > div:nth-child(n + 3) :target)) li:first-child > a,
+  .tabs-pending:has(> div:nth-child(3):target, > div:nth-child(3) :target) li:nth-child(2) > a,
+  .tabs-pending:has(> div:nth-child(4):target, > div:nth-child(4) :target) li:nth-child(3) > a {
+    border-color: transparent;
+    background: #f3f3ef;
+    color: #0b0b0a;
   }
 }

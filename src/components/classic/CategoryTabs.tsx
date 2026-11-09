@@ -2,6 +2,7 @@
 
 import { type KeyboardEvent, type ReactNode, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import { flushSync } from "react-dom";
+import { targetOf } from "@/lib/hash";
 
 export interface CategoryPanel {
   id: string;
@@ -22,15 +23,6 @@ function idFromHash(ids: string[], hash: string) {
   }
 }
 
-export function targetOf(hash: string) {
-  try {
-    const id = decodeURIComponent(hash.replace(/^#/, ""));
-    return id ? document.getElementById(id) : null;
-  } catch {
-    return null;
-  }
-}
-
 // Panel to show for a #hash: the panel itself, or the one holding the target (a project card).
 function panelFor(ids: string[], hash: string) {
   const el = targetOf(hash);
@@ -42,8 +34,14 @@ const PILL =
 const IDLE = "border-white/20 text-ink hover:border-white/45";
 const SELECTED = "border-transparent bg-[#f3f3ef] text-[#0b0b0a]";
 
-// Server HTML and no-JS: every panel in order under plain anchor links. Once hydrated: WAI-ARIA tabs,
-// only the active panel shows, and #id links to a panel or to anything inside one pick their tab.
+// Without JS, show every panel again, each under its label with a rule between panels (globals.css hides
+// all but one until the tabs take over).
+const NO_JS =
+  ".tabs-pending>div{display:block!important}.tabs-pending .tabs-label{display:flex}.tabs-pending>div+div{border-top:1px solid var(--line);padding-top:3.5rem}";
+
+// Server HTML and no-JS: every panel in order under plain anchor links (with JS, globals.css shows only the
+// panel the tabs will open until they take over). Once hydrated: WAI-ARIA tabs, only the active panel
+// shows, and #id links to a panel or to anything inside one pick their tab.
 export function CategoryTabs({ panels, label }: { panels: CategoryPanel[]; label: string }) {
   const enhanced = useSyncExternalStore(noSubscribe, () => true, () => false);
   const idsKey = panels.map((p) => p.id).join(" ");
@@ -53,11 +51,13 @@ export function CategoryTabs({ panels, label }: { panels: CategoryPanel[]; label
   );
   const tabs = useRef(new Map<string, HTMLButtonElement>());
 
-  // Landing on #id: the server HTML scrolled there with every panel open, so scroll again now
-  // that the others are hidden.
+  // Landing on #id in a later panel: without :has() support, globals.css keeps the panel holding the target
+  // hidden, or shows it below the first, until the tabs take over. So scroll to it now.
   useEffect(() => {
-    if (!enhanced) return;
-    if (panelFor(idsKey.split(" "), window.location.hash)) targetOf(window.location.hash)?.scrollIntoView();
+    if (!enhanced || CSS.supports("selector(:has(*))")) return;
+    const ids = idsKey.split(" ");
+    const id = panelFor(ids, window.location.hash);
+    if (id && id !== ids[0]) targetOf(window.location.hash)?.scrollIntoView();
   }, [enhanced, idsKey]);
 
   useEffect(() => {
@@ -119,7 +119,7 @@ export function CategoryTabs({ panels, label }: { panels: CategoryPanel[]; label
   };
 
   return (
-    <div>
+    <div className={enhanced ? undefined : "tabs-pending"}>
       {enhanced ? (
         <div role="tablist" aria-label={label} className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap [&>:last-child:nth-child(odd)]:col-span-2">
           {panels.map((p, i) => {
@@ -160,19 +160,19 @@ export function CategoryTabs({ panels, label }: { panels: CategoryPanel[]; label
         </nav>
       )}
 
-      {panels.map((p, i) => (
+      {panels.map((p) => (
         <div
           key={p.id}
           id={p.id}
           role={enhanced ? "tabpanel" : undefined}
           aria-labelledby={enhanced ? `${p.id}-tab` : `${p.id}-label`}
           tabIndex={enhanced ? 0 : undefined}
-          // Margin keeps the header and the tab bar in view when scrolled to. A hidden panel still has a
+          // Margin keeps the tab bar in view below the header when scrolled to. A hidden panel still has a
           // box (content-visibility), so it drops its own margin.
-          className={`mt-10 scroll-mt-56 [&[hidden]]:m-0 rounded-sm sm:scroll-mt-44 md:mt-12 md:scroll-mt-48 ${!enhanced && i > 0 ? "border-t border-line pt-14" : ""}`}
+          className="mt-10 scroll-mt-36 [&[hidden]]:m-0 rounded-sm sm:scroll-mt-24 md:mt-12 md:scroll-mt-28"
         >
           {!enhanced && (
-            <p id={`${p.id}-label`} className="mb-8 flex flex-wrap items-baseline gap-x-3 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-muted">
+            <p id={`${p.id}-label`} className="tabs-label mb-8 flex flex-wrap items-baseline gap-x-3 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-muted">
               <span className="text-ink">{p.label}</span>
               <span>
                 {p.count} {p.count === 1 ? "project" : "projects"}
@@ -182,6 +182,10 @@ export function CategoryTabs({ panels, label }: { panels: CategoryPanel[]; label
           {p.content}
         </div>
       ))}
+
+      <noscript>
+        <style dangerouslySetInnerHTML={{ __html: NO_JS }} />
+      </noscript>
     </div>
   );
 }
