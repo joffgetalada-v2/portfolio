@@ -109,7 +109,7 @@ export const profile = {
     },
     {
       title: "Launch and support",
-      body: "After launch I monitor the store and stay on for ongoing support, with hours that overlap the US, Australia, and Europe.",
+      body: "After launch I monitor the store and stay on for ongoing support, with hours that overlap the US, Australia, and Europe. Requests can come through your own Jira, HubSpot, or Zendesk.",
     },
   ],
   skills: [
@@ -135,7 +135,11 @@ export const profile = {
     },
     {
       group: "Data & Tools",
-      items: ["MySQL", "Git", "GitHub", "GitLab", "Bitbucket", "Jira", "Figma", "Google Lighthouse", "GTmetrix", "Agile/Scrum"],
+      items: ["MySQL", "Git", "GitHub", "GitLab", "Bitbucket", "Figma", "Google Lighthouse", "GTmetrix", "Agile/Scrum"],
+    },
+    {
+      group: "Helpdesk & CRM",
+      items: ["Jira", "HubSpot", "Zendesk"],
     },
   ],
   experience: [
@@ -152,6 +156,7 @@ export const profile = {
         "Built, migrated, and optimized 100+ Shopify and Shopify Plus stores, owning delivery from requirements and Figma handoff through Git-based development, launch, and post-release monitoring.",
         "Optimized page speed on client stores in small, regression-tested releases; typical Google PageSpeed scores went from 20–30 to 50–70 on mobile and from 45–50 to 70–90 on desktop.",
         "Resolved complex production issues on live stores as sole engineer for small businesses and within 3–5 person teams for mid-to-large clients, tracing root causes across theme code, JavaScript, app conflicts, and platform settings.",
+        "Handled tasks, tickets, and support requests in clients’ Jira, HubSpot, or Zendesk.",
         "Integrated and validated Klaviyo, preorder and back-in-stock apps, store locators, analytics, reviews, and marketing platforms, the tools stores use to capture and keep customers.",
         "Led a full storefront rebuild for The Artisan Collective on WordPress and WooCommerce, moving products and content and preserving SEO to protect existing search traffic.",
       ],
@@ -333,10 +338,11 @@ export const works: Work[] = [
       "Optimizes page speed in small, regression-tested releases that protect carts, filters, menus, and integrations.",
       "Integrates and validates Klaviyo, preorder and back-in-stock apps, store locators, analytics, reviews, and marketing platforms.",
       "Traces root causes across theme code, JavaScript, app conflicts, and platform settings, solo or in 3–5 person teams.",
+      "Handles tasks, tickets, and support requests in clients’ Jira, HubSpot, or Zendesk.",
     ],
     value: "One developer owning the work means fewer handoffs, and regression testing on each release protects the carts, filters, menus, and integrations that take orders.",
     result: "100+ Shopify and Shopify Plus stores delivered. Typical PageSpeed scores after speed work: 50–70 on mobile and 70–90 on desktop, up from 20–30 and 45–50.",
-    stack: ["Shopify Plus", "Liquid", "Shopify CLI", "Klaviyo", "Git", "Figma"],
+    stack: ["Shopify Plus", "Liquid", "Shopify CLI", "Klaviyo", "Git", "Figma", "Jira", "HubSpot", "Zendesk"],
     palette: { bg: "#111111", ink: "#f5f5f0", accent: "#95bf47" },
   },
   {
